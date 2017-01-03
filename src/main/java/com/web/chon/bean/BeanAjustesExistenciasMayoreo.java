@@ -413,5 +413,6 @@ public class BeanAjustesExistenciasMayoreo implements Serializable {
     public void setTotalCajas(BigDecimal totalCajas) {
         this.totalCajas = totalCajas;
     }
+    
 
 }

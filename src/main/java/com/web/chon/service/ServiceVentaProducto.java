@@ -1,8 +1,7 @@
 package com.web.chon.service;
 
 import com.web.chon.dominio.VentaProducto;
-import com.web.chon.negocio.NegocioVentaProducto;
-import com.web.chon.util.Utilidades;
+import com.web.chon.ejb.EjbVentaProducto;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -10,33 +9,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * Servicio para el modulo de venta de productos
  *
- * @author Juan de la Cruz
+ * @author Juan de la Cruzs
  */
 @Service
+@Transactional
 public class ServiceVentaProducto implements IfaceVentaProducto {
 
-    NegocioVentaProducto ejb;
-
-    private void getEjb() {
-        try {
-            ejb = (NegocioVentaProducto) Utilidades.getEJBRemote("ejbVentaProducto", NegocioVentaProducto.class.getName());
-        } catch (Exception ex) {
-            Logger.getLogger(ServiceVentaProducto.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+    @Autowired
+    EjbVentaProducto ejb;
 
     @Override
     public int insertarVentaProducto(VentaProducto ventaProducto, int idVenta) {
-        if (ejb == null) {
-            getEjb();
-        }
-        System.out.println("" + ventaProducto.toString());
         return ejb.insertarVentaProducto(ventaProducto, idVenta);
     }
 
@@ -44,7 +35,6 @@ public class ServiceVentaProducto implements IfaceVentaProducto {
     public ArrayList<VentaProducto> getVentasProductoByIdVenta(BigDecimal idVenta) {
         try {
             ArrayList<VentaProducto> lstProductos = new ArrayList<VentaProducto>();
-            getEjb();
             List<Object[]> lstObject = ejb.getProductosByIdVentaFK(idVenta);
             BigDecimal count = new BigDecimal(0);
             for (Object[] obj : lstObject) {
@@ -74,7 +64,6 @@ public class ServiceVentaProducto implements IfaceVentaProducto {
     public ArrayList<VentaProducto> getReporteVenta(String fechaInicio, String fechaFin, BigDecimal idSucursal) {
         try {
             ArrayList<VentaProducto> lstProductos = new ArrayList<VentaProducto>();
-            getEjb();
             List<Object[]> lstObject = ejb.getReporteVenta(fechaInicio, fechaFin, idSucursal);
             BigDecimal count = new BigDecimal(0);
             BigDecimal costo = new BigDecimal(0);

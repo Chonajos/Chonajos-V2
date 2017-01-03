@@ -1,6 +1,5 @@
 package com.web.chon.security.service;
 
-import com.web.chon.dominio.Usuario;
 import com.web.chon.dominio.UsuarioDominio;
 import java.util.Date;
 

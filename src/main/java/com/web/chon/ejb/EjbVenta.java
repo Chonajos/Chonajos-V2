@@ -1,7 +1,6 @@
 package com.web.chon.ejb;
 
 import com.web.chon.dominio.Venta;
-import com.web.chon.negocio.NegocioVenta;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
@@ -10,6 +9,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
@@ -17,13 +17,13 @@ import javax.persistence.Query;
  *
  * @author Juan de la Cruz
  */
-@Stateless(mappedName = "ejbVenta")
-public class EjbVenta implements NegocioVenta {
+@Repository
+public class EjbVenta {
 
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
 
-    @Override
+    
     public int insertarVenta(Venta venta, int folioVenta) {
         Query query = em.createNativeQuery("INSERT INTO VENTA(ID_VENTA_PK,FECHA_VENTA,ID_CLIENTE_FK,ID_VENDEDOR_FK,STATUS_FK,ID_SUCURSAL_FK,FOLIO_SUCURSAL,TIPO_VENTA) VALUES(?,sysdate,?,?,1,?,?,?)");
         System.out.println("venta ejb :" + venta.toString());
@@ -36,18 +36,16 @@ public class EjbVenta implements NegocioVenta {
         return query.executeUpdate();
     }
 
-    @Override
+    
     public int getNextVal() {
         Query query = em.createNativeQuery("SELECT S_VENTA.nextVal FROM DUAL");
         return Integer.parseInt(query.getSingleResult().toString());
     }
 
-    @Override
+    
     public List<Object[]> getVentasByInterval(String fechaInicio, String fechaFin, BigDecimal idSucursal, BigDecimal idStatusVenta, String idProducto, BigDecimal idTipoVenta, BigDecimal idCliente) {
         Query query;
         int cont = 0;
-
-        System.out.println("idTipoVenta " + idTipoVenta);
 
         StringBuffer cadena = new StringBuffer("SELECT ven.ID_VENTA_PK,ven.ID_CLIENTE_FK, "
                 + "  ven.ID_VENDEDOR_FK, ven.FECHA_VENTA,ven.STATUS_FK, "
@@ -80,7 +78,7 @@ public class EjbVenta implements NegocioVenta {
             cont++;
         }
 
-        if (idSucursal.intValue() != 0) {
+        if (idSucursal != null && idSucursal.intValue() != 0) {
             if (cont == 0) {
                 cadena.append(" WHERE ");
             } else {
@@ -129,12 +127,12 @@ public class EjbVenta implements NegocioVenta {
         }
 
         cadena.append(" ORDER BY ven.ID_VENTA_PK");
-        System.out.println("query [] " + cadena.toString());
 
         query = em.createNativeQuery(cadena.toString());
 
         try {
             List<Object[]> lstObject = query.getResultList();
+
             return lstObject;
         } catch (Exception e) {
             System.out.println("Error >" + e.getMessage());
@@ -143,7 +141,7 @@ public class EjbVenta implements NegocioVenta {
 
     }
 
-    @Override
+    
     public int getFolioByIdSucursal(int idSucursal) {
         try {
             Query query = em.createNativeQuery("select NVL(max(FOLIO_SUCURSAL),0) folioVenta from VENTA where ID_SUCURSAL_FK = ?");
@@ -156,7 +154,7 @@ public class EjbVenta implements NegocioVenta {
         }
     }
 
-    @Override
+    
     public int cancelarVenta(int idVenta, int idUsuario, String comentarios) {
         System.out.println("idVenta: " + idVenta);
         System.out.println("idUsuario: " + idUsuario);
@@ -176,7 +174,7 @@ public class EjbVenta implements NegocioVenta {
         }
     }
 
-    @Override
+    
     public BigDecimal getTotalVentasByDay(String fecha) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

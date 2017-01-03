@@ -1,12 +1,8 @@
 package com.web.chon.service;
-
-import com.web.chon.dominio.RelacionOperaciones;
-import com.web.chon.dominio.Subproducto;
 import com.web.chon.dominio.Venta;
 import com.web.chon.dominio.VentaProducto;
-import com.web.chon.negocio.NegocioVenta;
+import com.web.chon.ejb.EjbVenta;
 import com.web.chon.util.TiempoUtil;
-import com.web.chon.util.Utilidades;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.ArrayList;
@@ -26,36 +22,23 @@ import org.springframework.stereotype.Service;
 @Service
 public class ServiceVenta implements IfaceVenta {
 
-    NegocioVenta ejb;
+    @Autowired
+    EjbVenta ejb;
     @Autowired
     private IfaceVentaProducto ifaceVentaProducto;
 
-    private void getEjb() {
-        try {
-            if (ejb == null) {
-                ejb = (NegocioVenta) Utilidades.getEJBRemote("ejbVenta", NegocioVenta.class.getName());
-            }
-
-        } catch (Exception ex) {
-            Logger.getLogger(ServiceVenta.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
     @Override
     public int insertarVenta(Venta venta, int folioVenta) {
-        getEjb();
         return ejb.insertarVenta(venta, folioVenta);
     }
 
     @Override
     public int getNextVal() {
-        getEjb();
         return ejb.getNextVal();
     }
 
     @Override
     public ArrayList<Venta> getVentasByIntervalDate(Date fechaInicio, Date fechaFin, BigDecimal idSucursal, BigDecimal idStatusVenta, String idProducto, BigDecimal idTipoVenta,BigDecimal idCliente) {
-        getEjb();
         ArrayList<Venta> lstVenta = new ArrayList<Venta>();
         BigDecimal count = new BigDecimal(0);
         BigDecimal B_CONTADO = new BigDecimal(1);
@@ -85,7 +68,7 @@ public class ServiceVenta implements IfaceVenta {
             venta.setNumeroPagos(obj[16] == null ? new BigDecimal(1) : new BigDecimal(obj[16].toString()));
             venta.setPlazos(obj[17] == null ? new BigDecimal(1) : new BigDecimal(obj[17].toString()));
             venta.setaCuenta(obj[18] == null ? new BigDecimal(0) : new BigDecimal(obj[18].toString()));
-
+            
             ArrayList<VentaProducto> listaProductos = new ArrayList<VentaProducto>();
             listaProductos = ifaceVentaProducto.getVentasProductoByIdVenta(venta.getIdVentaPk());
             venta.setLstVentaProducto(listaProductos);
@@ -99,19 +82,16 @@ public class ServiceVenta implements IfaceVenta {
 
     @Override
     public int getFolioByIdSucursal(int idSucursal) {
-        getEjb();
         return (ejb.getFolioByIdSucursal(idSucursal));
     }
 
     @Override
     public int cancelarVenta(int idVenta, int idUsuario, String comentarios) {
-        getEjb();
         return ejb.cancelarVenta(idVenta, idUsuario, comentarios);
     }
 
     @Override
     public BigDecimal getTotalVentasByDay(String fecha) {
-        getEjb();
         return ejb.getTotalVentasByDay(fecha);
 
     }

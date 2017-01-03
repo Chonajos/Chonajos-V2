@@ -2,6 +2,7 @@ package com.web.chon.security.service;
 
 import com.web.chon.dominio.Menu;
 import com.web.chon.dominio.UsuarioDominio;
+import com.web.chon.ejb.UsuariosRepository;
 import com.web.chon.negocio.NegocioUsuarioLogin;
 import com.web.chon.util.Utilidades;
 import java.math.BigDecimal;
@@ -15,6 +16,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,7 +31,9 @@ import org.springframework.util.StringUtils;
 @Service(value = "userDetailsService")
 public class PlataformaUserDetailsServiceImpl implements PlataformaUserDetailsService {
 
-    private NegocioUsuarioLogin usuarioRepository;
+//    private NegocioUsuarioLogin usuarioRepository;
+    @Autowired
+    private UsuariosRepository usuarioRepository;
 
     private Map<Menu, Set<Menu>> menu;
     private List<Object[]> listMenu;
@@ -46,7 +50,7 @@ public class PlataformaUserDetailsServiceImpl implements PlataformaUserDetailsSe
     public void getEjb() {
         if (usuarioRepository == null) {
             try {
-                usuarioRepository = (NegocioUsuarioLogin) Utilidades.getEJBRemote("ejbUsuarioLogin", NegocioUsuarioLogin.class.getName());
+//                usuarioRepository = (NegocioUsuarioLogin) Utilidades.getEJBRemote("ejbUsuarioLogin", NegocioUsuarioLogin.class.getName());
             } catch (Exception ex) {
                 Logger.getLogger(PlataformaUserDetailsServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -55,11 +59,14 @@ public class PlataformaUserDetailsServiceImpl implements PlataformaUserDetailsSe
 
     @Override
     public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException, DataAccessException {
-        getEjb();
-        
+        System.out.println("load usuario ");
+//        getEjb();
+
         final List<Object[]> usuario = usuarioRepository.getUser(username);
+        
+        System.out.println("load usuario repositorio final ");
         if (usuario == null || usuario.isEmpty()) {
-            
+
             throw new UsernameNotFoundException(username + ": no encontrado");
         }
 
@@ -70,44 +77,46 @@ public class PlataformaUserDetailsServiceImpl implements PlataformaUserDetailsSe
 
     private UsuarioDominio setValueToUsuarioDominio(List<Object[]> lstObject) {
         UsuarioDominio dominio = new UsuarioDominio();
-        
+
         for (Object[] obj : lstObject) {
 
             dominio.setUsuId(obj[0].toString());
             dominio.setUsuNombre(obj[1].toString());
             dominio.setUsuPaterno(obj[2].toString());
-            dominio.setUsuMaterno(obj[3] == null ? "":obj[3].toString());
+            dominio.setUsuMaterno(obj[3] == null ? "" : obj[3].toString());
             dominio.setUsuPassword(obj[4].toString());
             dominio.setUsuFecAlta((Date) obj[5]);
-            dominio.setPerId(obj[6] == null ? null: Integer.parseInt(obj[6].toString()));
-            dominio.setSucId(obj[7] == null ? null: Integer.parseInt(obj[7].toString()));
+            dominio.setPerId(obj[6] == null ? null : Integer.parseInt(obj[6].toString()));
+            dominio.setSucId(obj[7] == null ? null : Integer.parseInt(obj[7].toString()));
             dominio.setPerDescripcion(obj[8].toString());
             dominio.setIdUsuario(new BigDecimal(obj[9].toString()));
-            dominio.setNombreSucursal(obj[10] == null ? "":obj[10].toString());
-            dominio.setTelefonoSucursal(obj[11] == null ? "":obj[11].toString());
-            
+            dominio.setNombreSucursal(obj[10] == null ? "" : obj[10].toString());
+            dominio.setTelefonoSucursal(obj[11] == null ? "" : obj[11].toString());
+
             menu = new TreeMap<Menu, Set<Menu>>();
             allowedUrl = new HashSet<String>();
-            
+
             ConstuctMenu(obj[6].toString());
-            
+
             dominio.setMenu(listMenuDTO);
             dominio.setAllowedUrl(allowedUrl);
-            
+
         }
 
         return dominio;
     }
 
     private void ConstuctMenu(String idPerfil) {
-        
+
         getEjb();
         Menu menuDTO = null;
         Menu subMenuDTO = null;
         Menu subBMenuDTO = null;
         Menu subCMenuDTO = null;
         listMenu = new ArrayList<Object[]>();
+        System.out.println("menu  ");
         listMenu = this.usuarioRepository.getMenuByUser(idPerfil);
+        System.out.println("menu  final");
         for (Object[] menuLs : listMenu) {
 
             nivel = StringUtils.countOccurrencesOf(menuLs[3].toString(), ".");

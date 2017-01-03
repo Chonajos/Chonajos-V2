@@ -10,11 +10,12 @@ import com.web.chon.negocio.NegocioExistenciaMenudeo;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import org.jboss.logging.Logger;
+
 
 /**
  *
@@ -55,7 +56,7 @@ public class EjbExistenciaMenudeo implements NegocioExistenciaMenudeo {
 
             return query.executeUpdate();
         } catch (Exception ex) {
-            Logger.getLogger(EjbExistenciaMenudeo.class.getName()).log(Logger.Level.INFO, "Error en la modificacion de esxistencias", ex);
+//            Logger.getLogger(EjbExistenciaMenudeo.class.getName()).log(Logger.Level.INFO, "Error en la modificacion de esxistencias", ex);
             return 0;
         }
 
@@ -72,7 +73,7 @@ public class EjbExistenciaMenudeo implements NegocioExistenciaMenudeo {
 
             return query.getResultList();
         } catch (Exception ex) {
-            Logger.getLogger(EjbExistenciaMenudeo.class.getName()).log(Logger.Level.INFO, "Error en la busqueda por id de sucursal", ex);
+//            Logger.getLogger(EjbExistenciaMenudeo.class.getName()).log(Logger.Level.INFO, "Error en la busqueda por id de sucursal", ex);
             return null;
         }
     }
@@ -90,7 +91,7 @@ public class EjbExistenciaMenudeo implements NegocioExistenciaMenudeo {
 
             return query.getResultList();
         } catch (Exception ex) {
-            Logger.getLogger(EjbExistenciaMenudeo.class.getName()).log(Logger.Level.INFO, "Error en la busqueda por id", ex);
+//            Logger.getLogger(EjbExistenciaMenudeo.class.getName()).log(Logger.Level.INFO, "Error en la busqueda por id", ex);
             return null;
         }
     }
@@ -114,7 +115,7 @@ public class EjbExistenciaMenudeo implements NegocioExistenciaMenudeo {
             System.out.println("IdSucursal: "+ID_SUCURSAL_FK);
             return query.getResultList();
         } catch (Exception ex) {
-            Logger.getLogger(EjbExistenciaMenudeo.class.getName()).log(Logger.Level.INFO, "Error en la busqueda por id", ex);
+//            Logger.getLogger(EjbExistenciaMenudeo.class.getName()).log(Logger.Level.INFO, "Error en la busqueda por id", ex);
             return null;
         }
     }
@@ -148,7 +149,7 @@ public class EjbExistenciaMenudeo implements NegocioExistenciaMenudeo {
 
             return query.getResultList();
         } catch (Exception ex) {
-            Logger.getLogger(EjbExistenciaMenudeo.class.getName()).log(Logger.Level.INFO, "Error en la busqueda por id de sucursal, Subproducto", ex);
+//            Logger.getLogger(EjbExistenciaMenudeo.class.getName()).log(Logger.Level.INFO, "Error en la busqueda por id de sucursal, Subproducto", ex);
             return null;
         }
     }
@@ -179,7 +180,7 @@ public class EjbExistenciaMenudeo implements NegocioExistenciaMenudeo {
          
             return query.getResultList();
         } catch (Exception ex) {
-            Logger.getLogger(EjbExistenciaMenudeo.class.getName()).log(Logger.Level.INFO, "Error en la busqueda por id", ex);
+//            Logger.getLogger(EjbExistenciaMenudeo.class.getName()).log(Logger.Level.INFO, "Error en la busqueda por id", ex);
             return null;
         }
     

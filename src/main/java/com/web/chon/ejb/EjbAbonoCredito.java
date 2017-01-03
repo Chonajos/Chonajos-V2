@@ -3,7 +3,6 @@ package com.web.chon.ejb;
 import com.web.chon.dominio.AbonoCredito;
 import com.web.chon.negocio.NegocioAbonoCredito;
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--chonajos-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+    	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    	http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd">
+
+<!--    <bean id="tenantDataSourceJndi" class="">
+	   <property name="driverClassName" value="oracle.jdbc.OracleDriver" />
+	   <property name="url" value="jdbc:oracle:thin:@201.99.114.29:1523:xe" />
+	   <property name="username" value="chonajos"/>
+	   <property name="password" value="chonajos2016"/>
+	   <property name="initialSize" value="3" />
+	   <property name="validationQuery" value="select 1 from dual" />
+	   <property name="testOnBorrow" value="true" />
+	   <property name="testOnReturn" value="true" />
+	   <property name="testWhileIdle" value="true" />
+	   <property name="timeBetweenEvictionRunsMillis" value="60000" />
+	   <property name="logAbandoned" value="true" />
+	   <property name="suspectTimeout" value="60" />
+	   <property name="jdbcInterceptors" value="org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer;org.apache.tomcat.jdbc.pool.interceptor.SlowQueryReport" />
+        <property name="maxIdle" value="6" />
+       <property name="minIdle" value="2" />  
+	</bean>--> 
+
+
+<!-- Database connection Oracle 10g jdbc -->
+     <bean id="tenantDataSourceJndi" class="oracle.jdbc.pool.OracleDataSource" destroy-method="close">
+              <property name="URL" value="${db.url}" />
+              <property name="user" value="${db.username}" />
+              <property name="password" value="${db.password}" />
+              <property name="connectionCachingEnabled" value="true" />
+       </bean>
+		
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="tenantDataSourceJndi" />
+		<property name="persistenceUnitName" value="persistenceJR" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="database" value="ORACLE" />
+				<property name="showSql" value="false" />
+				<property name="generateDdl" value="false" />
+				<property name="databasePlatform" value="org.hibernate.dialect.Oracle10gDialect" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+	
+	<!-- Se crea instancia de transaction template para poder manipular la transaccion desde programa -->
+	<bean id="txTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+		<property name="transactionManager" ref="transactionManager"></property>
+	</bean>	
+
+</beans>
