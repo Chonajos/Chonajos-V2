@@ -1,7 +1,7 @@
 package com.web.chon.util;
 
 import com.web.chon.dominio.Subproducto;
-import com.web.chon.service.ServiceSubProducto;
+import com.web.chon.service.IfaceSubProducto;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class ProductoConverter implements Converter {
 
     @Autowired
-    ServiceSubProducto serviceSubProducto;
+    IfaceSubProducto serviceSubProducto;
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {

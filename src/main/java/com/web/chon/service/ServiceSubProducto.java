@@ -2,10 +2,6 @@ package com.web.chon.service;
 
 import com.web.chon.dominio.Subproducto;
 import com.web.chon.ejb.EjbSubProducto;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
