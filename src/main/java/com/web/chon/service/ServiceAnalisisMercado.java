@@ -4,7 +4,6 @@ import com.web.chon.dominio.AnalisisMercado;
 import com.web.chon.dominio.Pagina;
 import com.web.chon.ejb.EjbAnalisisMercado;
 import com.web.chon.util.TiempoUtil;
-import com.web.chon.util.Utilidades;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,12 +11,14 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Juan
  */
 @Service
+@Transactional
 public class ServiceAnalisisMercado implements IfaceAnalisisMercado {
 
     @Autowired
@@ -27,7 +28,7 @@ public class ServiceAnalisisMercado implements IfaceAnalisisMercado {
     public int saveEntradaProductoCentral(AnalisisMercado entradaMercancia) {
 
            
-        System.out.println(entradaMercancia.toString());
+        //System.out.println(entradaMercancia.toString());
         return ejb.saveEntradaProductoCentral(entradaMercancia);
     }
 
@@ -251,11 +252,11 @@ public class ServiceAnalisisMercado implements IfaceAnalisisMercado {
 
                 default:
 
-                    System.out.println("default " + filtro);
+                    //System.out.println("default " + filtro);
                     break;
             }
         } catch (Exception e) {
-            System.out.println("error servide " + e.getMessage());
+            //System.out.println("error servide " + e.getMessage());
             e.getStackTrace();
         }
 
@@ -310,10 +311,10 @@ public class ServiceAnalisisMercado implements IfaceAnalisisMercado {
     @Override
     public ArrayList<AnalisisMercado> getAnalisMercadoByNameDayOfYear(String fechaInicio, String fechaFin, String idProducto, String nombreDia) {
         List<Object[]> lstObject = null;
-        System.out.println("fechaInicio "+fechaInicio);
-        System.out.println("fechaFin "+fechaFin);
-        System.out.println("idProducto "+idProducto);
-        System.out.println("nombreDia "+nombreDia);
+//        System.out.println("fechaInicio "+fechaInicio);
+//        System.out.println("fechaFin "+fechaFin);
+//        System.out.println("idProSystemducto "+idProducto);
+//        System.out.println("nombreDia "+nombreDia);
         ArrayList<AnalisisMercado> lstAnalisisMercado = new ArrayList<AnalisisMercado>();
            
         lstObject = ejb.getAnalisMercadoByNameDayOfYear(fechaInicio, fechaFin, idProducto, nombreDia);
@@ -332,7 +333,7 @@ public class ServiceAnalisisMercado implements IfaceAnalisisMercado {
             lstAnalisisMercado.add(dominio);
 
         }
-        System.out.println("termina");
+        //System.out.println("termina");
 
         return lstAnalisisMercado;
     }

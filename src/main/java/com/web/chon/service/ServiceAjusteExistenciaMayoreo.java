@@ -7,12 +7,14 @@ import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Juan de la Cruz
  */
 @Service
+@Transactional
 public class ServiceAjusteExistenciaMayoreo implements IfaceAjusteExistenciaMayoreo {
 
     @Autowired

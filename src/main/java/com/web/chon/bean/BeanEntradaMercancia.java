@@ -147,7 +147,7 @@ public class BeanEntradaMercancia implements Serializable {
     {
         Date hoy = context.getFechaSistema();
         data.setFechaPago(TiempoUtil.sumarRestarDias(hoy, data.getDiasPago().intValue()));
-        System.out.println("Fecha de Pago: "+data.getFechaPago());
+        //System.out.println("Fecha de Pago: "+data.getFechaPago());
     }
 
     public void permisions() {
@@ -201,18 +201,18 @@ public class BeanEntradaMercancia implements Serializable {
                 entrada_mercancia.setFecha(data.getFecha());
                 entrada_mercancia.setFolio(data.getFolio());
                 entrada_mercancia.setCantidadEmpaquesProvedor(data.getCantidadEmpaquesProvedor());
-                System.out.println("CantidadReal ===" +cantidadReal);
+                //System.out.println("CantidadReal ===" +cantidadReal);
                 entrada_mercancia.setCantidadEmpaquesReales(cantidadReal);
                 entrada_mercancia.setKilosTotales(kilos);
-                System.out.println("kilos ===" +kilos);
+                //System.out.println("kilos ===" +kilos);
                 entrada_mercancia.setKilosTotalesProvedor(data.getKilosTotalesProvedor());
                 entrada_mercancia.setComentariosGenerales(data.getComentariosGenerales());
                 entrada_mercancia.setFechaRemision(data.getFechaRemision());
                 entrada_mercancia.setIdCarroSucursal(new BigDecimal(idCarroSucursal + 1));
                 entrada_mercancia.setFechaPago(data.getFechaPago());
-                System.out.println("=============Entrada=================");
-                System.out.println(data.toString());
-                System.out.println("Entrada: "+entrada_mercancia.toString());
+                //System.out.println("=============Entrada=================");
+                //System.out.println(data.toString());
+                //System.out.println("Entrada: "+entrada_mercancia.toString());
 
                 int mercanciaOrdenada = ifaceEntradaMercancia.insertEntradaMercancia(entrada_mercancia);
                 if (mercanciaOrdenada != 0) {

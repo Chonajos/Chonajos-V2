@@ -7,23 +7,21 @@ package com.web.chon.service;
 
 import com.web.chon.dominio.Documento;
 import com.web.chon.ejb.EjbDocumentos;
-import com.web.chon.negocio.NegocioDocumentos;
 import com.web.chon.util.TiempoUtil;
-import com.web.chon.util.Utilidades;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author JesusAlfredo
  */
 @Service
+@Transactional
 public class ServiceDocumentos implements IfaceDocumentos {
 @Autowired
     EjbDocumentos ejb;

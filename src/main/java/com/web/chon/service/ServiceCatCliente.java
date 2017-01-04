@@ -7,8 +7,6 @@ package com.web.chon.service;
 
 import com.web.chon.dominio.Cliente;
 import com.web.chon.ejb.EjbCatCliente;
-import com.web.chon.negocio.NegocioCatCliente;
-import com.web.chon.util.Utilidades;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.ArrayList;
@@ -18,12 +16,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Freddy
  */
 @Service
+@Transactional
 public class ServiceCatCliente implements IfaceCatCliente {
 
     @Autowired
@@ -137,7 +137,7 @@ public class ServiceCatCliente implements IfaceCatCliente {
 
     @Override
     public int insertCliente(Cliente cliente) {
-        System.out.println("Cliente" + cliente.toString());
+        //System.out.println("Cliente" + cliente.toString());
         return ejb.insertCliente(cliente);
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

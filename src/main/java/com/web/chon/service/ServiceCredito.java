@@ -3,9 +3,7 @@ package com.web.chon.service;
 import com.web.chon.dominio.Credito;
 import com.web.chon.dominio.SaldosDeudas;
 import com.web.chon.ejb.EjbCredito;
-import com.web.chon.negocio.NegocioCredito;
 import com.web.chon.security.service.PlataformaSecurityContext;
-import com.web.chon.util.Utilidades;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,12 +15,14 @@ import com.web.chon.util.TiempoUtil;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Juan de la Cruz
  */
 @Service
+@Transactional
 public class ServiceCredito implements IfaceCredito {
 
     @Autowired
@@ -105,7 +105,7 @@ public class ServiceCredito implements IfaceCredito {
     public int insert(Credito credito) {
         try {
                
-            System.out.println("credito " + credito.toString());
+            //System.out.println("credito " + credito.toString());
             int idCredito = ejb.nextVal();
 
             if (ejb.insert(credito, idCredito) == 0) {
@@ -114,14 +114,14 @@ public class ServiceCredito implements IfaceCredito {
                 return idCredito;
             }
         } catch (Exception ex) {
-            System.out.println("error >" + ex.getMessage().toString());
+            //                       System.out.println("error >" + ex.getMessage().toString());
             return 0;
         }
     }
 
     @Override
     public ArrayList<SaldosDeudas> getCreditosActivos(BigDecimal idCliente,BigDecimal idAbonoPk) {
-        System.out.println("**************Service*************");
+        //System.out.println("**************Service*************");
            
         ArrayList<SaldosDeudas> lstCreditos = new ArrayList<SaldosDeudas>();
         List<Object[]> lstObject = new ArrayList<Object[]>();
@@ -192,7 +192,7 @@ public class ServiceCredito implements IfaceCredito {
 
                     case -1:
 
-                        System.out.println("Case -1: " + " Hoy: " + hoy + " Fecha: " + fechas_pagos.get(x));
+                        //System.out.println("Case -1: " + " Hoy: " + hoy + " Fecha: " + fechas_pagos.get(x));
                         if (fechaPagoMayoraHoy == false) {
                             credito.setFechaProximaAbonar(fechas_pagos.get(x));
                             credito.setStatusFechaProxima(CREDITONOATRASADO);

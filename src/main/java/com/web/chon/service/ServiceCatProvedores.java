@@ -1,16 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package com.web.chon.service;
 
+package com.web.chon.service;
 import com.web.chon.dominio.Pagina;
 import com.web.chon.dominio.Provedor;
 import com.web.chon.ejb.EjbCatProvedores;
 import com.web.chon.negocio.NegocioCatProvedores;
-
-import com.web.chon.util.Utilidades;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,12 +13,14 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author freddy
  */
 @Service
+@Transactional
 public class ServiceCatProvedores implements IfaceCatProvedores {
 
     @Autowired
@@ -79,10 +74,6 @@ public class ServiceCatProvedores implements IfaceCatProvedores {
 
     @Override
     public Pagina<Provedor> findAllDominio(Provedor filters, int first, int pageSize) {
-
-        System.out.println("ServiceCatProvedores FindAllDominio");
-           
-
         long size = ejb.getSizeListProvedores();
         if (first != 0) {
             first++;
@@ -181,8 +172,7 @@ public class ServiceCatProvedores implements IfaceCatProvedores {
     public ArrayList<Provedor> getProvedores() {
 
         try {
-            System.out.println("ServiceCatProvedores getSucursales()");
-               
+            
             List<Object[]> lstObject = ejb.getProvedores();
             ArrayList<Provedor> lista_provedores = new ArrayList<Provedor>();
             for (Object[] obj : lstObject) {

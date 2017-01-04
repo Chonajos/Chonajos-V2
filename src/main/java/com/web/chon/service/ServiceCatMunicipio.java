@@ -6,8 +6,6 @@
 package com.web.chon.service;
 import com.web.chon.dominio.Municipios;
 import com.web.chon.ejb.EjbCatMunicipio;
-import com.web.chon.negocio.NegocioCatMunicipio;
-import com.web.chon.util.Utilidades;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;

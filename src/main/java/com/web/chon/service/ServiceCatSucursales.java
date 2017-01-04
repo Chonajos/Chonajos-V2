@@ -8,8 +8,6 @@ package com.web.chon.service;
 import com.web.chon.dominio.Pagina;
 import com.web.chon.dominio.Sucursal;
 import com.web.chon.ejb.EjbCatSucursales;
-import com.web.chon.negocio.NegocioCatSucursales;
-import com.web.chon.util.Utilidades;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,19 +16,17 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author freddy
  */
 @Service
+@Transactional
 public class ServiceCatSucursales implements IfaceCatSucursales {
     @Autowired
     EjbCatSucursales ejb;
-
-    
-    
-
     @Override
     public ArrayList<Sucursal> getSucursales() {
         try {

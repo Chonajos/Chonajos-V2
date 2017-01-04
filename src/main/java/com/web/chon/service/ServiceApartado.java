@@ -10,12 +10,14 @@ import com.web.chon.ejb.EjbApartado;
 import java.math.BigDecimal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author jramirez
  */
 @Service
+@Transactional
 public class ServiceApartado implements IfaceApartado{
     @Autowired
     EjbApartado ejb;

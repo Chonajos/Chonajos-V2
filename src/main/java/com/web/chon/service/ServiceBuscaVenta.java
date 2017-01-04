@@ -13,12 +13,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author freddy
  */
 @Service
+@Transactional
 public class ServiceBuscaVenta implements IfaceBuscaVenta {
 
     @Autowired
@@ -99,8 +101,8 @@ public class ServiceBuscaVenta implements IfaceBuscaVenta {
                 //busca_venta.setIdTipoConvenio(obj[20] == null ? null : new BigDecimal(obj[20].toString()));
                 //busca_venta.setIdProvedor(obj[21] == null ? null : new BigDecimal(obj[21].toString()));
 
-                System.out.println("###################################");
-                System.out.println(busca_venta.toString());
+//                System.out.println("###################################");
+//                System.out.println(busca_venta.toString());
                 lstVentas.add(busca_venta);
             }
             return lstVentas;
@@ -157,8 +159,8 @@ public class ServiceBuscaVenta implements IfaceBuscaVenta {
 //                //busca_venta.setIdTipoConvenio(obj[20] == null ? null : new BigDecimal(obj[20].toString()));
 //                //busca_venta.setIdProvedor(obj[21] == null ? null : new BigDecimal(obj[21].toString()));
 //                
-                System.out.println("###################################");
-                System.out.println(busca_venta.toString());
+//                System.out.println("###################################");
+//                System.out.println(busca_venta.toString());
                 lstVentas.add(busca_venta);
             }
             return lstVentas;

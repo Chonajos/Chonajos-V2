@@ -7,23 +7,20 @@ package com.web.chon.service;
 
 import com.web.chon.dominio.CodigoPostal;
 import com.web.chon.ejb.EjbCatCodigosPostales;
-
-import com.web.chon.negocio.NegocioCatCodigosPostales;
-
-import com.web.chon.util.Utilidades;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author freddy
  */
 @Service
+@Transactional
 public class ServiceCodigoPostal implements IfaceCatCodigosPostales {
     @Autowired
     EjbCatCodigosPostales ejb;
