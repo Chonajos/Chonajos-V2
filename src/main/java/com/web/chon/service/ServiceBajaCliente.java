@@ -6,11 +6,9 @@
 package com.web.chon.service;
 
 import com.web.chon.dominio.BajaClientes;
-import com.web.chon.negocio.NegocioBajaClientes;
-import com.web.chon.util.Utilidades;
+import com.web.chon.ejb.EjbBajaClientes;
 import java.math.BigDecimal;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,37 +18,21 @@ import org.springframework.stereotype.Service;
 @Service
 public class ServiceBajaCliente implements IfaceBajaCliente
 {
-    NegocioBajaClientes ejb;
+    @Autowired
+    EjbBajaClientes ejb;
 
     @Override
     public int insertCliente(BajaClientes cliente) 
     {
-    try 
-        {
-            ejb = (NegocioBajaClientes) Utilidades.getEJBRemote("ejbBajaClientes", NegocioBajaClientes.class.getName());
-            return ejb.insertCliente(cliente);
-        } catch (Exception ex) 
-        {
-            Logger.getLogger(ServiceCatCliente.class.getName()).log(Level.SEVERE, null, ex);
-            return 0;
-        }
-       
+        return ejb.insertCliente(cliente);
+
     }
 
     @Override
     public int deleteCliente(BigDecimal idCliente) 
     {
-          try 
-        {
-            System.out.println("service delete Bajaclientes");
+        
        return ejb.deleteClienteBajas(idCliente);
-        } catch (Exception ex) 
-        {
-            Logger.getLogger(ServiceBajaCliente.class.getName()).log(Level.SEVERE, null, ex);
-            return 0;
-        }
-        
-        
        
     }
     

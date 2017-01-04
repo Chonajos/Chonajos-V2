@@ -9,6 +9,7 @@ import com.web.chon.dominio.EntradaMercanciaProducto;
 import com.web.chon.dominio.EntradaMercanciaProductoPaquete;
 import com.web.chon.dominio.Pagina;
 import com.web.chon.dominio.VentaProductoMayoreo;
+import com.web.chon.ejb.EjbEntradaMercanciaProducto;
 import com.web.chon.negocio.NegocioEntradaMercanciaProducto;
 import com.web.chon.util.Utilidades;
 import java.math.BigDecimal;
@@ -27,27 +28,18 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ServiceEntradaMercanciaProducto implements IfaceEntradaMercanciaProducto {
-
-    NegocioEntradaMercanciaProducto ejb;
+@Autowired
+    EjbEntradaMercanciaProducto ejb;
     @Autowired private IfaceCatBodegas ifaceCatBodegas;
     @Autowired private IfaceSubProducto ifaceSubProducto;
     @Autowired private IfaceEntMerProPaq ifaceEntMerProPaq;
 
 
-    public void getEjb() {
-        if (ejb == null) {
-            try {
-                ejb = (NegocioEntradaMercanciaProducto) Utilidades.getEJBRemote("ejbEntradaMercanciaProducto", NegocioEntradaMercanciaProducto.class.getName());
-            } catch (Exception ex) {
-                Logger.getLogger(ServiceCatSucursales.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
 
     @Override
     public int insertEntradaMercanciaProducto(EntradaMercanciaProducto producto) {
 
-        getEjb();
+           
         return ejb.insertEntradaMercanciaProducto(producto);
     }
 
@@ -78,7 +70,7 @@ public class ServiceEntradaMercanciaProducto implements IfaceEntradaMercanciaPro
 
     @Override
     public int update(EntradaMercanciaProducto dominio) {
-       getEjb();
+          
         return ejb.updateEntradaMercanciaProducto(dominio);
     }
 
@@ -95,7 +87,7 @@ public class ServiceEntradaMercanciaProducto implements IfaceEntradaMercanciaPro
     @Override
     public int getNextVal() {
 
-        getEjb();
+           
         return ejb.getNextVal();
 
     }
@@ -103,7 +95,7 @@ public class ServiceEntradaMercanciaProducto implements IfaceEntradaMercanciaPro
     @Override
     public ArrayList<EntradaMercanciaProducto> getEntradaProductoByIdEM(BigDecimal idEntradaMercancia) {
 
-        getEjb();
+           
 
         ArrayList<EntradaMercanciaProducto> lstEntradaMercanciaProducto = new ArrayList<EntradaMercanciaProducto>();
         List<Object[]> lstObject = new ArrayList<Object[]>();
@@ -167,7 +159,7 @@ public class ServiceEntradaMercanciaProducto implements IfaceEntradaMercanciaPro
 
     @Override
     public int deleteEntradaMercanciaProducto(EntradaMercanciaProducto ep) {
-       getEjb();
+          
         return ejb.deleteEntradaProducto(ep);
     }
 
@@ -175,9 +167,9 @@ public class ServiceEntradaMercanciaProducto implements IfaceEntradaMercanciaPro
 
     @Override
     public EntradaMercanciaProducto getEntradaMercanciaProductoByIdEmpPk(BigDecimal idEmpPk) {
-       getEjb();
+          
         try {
-            getEjb();
+               
             List<Object[]> lstObject = new ArrayList<Object[]>();
             lstObject = ejb.getEntradaMercanciaProductoByIdEmpPk(idEmpPk);
             EntradaMercanciaProducto entradaProducto = new EntradaMercanciaProducto();
@@ -199,9 +191,9 @@ public class ServiceEntradaMercanciaProducto implements IfaceEntradaMercanciaPro
 
     @Override
     public VentaProductoMayoreo getTotalVentasByIdEMP(BigDecimal idEmP) {
-       getEjb();
+          
         try {
-            getEjb();
+               
             List<Object[]> lstObject = new ArrayList<Object[]>();
             lstObject = ejb.getTotalVentasByIdEMP(idEmP);
             VentaProductoMayoreo venta = new VentaProductoMayoreo();

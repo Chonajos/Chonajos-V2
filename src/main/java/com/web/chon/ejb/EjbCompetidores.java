@@ -15,17 +15,18 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author marcogante
  */
-@Stateless(mappedName = "ejbCompetidores")
-public class EjbCompetidores implements NegocioCompetidor{
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+@Repository
+public class EjbCompetidores  {
+    @PersistenceContext
+    private EntityManager em;
 
-    @Override
+       
     public List<Object[]> getCometidores() {
        try {
             Query query = em.createNativeQuery("select * from COMPETIDOR ");
@@ -37,13 +38,13 @@ public class EjbCompetidores implements NegocioCompetidor{
         
     }
 
-    @Override
+       
     public int getNextVal() {
        Query query = em.createNativeQuery("SELECT s_COMPETIDOR.nextVal FROM DUAL");
         return Integer.parseInt(query.getSingleResult().toString());
     }
 
-    @Override
+       
     public int insertCompetidor(Competidor c) {
        System.out.println("EJB_INSERTA_Competidor======"+c.toString());
         try {
@@ -60,7 +61,7 @@ public class EjbCompetidores implements NegocioCompetidor{
         }
     }
 
-    @Override
+       
     public int updateCompetidor(Competidor c) {
         try {
 
@@ -75,7 +76,7 @@ public class EjbCompetidores implements NegocioCompetidor{
         }
     }
 
-    @Override
+       
     public List<Object[]> getCometidoresById(BigDecimal idCompetidor) {
         Query query = em.createNativeQuery("select * from COMPETIDOR where ID_COMPETIDOR_PK = ?");
         query.setParameter(1, idCompetidor);

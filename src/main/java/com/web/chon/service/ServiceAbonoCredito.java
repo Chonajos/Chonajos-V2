@@ -1,15 +1,15 @@
 package com.web.chon.service;
 
 import com.web.chon.dominio.AbonoCredito;
-import com.web.chon.negocio.NegocioAbonoCredito;
+import com.web.chon.ejb.EjbAbonoCredito;
 import com.web.chon.util.TiempoUtil;
-import com.web.chon.util.Utilidades;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,39 +19,32 @@ import org.springframework.stereotype.Service;
 @Service
 public class ServiceAbonoCredito implements IfaceAbonoCredito {
 
-    NegocioAbonoCredito ejb;
+    @Autowired
+    EjbAbonoCredito ejb;
 
-    private void getEjb() {
-        if (ejb == null) {
-            try {
-                ejb = (NegocioAbonoCredito) Utilidades.getEJBRemote("ejbAbonoCredito", NegocioAbonoCredito.class.getName());
-            } catch (Exception ex) {
-                Logger.getLogger(ServiceAbonoCredito.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
+    
 
     @Override
     public int update(AbonoCredito abonoCredito) {
-        getEjb();
+           
         return ejb.update(abonoCredito);
     }
 
     @Override
     public int insert(AbonoCredito abonoCredito) {
-        getEjb();
+           
         return ejb.insert(abonoCredito);
     }
 
     @Override
     public int delete(BigDecimal idAbonoCredito) {
-        getEjb();
+           
         return ejb.delete(idAbonoCredito);
     }
 
     @Override
     public ArrayList<AbonoCredito> getAll() {
-        getEjb();
+           
         ArrayList<AbonoCredito> lstAbonoCredito = new ArrayList<AbonoCredito>();
         List<Object[]> lstObject = new ArrayList<Object[]>();
         lstObject = ejb.getAll();
@@ -73,7 +66,7 @@ public class ServiceAbonoCredito implements IfaceAbonoCredito {
 
     @Override
     public AbonoCredito getById(BigDecimal idAbonoCredito) {
-        getEjb();
+           
         List<Object[]> lstObject = new ArrayList<Object[]>();
         lstObject = ejb.getAll();
         AbonoCredito abonoCredito = new AbonoCredito();
@@ -92,7 +85,7 @@ public class ServiceAbonoCredito implements IfaceAbonoCredito {
 
     @Override
     public int getNextVal() {
-        getEjb();
+           
         try {
             return ejb.getNextVal();
 
@@ -104,7 +97,7 @@ public class ServiceAbonoCredito implements IfaceAbonoCredito {
 
     @Override
     public ArrayList<AbonoCredito> getByIdCredito(BigDecimal idCreditoFk) {
-       getEjb();
+          
         ArrayList<AbonoCredito> lstAbonoCredito = new ArrayList<AbonoCredito>();
         List<Object[]> lstObject = new ArrayList<Object[]>();
         lstObject = ejb.getByIdCredito(idCreditoFk);
@@ -134,7 +127,7 @@ public class ServiceAbonoCredito implements IfaceAbonoCredito {
 
     @Override
     public ArrayList<AbonoCredito> getChequesPendientes(Date fechaInicio, Date fechaFin,BigDecimal idSucursal,BigDecimal idClienteFk,BigDecimal filtro,BigDecimal filtroStatus) {
-       getEjb();
+          
         ArrayList<AbonoCredito> lstAbonoCredito = new ArrayList<AbonoCredito>();
         List<Object[]> lstObject = new ArrayList<Object[]>();
         lstObject = ejb.getChequesPendientes(TiempoUtil.getFechaDDMMYYYY(fechaInicio), TiempoUtil.getFechaDDMMYYYY(fechaFin),idSucursal,idClienteFk,filtro,filtroStatus);
@@ -169,7 +162,7 @@ public class ServiceAbonoCredito implements IfaceAbonoCredito {
 
     @Override
     public AbonoCredito getByIdVentaMayoreoFk(BigDecimal idVentaMayoreoFk) {
-        getEjb();
+           
         List<Object[]> lstObject = new ArrayList<Object[]>();
         lstObject = ejb.getByIdVentaMayoreoFk(idVentaMayoreoFk);
         AbonoCredito abonoCredito = new AbonoCredito();
@@ -188,7 +181,7 @@ public class ServiceAbonoCredito implements IfaceAbonoCredito {
 
     @Override
     public AbonoCredito getByIdVentaMenudeoFk(BigDecimal idVentaMenudeoFk) {
-       getEjb();
+          
         List<Object[]> lstObject = new ArrayList<Object[]>();
         lstObject = ejb.getByIdVentaMenudeoFk(idVentaMenudeoFk);
         AbonoCredito abonoCredito = new AbonoCredito();
@@ -209,7 +202,7 @@ public class ServiceAbonoCredito implements IfaceAbonoCredito {
     
      @Override
     public ArrayList<AbonoCredito> getAbonosByIdCredito(BigDecimal idCredito) {
-       getEjb();
+          
         ArrayList<AbonoCredito> lstAbonoCredito = new ArrayList<AbonoCredito>();
         List<Object[]> lstObject = new ArrayList<Object[]>();
         lstObject = ejb.getAbonosByIdCredito(idCredito);
@@ -239,7 +232,7 @@ public class ServiceAbonoCredito implements IfaceAbonoCredito {
 
     @Override
     public ArrayList<AbonoCredito> getHistorialAbonos(BigDecimal idClienteFk, BigDecimal idCajeroFk, Date fechaInicio, Date fechaFin, BigDecimal idTipoPagoFk, BigDecimal idAbonoPk, BigDecimal idCreditoFk) {
-        getEjb();
+           
         ArrayList<AbonoCredito> lstAbonoCredito = new ArrayList<AbonoCredito>();
         List<Object[]> lstObject = new ArrayList<Object[]>();
         lstObject = ejb.getHistorialAbonos(idClienteFk, idCajeroFk, TiempoUtil.getFechaDDMMYYYY(fechaInicio),  TiempoUtil.getFechaDDMMYYYY(fechaFin),  idTipoPagoFk,  idAbonoPk,  idCreditoFk);

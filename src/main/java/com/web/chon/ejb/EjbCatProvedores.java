@@ -6,27 +6,26 @@
 package com.web.chon.ejb;
 
 import com.web.chon.dominio.Provedor;
-import com.web.chon.negocio.NegocioCatProvedores;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author freddy
  */
-@Stateless(mappedName = "ejbCatProvedores")
-public class EjbCatProvedores implements NegocioCatProvedores {
+@Repository
+public class EjbCatProvedores   {
 
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+     @PersistenceContext
+    private EntityManager em;
 
-    @Override
+       
     public List<Object[]> getProvedores() {
         try {
 
@@ -43,7 +42,7 @@ public class EjbCatProvedores implements NegocioCatProvedores {
 
     }
 
-    @Override
+       
     public List<Object[]> getProvedoresDetalle(int first, int pageSize) {
 
         try {
@@ -84,12 +83,12 @@ public class EjbCatProvedores implements NegocioCatProvedores {
 
     }
 
-    @Override
+       
     public List<Object[]> getProvedorId(BigDecimal idProvedor) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
+       
     public Long getSizeListProvedores() {
         try {
             Query query = em.createNativeQuery("select count(id_provedor_pk) from provedores");
@@ -104,12 +103,12 @@ public class EjbCatProvedores implements NegocioCatProvedores {
 
     }
 
-    @Override
+       
     public int deleteProvedor(BigDecimal idProvedor) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
+       
     public int updateProvedor(Provedor prove) {
 
         System.out.println("EJB_UPDATE_PROVEDOR");
@@ -158,7 +157,7 @@ public class EjbCatProvedores implements NegocioCatProvedores {
 
     }
 
-    @Override
+       
     public int insertProvedor(Provedor prove) {
         System.out.println("EJB_INSERTA_PROVEDOR");
         try {
@@ -216,13 +215,13 @@ public class EjbCatProvedores implements NegocioCatProvedores {
         }
     }
 
-    @Override
+       
     public int getNextVal() {
         Query query = em.createNativeQuery("SELECT S_PROVEDOR.nextVal FROM DUAL");
         return Integer.parseInt(query.getSingleResult().toString());
     }
 
-    @Override
+       
     public List<Object[]> getProvedorByNombreCompleto(String nombreCompleto) {
 
         Query query = em.createNativeQuery("SELECT * FROM PROVEDORES WHERE UPPER(NOMBRE_PROVEDOR ||' '|| A_PATERNO_PROVE ||' '|| A_MATERNO_PROVE )  LIKE UPPER('%" + nombreCompleto + "%')");
@@ -231,14 +230,14 @@ public class EjbCatProvedores implements NegocioCatProvedores {
 
     }
 
-    @Override
+       
     public List<Object[]> getById(BigDecimal idProvedor) {
         Query query = em.createNativeQuery("SELECT * FROM PROVEDORES WHERE ID_PROVEDOR_PK = ?");
         query.setParameter(1, idProvedor);
         return query.getResultList();
     }
 
-    @Override
+       
     public List<Object[]> getProvedoresByIdSucursal(BigDecimal idSucursal) {
         try {
             Query query = em.createNativeQuery("SELECT UNIQUE(PRO.ID_PROVEDOR_PK), PRO.NOMBRE_PROVEDOR ||' '||PRO.A_PATERNO_PROVE||' '||PRO.A_MATERNO_PROVE AS NOMBRE_COMPLETO, "

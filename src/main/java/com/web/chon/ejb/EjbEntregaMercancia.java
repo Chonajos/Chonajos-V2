@@ -10,19 +10,19 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  * Ejb Entrega de Mercancia
  *
  * @author Juan de la Cruz
  */
-@Stateless(mappedName = "ejbEntregaMercancia")
-public class EjbEntregaMercancia implements NegocioEntregaMercancia {
+@Repository
+public class EjbEntregaMercancia  {
 
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
 
-    @Override
     public int insertar(EntregaMercancia entregaMercancia) {
         try {
             System.out.println("insert : " + entregaMercancia.toString());
@@ -46,7 +46,7 @@ public class EjbEntregaMercancia implements NegocioEntregaMercancia {
 
     }
 
-    @Override
+    
     public int getNextVal() {
 
         try {
@@ -62,7 +62,6 @@ public class EjbEntregaMercancia implements NegocioEntregaMercancia {
 
     }
 
-    @Override
     public List<Object[]> getByIdSucursalAndIdFolioSucursal(BigDecimal idSucursal, BigDecimal idFolioSucursal) {
 
         try {
@@ -96,7 +95,7 @@ public class EjbEntregaMercancia implements NegocioEntregaMercancia {
 
     }
 
-    @Override
+    
     public List<Object[]> getByIdVentaMayoreoProducto(BigDecimal idVentaMayoreoProducto) {
 
         try {

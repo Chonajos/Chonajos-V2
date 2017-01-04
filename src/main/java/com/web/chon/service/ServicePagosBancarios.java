@@ -6,15 +6,14 @@
 package com.web.chon.service;
 
 import com.web.chon.dominio.PagosBancarios;
-import com.web.chon.negocio.NegocioPagosBancarios;
-import com.web.chon.util.Utilidades;
+import com.web.chon.ejb.EjbPagoBancario;
+
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -23,36 +22,28 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ServicePagosBancarios implements IfacePagosBancarios {
-NegocioPagosBancarios ejb;
-    private void getEjb() 
-    {
-        if (ejb == null) {
-            try {
-                ejb = (NegocioPagosBancarios) Utilidades.getEJBRemote("ejbPagoBancario", NegocioPagosBancarios.class.getName());
-            } catch (Exception ex) {
-                Logger.getLogger(ServicePagosBancarios.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
+    @Autowired
+    EjbPagoBancario ejb;
+   
     
     
     
     @Override
     public int insertaPagoBancario(PagosBancarios pb) {
-        getEjb();
+           
         return ejb.insertaPagoBancario(pb);
     }
 
     @Override
     public int updatePagoBancario(PagosBancarios pb) {
-        getEjb();
+           
         return ejb.updatePagoBancario(pb);
     
     }
 
     @Override
     public ArrayList<PagosBancarios> getPagosPendientes() {
-        getEjb();
+           
         BigDecimal  i = new BigDecimal(1);
         ArrayList<PagosBancarios> listaOperaciones = new ArrayList<PagosBancarios>();
         List<Object[]> lstObject = ejb.getPagosPendientes();
@@ -100,7 +91,7 @@ NegocioPagosBancarios ejb;
 
     @Override
     public int getNextVal() {
-        getEjb();
+           
        return ejb.getNextVal();
     }
     

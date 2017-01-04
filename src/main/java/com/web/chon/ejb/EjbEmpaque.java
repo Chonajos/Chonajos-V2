@@ -4,27 +4,26 @@ package com.web.chon.ejb;
 
 
 import com.web.chon.dominio.TipoEmpaque;
-import com.web.chon.negocio.NegocioEmpaque;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author juan
  */
-@Stateless(mappedName = "ejbEmpaque")
-public class EjbEmpaque implements NegocioEmpaque {
+@Repository
+public class EjbEmpaque  {
 
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
  
 
-    @Override
+       
     public List<Object[]> getEmpaques() {
         try {
             System.out.println("ejb selec all");
@@ -40,7 +39,7 @@ public class EjbEmpaque implements NegocioEmpaque {
         }
     }
 
-    @Override
+       
     public int deleteEmpaque(int idEmpaque) {
         try {
 
@@ -56,7 +55,7 @@ public class EjbEmpaque implements NegocioEmpaque {
     
     }
 
-    @Override
+       
     public int insertarEmpaque(TipoEmpaque tipoEmpaque) {
         try {
             System.out.println("ejb insert");
@@ -73,7 +72,7 @@ public class EjbEmpaque implements NegocioEmpaque {
         
     }
 
-    @Override
+       
     public int updateEmpaque(TipoEmpaque tipoEmpaque) {
         try {
 
@@ -91,7 +90,7 @@ public class EjbEmpaque implements NegocioEmpaque {
         }
     }
 
-    @Override
+       
     public Object getEmpaqueByIdEmpaque(int idEmpaque) {
         System.out.println("ejb get empaque by id"+ idEmpaque);
         try {

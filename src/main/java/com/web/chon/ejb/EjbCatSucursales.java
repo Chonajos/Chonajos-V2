@@ -6,27 +6,26 @@
 package com.web.chon.ejb;
 
 import com.web.chon.dominio.Sucursal;
-import com.web.chon.negocio.NegocioCatSucursales;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author freddy
  */
-@Stateless(mappedName = "ejbCatSucursales")
-public class EjbCatSucursales implements NegocioCatSucursales {
+@Repository
+public class EjbCatSucursales   {
 
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+     @PersistenceContext
+    private EntityManager em;
 
-    @Override
+       
     public List<Object[]> getSucursales() {
         try {
 
@@ -41,7 +40,7 @@ public class EjbCatSucursales implements NegocioCatSucursales {
         }
     }
 
-    @Override
+       
     public List<Object[]> getSucursalId(BigDecimal idSucursal) {
 
         try {
@@ -57,7 +56,7 @@ public class EjbCatSucursales implements NegocioCatSucursales {
         }
     }
 
-    @Override
+       
     public int deleteSucursal(BigDecimal idSucursal) {
 
         try {
@@ -75,7 +74,7 @@ public class EjbCatSucursales implements NegocioCatSucursales {
         }
     }
 
-    @Override
+       
     public int updateSucursal(Sucursal sucu) {
         System.out.println("EJB_UPDATE_SUCURSAL");
         try {
@@ -97,7 +96,7 @@ public class EjbCatSucursales implements NegocioCatSucursales {
         }
     }
 
-    @Override
+       
     public int insertSucursal(Sucursal sucu) {
         System.out.println("EJB_INSERTA_SUCURSAL");
         try {
@@ -120,13 +119,13 @@ public class EjbCatSucursales implements NegocioCatSucursales {
 
     }
 
-    @Override
+       
     public int getNextVal() {
         Query query = em.createNativeQuery("SELECT S_SUCURSAL.nextVal FROM DUAL");
         return Integer.parseInt(query.getSingleResult().toString());
     }
 
-    @Override
+       
     public Long getSizeListSucursales() {
 
         try {
@@ -142,7 +141,7 @@ public class EjbCatSucursales implements NegocioCatSucursales {
         }
     }
 
-    @Override
+       
     public List<Object[]> getSucursalesDetalle(int first, int pageSize) {
         try {
             System.out.println("EJB_getSucursalesDetalle");

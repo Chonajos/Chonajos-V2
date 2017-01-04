@@ -17,18 +17,19 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author freddy
  */
-@Stateless(mappedName = "ejbEntradaMercancia")
-public class EjbEntradaMercancia implements NegocioEntradaMercancia {
+@Repository
+public class EjbEntradaMercancia {
 
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
 
-    @Override
+    
     public int insertEntradaMercancia(EntradaMercancia entrada) {
         //System.out.println("EJB_INSERTA_ENTRADAMERCANCIA");
         try {
@@ -82,13 +83,13 @@ public class EjbEntradaMercancia implements NegocioEntradaMercancia {
 
     }
 
-    @Override
+    
     public int getNextVal() {
         Query query = em.createNativeQuery("SELECT S_ENTRADAMERCANCIA.nextVal FROM DUAL");
         return Integer.parseInt(query.getSingleResult().toString());
     }
 
-    @Override
+   
     public List<Object[]> getEntradaProductoByIntervalDate(Date fechaInicio, Date fechaFin, BigDecimal idSucursal, BigDecimal idProvedor,BigDecimal carro) {
         int cont = 0;
         StringBuffer query = new StringBuffer("SELECT EMA.ID_EM_PK,EMA.ID_PROVEDOR_FK,EMA.MOVIMIENTO,EMA.FECHA,EMA.REMISION,EMA.ID_SUCURSAL_FK,EMA.IDENTIFICADOR,\n" +
@@ -140,7 +141,7 @@ public class EjbEntradaMercancia implements NegocioEntradaMercancia {
 
     }
 
-    @Override
+    
     public List<Object[]> getSubEntradaByNombre(String clave) {
         //System.out.println("Ejb: " + clave);
         Query query = em.createNativeQuery("SELECT ID_EM_PK,IDENTIFICADOR FROM ENTRADAMERCANCIA WHERE UPPER(IDENTIFICADOR) LIKE '%" + clave + "%'");
@@ -148,7 +149,7 @@ public class EjbEntradaMercancia implements NegocioEntradaMercancia {
         return query.getResultList();
     }
 
-    @Override
+   
     public List<Object[]> getEntradaById(BigDecimal id) {
         Query query = em.createNativeQuery("SELECT ID_EM_PK,IDENTIFICADOR FROM ENTRADAMERCANCIA WHERE ID_EM_PK = ?");
         query.setParameter(1, id);
@@ -156,7 +157,7 @@ public class EjbEntradaMercancia implements NegocioEntradaMercancia {
         return query.getResultList();
     }
 
-    @Override
+   
     public int getCarroSucursal(BigDecimal idSucursal) {
         Query query = em.createNativeQuery("select count(*) from ENTRADAMERCANCIA where ID_SUCURSAL_FK=?");
         query.setParameter(1, idSucursal);
@@ -164,7 +165,7 @@ public class EjbEntradaMercancia implements NegocioEntradaMercancia {
 
     }
 
-    @Override
+   
     public int deleteEntradaMercancia(EntradaMercancia entrada) {
         //System.out.println("EJB_DELETE EntradaMercancia");
         try {
@@ -177,7 +178,7 @@ public class EjbEntradaMercancia implements NegocioEntradaMercancia {
         }
     }
 
-    @Override
+    
     public int updateEntradaMercancia(EntradaMercancia entrada) {
 
         System.out.println("------------------EJB_UPDATE_ENTRADAMERCANCIA---------------------");
@@ -210,7 +211,7 @@ public class EjbEntradaMercancia implements NegocioEntradaMercancia {
 
     }
 
-    @Override
+    
     public List<Object[]> getEntradaByIdEmPFk(BigDecimal idEmPFk) {
         //System.out.println("EJB_getEntradaByIdEmPFk: "+idEmPFk);
         Query query = em.createNativeQuery("select em.* from ENTRADAMERCANCIA em\n"
@@ -222,7 +223,7 @@ public class EjbEntradaMercancia implements NegocioEntradaMercancia {
 
     }
 
-    @Override
+    
     public List<Object[]> getEntradaByIdPk(BigDecimal idPk) {
         //System.out.println("EJB_getEntradaByIdPkk: "+idPk);
         Query query = em.createNativeQuery("select em.* from ENTRADAMERCANCIA em\n"
@@ -232,7 +233,7 @@ public class EjbEntradaMercancia implements NegocioEntradaMercancia {
 
     }
 
-    @Override
+    
     public List<Object[]> getCarrosByIdSucursalAndIdProvedor(BigDecimal idSucursal, BigDecimal idProvedor, BigDecimal carro) {
 
         try {

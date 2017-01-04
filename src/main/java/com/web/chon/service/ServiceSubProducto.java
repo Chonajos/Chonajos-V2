@@ -1,8 +1,7 @@
 package com.web.chon.service;
 
 import com.web.chon.dominio.Subproducto;
-import com.web.chon.negocio.NegocioSubProducto;
-import com.web.chon.util.Utilidades;
+import com.web.chon.ejb.EjbSubProducto;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutput;
@@ -13,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -23,15 +23,14 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ServiceSubProducto implements IfaceSubProducto {
-
-    NegocioSubProducto ejb;
+    @Autowired
+    EjbSubProducto ejb;
 
     @Override
     public ArrayList<Subproducto> getSubProductos() {
         try {
             ArrayList<Subproducto> lstSubProducto = new ArrayList<Subproducto>();
-            ejb = (NegocioSubProducto) Utilidades.getEJBRemote("ejbSubProducto", NegocioSubProducto.class.getName());
-
+            
             List<Object[]> lstObject = ejb.getSubProductos();
 
             for (Object[] obj : lstObject) {
@@ -61,7 +60,6 @@ public class ServiceSubProducto implements IfaceSubProducto {
     public Subproducto getSubProductoById(String idSubProducto) {
         try {
             Subproducto subProducto = new Subproducto();
-            ejb = (NegocioSubProducto) Utilidades.getEJBRemote("ejbSubProducto", NegocioSubProducto.class.getName());
             List<Object[]> object = ejb.getProductoById(idSubProducto.trim());
             for (Object[] obj : object) {
 
@@ -123,7 +121,6 @@ public class ServiceSubProducto implements IfaceSubProducto {
     public int getLastIdProducto(String idCategoria) {
         try {
             int idProducto = 0;
-            ejb = (NegocioSubProducto) Utilidades.getEJBRemote("ejbSubProducto", NegocioSubProducto.class.getName());
             idProducto = ejb.getLastIdProducto(idCategoria);
             return idProducto;
         } catch (Exception ex) {
@@ -136,7 +133,6 @@ public class ServiceSubProducto implements IfaceSubProducto {
     public ArrayList<Subproducto> getSubProductoByNombre(String nombre) {
         try {
             ArrayList<Subproducto> lstSubProducto = new ArrayList<Subproducto>();
-            ejb = (NegocioSubProducto) Utilidades.getEJBRemote("ejbSubProducto", NegocioSubProducto.class.getName());
             List<Object[]> object = ejb.getSubProductoByNombre(nombre);
 
             for (Object[] obj : object) {
@@ -159,8 +155,7 @@ public class ServiceSubProducto implements IfaceSubProducto {
     public ArrayList<Subproducto> getSubProductosIdSucursal(BigDecimal idSucursal) {
         try {
             ArrayList<Subproducto> lstSubProducto = new ArrayList<Subproducto>();
-            ejb = (NegocioSubProducto) Utilidades.getEJBRemote("ejbSubProducto", NegocioSubProducto.class.getName());
-
+            
             List<Object[]> lstObject = ejb.getSubProductosIdSucursal(idSucursal);
 
             for (Object[] obj : lstObject) {

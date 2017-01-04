@@ -1,29 +1,27 @@
 package com.web.chon.ejb;
 
 import com.web.chon.dominio.AnalisisMercado;
-import com.web.chon.negocio.NegocioBuscaVenta;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import com.web.chon.negocio.NegocioAnalisisMercado;
 import com.web.chon.util.TiempoUtil;
 import java.math.BigDecimal;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Juan
  */
-@Stateless(mappedName = "ejbAnalisisMercado")
-public class EjbAnalisisMercado implements NegocioAnalisisMercado {
+@Repository
+public class EjbAnalisisMercado   {
 
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
 
-    @Override
+       
     public int saveEntradaProductoCentral(AnalisisMercado entradaMercancia) {
         try {
             Query query = em.createNativeQuery("INSERT INTO ANALISIS_MERCADO (ID_ENTRADA,PRECIO_VENTA,TONELADAS,FECHA,ID_SUBPRODUCTO) VALUES(S_ANALISIS_MERCADO.NEXTVAL,?,?,?,?)");
@@ -40,7 +38,7 @@ public class EjbAnalisisMercado implements NegocioAnalisisMercado {
         }
     }
 
-    @Override
+       
     public List<Object[]> getEntradaProductoByFiltroDay(String fechaInicio, String fechaFin, String idProducto) {
         try {
 
@@ -57,7 +55,7 @@ public class EjbAnalisisMercado implements NegocioAnalisisMercado {
         }
     }
 
-    @Override
+       
     public List<Object[]> getEntradaProductoByFiltroWeek(String fechaInicio, String fechaFin, String idProducto) {
         try {
             Query query = em.createNativeQuery("SELECT NVL(AVG(PRECIO_VENTA),0) PRECIO_VENTA, NVL(SUM(TONELADAS),0)TONELADAS,NVL(SUM(REMANENTE),0) REMANENTE FROM ANALISIS_MERCADO WHERE TO_DATE(TO_CHAR(FECHA,'dd/mm/yyyy'),'dd/mm/yyyy') BETWEEN ? AND ? AND ID_SUBPRODUCTO = ? ORDER BY FECHA ");
@@ -73,7 +71,7 @@ public class EjbAnalisisMercado implements NegocioAnalisisMercado {
         }
     }
 
-    @Override
+       
     public List<Object[]> getEntradaProductoByFiltroMonth(String fechaInicio, String fechaFin, String idSubproducto) {
         try {
             Query query = em.createNativeQuery("SELECT NVL(AVG(PRECIO_VENTA),0) PRECIO_VENTA, NVL(SUM(TONELADAS),0)TONELADAS FROM ANALISIS_MERCADO WHERE TO_DATE(TO_CHAR(FECHA,'dd/mm/yyyy'),'dd/mm/yyyy') BETWEEN ? AND ? AND ID_SUBPRODUCTO = ? ");
@@ -89,7 +87,7 @@ public class EjbAnalisisMercado implements NegocioAnalisisMercado {
         }
     }
 
-    @Override
+       
     public List<Object[]> getEntradaProductoByFiltroYear(String fechaInicio, String fechaFin) {
         try {
             Query query = em.createNativeQuery("SELECT AVG(PRECIO_VENTA) PRECIO_VENTA, SUM(TONELADAS)TONELADAS FROM ANALISIS_MERCADO WHERE TO_DATE(TO_CHAR(FECHA,'dd/mm/yyyy'),'dd/mm/yyyy') BETWEEN ? AND ?");
@@ -104,7 +102,7 @@ public class EjbAnalisisMercado implements NegocioAnalisisMercado {
         }
     }
 
-    @Override
+       
     public int update(AnalisisMercado entradaMercancia) {
 
         try {
@@ -122,7 +120,7 @@ public class EjbAnalisisMercado implements NegocioAnalisisMercado {
 
     }
 
-    @Override
+       
     public List<Object[]> getEntradaProductoByIdProducto(String idProducto, String fecha) {
         try {
             Query query = em.createNativeQuery("SELECT * FROM ANALISIS_MERCADO WHERE TO_DATE(TO_CHAR(FECHA,'dd/mm/yyyy'),'dd/mm/yyyy') = ? AND ID_SUBPRODUCTO = ? ORDER BY FECHA ");
@@ -137,7 +135,7 @@ public class EjbAnalisisMercado implements NegocioAnalisisMercado {
         }
     }
 
-    @Override
+       
     public BigDecimal getRemanente(String fechaInicio, String fechaFin, String idProducto) {
         try {
 
@@ -154,7 +152,7 @@ public class EjbAnalisisMercado implements NegocioAnalisisMercado {
         }
     }
 
-    @Override
+       
     public int updateByIdProductoAndFecha(AnalisisMercado entradaMercancia) {
 
         try {
@@ -172,7 +170,7 @@ public class EjbAnalisisMercado implements NegocioAnalisisMercado {
 
     }
 
-    @Override
+       
     public List<Object[]> getAnalisMercadoByNameDayOfYear(String fechaInicio, String fechaFin, String idProducto, String nombreDia) {
 
         try {

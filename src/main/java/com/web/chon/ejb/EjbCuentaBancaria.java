@@ -9,22 +9,22 @@ import com.web.chon.negocio.NegocioCuentasBancarias;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author JesusAlfredo
  */
-@Stateless(mappedName = "ejbCuentaBancaria")
+@Repository
 public class EjbCuentaBancaria implements NegocioCuentasBancarias {
     
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
 
-    @Override
+       
     public List<Object[]> getCuentas() {
          try {
             Query query = em.createNativeQuery("SELECT * FROM CUENTA_BANCARIA");

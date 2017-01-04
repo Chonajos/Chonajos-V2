@@ -6,14 +6,15 @@
 package com.web.chon.service;
 
 import com.web.chon.dominio.ConceptosES;
+import com.web.chon.ejb.EjbConceptos;
 import com.web.chon.negocio.NegocioConceptos;
 import com.web.chon.util.Utilidades;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -22,22 +23,14 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ServiceConceptos implements IfaceConceptos {
-
-    NegocioConceptos ejb;
-     private void getEjb() {
-        if (ejb == null) {
-            try {
-                ejb = (NegocioConceptos) Utilidades.getEJBRemote("ejbConceptos", NegocioConceptos.class.getName());
-            } catch (Exception ex) {
-                Logger.getLogger(ServiceConceptos.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
+    @Autowired
+    EjbConceptos ejb;
+     
     
     @Override
     public ArrayList<ConceptosES> getConceptosByTipoOperacion(BigDecimal idTipoOperacionFk) {
         
-        getEjb();
+           
         ArrayList<ConceptosES> lstConceptos= new ArrayList<ConceptosES>();
         List<Object[]> lstObject = new ArrayList<Object[]>();
         lstObject = ejb.getConceptosByTipoOperacion(idTipoOperacionFk);
@@ -57,7 +50,7 @@ public class ServiceConceptos implements IfaceConceptos {
 
     @Override
     public ArrayList<ConceptosES> getConceptos() {
-        getEjb();
+           
         ArrayList<ConceptosES> lstConceptos= new ArrayList<ConceptosES>();
         List<Object[]> lstObject = new ArrayList<Object[]>();
         lstObject = ejb.getConceptos();

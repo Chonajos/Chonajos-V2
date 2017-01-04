@@ -6,11 +6,8 @@
 package com.web.chon.service;
 
 import com.web.chon.dominio.TransferenciaMercancia;
-import com.web.chon.negocio.NegocioExistenciaProducto;
-import com.web.chon.negocio.NegocioTransferenciaMercancia;
-import com.web.chon.util.Utilidades;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.web.chon.ejb.EjbTransferenciaMercancia;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,22 +16,15 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ServiceTransferenciaMercancia implements IfaceTransferenciaMercancia{
-    NegocioTransferenciaMercancia ejb;
+    @Autowired
+    EjbTransferenciaMercancia ejb;
         
         
-        public void getEjb() {
-        if (ejb == null) {
-            try {
-                ejb = (NegocioTransferenciaMercancia) Utilidades.getEJBRemote("ejbTransferenciaMercancia", NegocioTransferenciaMercancia.class.getName());
-            } catch (Exception ex) {
-                Logger.getLogger(NegocioTransferenciaMercancia.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
+        
     
     @Override
     public int insertTransferenciaMercancia(TransferenciaMercancia tm) {
-        getEjb();
+        
         return ejb.insertaTransferencia(tm);
     }
     

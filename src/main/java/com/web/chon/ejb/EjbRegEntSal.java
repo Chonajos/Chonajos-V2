@@ -6,28 +6,26 @@
 package com.web.chon.ejb;
 
 import com.web.chon.dominio.RegistroEntradaSalida;
-import com.web.chon.negocio.NegocioRegEntSal;
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author marcogante
  */
-@Stateless(mappedName = "ejbRegEntSal")
-public class EjbRegEntSal implements NegocioRegEntSal
+@Repository
+public class EjbRegEntSal
 {
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
 
-    @Override
+       
     public List<Object[]> getUsuarioByIdUsuario(BigDecimal idUsuarioFK, String fechaHoy) {
       try {
 
@@ -43,7 +41,7 @@ public class EjbRegEntSal implements NegocioRegEntSal
         }
     }
 
-    @Override
+       
     public int updateSalidabyIdReg(RegistroEntradaSalida data) {
        Query query = em.createNativeQuery("UPDATE REGISTROENTRADA set FECHASALIDA =sysdate ,LATITUDSALIDA=?,LONGITUDSALIDA=? WHERE ID_REGENT_PK=?");
         query.setParameter(1, data.getLatitudSalida());
@@ -52,7 +50,7 @@ public class EjbRegEntSal implements NegocioRegEntSal
         return query.executeUpdate();   
     }
 
-    @Override
+       
     public int insertEntradabyIdReg(RegistroEntradaSalida data) {
      Query query = em.createNativeQuery("INSERT INTO REGISTROENTRADA(ID_REGENT_PK,FECHAENTRADA,LATITUDENTRADA,LONGITUDENTRADA,ID_USUARIO_FK,ID_SUCURSAL_FK,LATITUDSALIDA,LONGITUDSALIDA) VALUES(?,sysdate,?,?,?,?,?,?)");
         query.setParameter(1, data.getIdRegEntSalPk());
@@ -67,14 +65,14 @@ public class EjbRegEntSal implements NegocioRegEntSal
     
     }
 
-    @Override
+       
     public int getNextVal() {
         Query query = em.createNativeQuery("SELECT S_REGISTROENTRADA.nextVal FROM DUAL");
         return Integer.parseInt(query.getSingleResult().toString());
     
     }
 
-    @Override
+       
     public List<Object[]> getRegistros(BigDecimal idUsuarioFK, String fechaInicio, String fechaFin) {
         System.out.println("EJB: idUser_ "+idUsuarioFK+" Fecha Inicio: "+fechaInicio+" Fecha Fin: "+fechaFin);
         try {
@@ -91,7 +89,7 @@ public class EjbRegEntSal implements NegocioRegEntSal
         }
     }
 
-    @Override
+       
     public List<Object[]> getALL(String fechaInicio, String fechaFin) {
       try {
 

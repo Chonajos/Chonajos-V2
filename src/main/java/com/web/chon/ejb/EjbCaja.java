@@ -6,38 +6,38 @@
 package com.web.chon.ejb;
 
 import com.web.chon.dominio.Caja;
-import com.web.chon.negocio.NegocioCaja;
+
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author JesusAlfredo
  */
-@Stateless(mappedName = "ejbCaja")
-public class EjbCaja implements NegocioCaja {
+@Repository
+public class EjbCaja   {
 
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+     @PersistenceContext
+    private EntityManager em;
 
-    @Override
+       
     public int insertCaja(Caja c) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
+       
     public int updateCaja(Caja c) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 
-    @Override
+       
     public List<Object[]> getCajas() {
         try {
             Query query = em.createNativeQuery("select * from caja");
@@ -49,7 +49,7 @@ public class EjbCaja implements NegocioCaja {
 
     }
 
-    @Override
+       
     public List<Object[]> getCajaByIdPk(BigDecimal idCajaPk) {
         try {
             Query query = em.createNativeQuery("select * from caja c where c.ID_CAJA_PK = ? ");
@@ -63,7 +63,7 @@ public class EjbCaja implements NegocioCaja {
 
     }
 
-    @Override
+       
     public List<Object[]> getCajaByIdUsuarioPk(BigDecimal idUsuarioPk) {
         System.out.println("IDUser: "+idUsuarioPk);
         try {
@@ -76,7 +76,7 @@ public class EjbCaja implements NegocioCaja {
         }
 
     }
-    @Override
+       
     public List<Object[]> getSucursalesByIdCaja(BigDecimal idCajaFk) {
         try {
             Query query = em.createNativeQuery("select sucu.ID_SUCURSAL_PK,sucu.NOMBRE_SUCURSAL from CAJA_SUCURSAL cs \n" +

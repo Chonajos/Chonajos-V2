@@ -6,13 +6,11 @@
 package com.web.chon.service;
 
 import com.web.chon.dominio.Caja;
-import com.web.chon.negocio.NegocioCaja;
-import com.web.chon.util.Utilidades;
+import com.web.chon.ejb.EjbCaja;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -22,18 +20,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class ServiceCaja implements IfaceCaja {
 
-    NegocioCaja ejb;
+    @Autowired
+    EjbCaja ejb;
 
-    private void getEjb() {
-        try {
-            if (ejb == null) {
-                ejb = (NegocioCaja) Utilidades.getEJBRemote("ejbCaja", NegocioCaja.class.getName());
-            }
-
-        } catch (Exception ex) {
-            Logger.getLogger(ServiceCaja.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+   
 
     @Override
     public int insertCaja(Caja c) {
@@ -47,7 +37,7 @@ public class ServiceCaja implements IfaceCaja {
 
     @Override
     public Caja getCajaByIdPk(BigDecimal idCajaPk) {
-        getEjb();
+           
         List<Object[]> object = ejb.getCajaByIdPk(idCajaPk);
         Caja caja = new Caja();
         for (Object[] obj : object) {
@@ -62,7 +52,7 @@ public class ServiceCaja implements IfaceCaja {
 
     @Override
     public Caja getCajaByIdUsuarioPk(BigDecimal idUsuarioPk) {
-        getEjb();
+           
         List<Object[]> object = ejb.getCajaByIdUsuarioPk(idUsuarioPk);
         Caja caja = new Caja();
         for (Object[] obj : object) {
@@ -78,7 +68,7 @@ public class ServiceCaja implements IfaceCaja {
 
     @Override
     public ArrayList<Caja> getCajas() {
-        getEjb();
+           
         ArrayList<Caja> listaCajas = new ArrayList<Caja>();
         List<Object[]> lstObject = ejb.getCajas();
         for (Object[] obj : lstObject) {
@@ -95,7 +85,7 @@ public class ServiceCaja implements IfaceCaja {
 
     @Override
     public ArrayList<Caja> getSucursalesByIdCaja(BigDecimal idCajaFk) {
-          getEjb();
+             
         ArrayList<Caja> listaCajas = new ArrayList<Caja>();
         List<Object[]> lstObject = ejb.getSucursalesByIdCaja(idCajaFk);
         for (Object[] obj : lstObject) 

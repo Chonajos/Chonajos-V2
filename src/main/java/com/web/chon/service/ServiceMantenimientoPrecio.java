@@ -1,14 +1,14 @@
 package com.web.chon.service;
 
 import com.web.chon.dominio.MantenimientoPrecios;
-import com.web.chon.negocio.NegocioMantenimientoPrecio;
-import com.web.chon.util.Utilidades;
+import com.web.chon.ejb.EjbMantenimientoPrecio;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,13 +20,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class ServiceMantenimientoPrecio implements IfaceMantenimientoPrecio {
 
-    NegocioMantenimientoPrecio ejb;
+    @Autowired
+    EjbMantenimientoPrecio ejb;
 
     @Override
     public MantenimientoPrecios getMantenimientoPrecioById(String idSubProducto, int idEmpaque, int idSucursal) {
         try {
             MantenimientoPrecios mantenimientoPrecios = new MantenimientoPrecios();
-            ejb = (NegocioMantenimientoPrecio) Utilidades.getEJBRemote("ejbMantenimientoPrecio", NegocioMantenimientoPrecio.class.getName());
             List<Object[]> object = ejb.getPrecioByIdEmpaqueAndIdProducto(idSubProducto.trim(), idEmpaque, idSucursal);
             for (Object[] obj : object) {
 
@@ -70,7 +70,6 @@ public class ServiceMantenimientoPrecio implements IfaceMantenimientoPrecio {
         try {
             ArrayList<MantenimientoPrecios> lstMantenimientoPrecios = new ArrayList<MantenimientoPrecios>();
 
-            ejb = (NegocioMantenimientoPrecio) Utilidades.getEJBRemote("ejbMantenimientoPrecio", NegocioMantenimientoPrecio.class.getName());
             List<Object[]> object = ejb.getAllByIdSucAndIdSubProducto(idSucursal, idSubProducto, fechaMercado);
             for (Object[] obj : object) {
 

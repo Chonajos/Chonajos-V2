@@ -6,28 +6,27 @@
 package com.web.chon.ejb;
 
 import com.web.chon.dominio.EntradaMenudeo;
-import com.web.chon.negocio.NegocioEntradaMenudeo;
 import com.web.chon.util.TiempoUtil;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author freddy
  */
-@Stateless(mappedName = "ejbEntradaMenudeo")
-public class EjbEntradaMenudeo implements NegocioEntradaMenudeo{
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+@Repository
+public class EjbEntradaMenudeo {
+    @PersistenceContext
+    private EntityManager em;
 
-    @Override
+    
     public int insertEntradaMenudeo(EntradaMenudeo entrada) {
         System.out.println("::::::::::::::::::::::::::::::::");
         System.out.println(entrada.toString());
@@ -55,36 +54,36 @@ public class EjbEntradaMenudeo implements NegocioEntradaMenudeo{
     }
     
 
-    @Override
+    
     public int updateEntradaMenudeo(EntradaMenudeo entrada) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
+    
     public int getNextVal() {
         Query query = em.createNativeQuery("SELECT S_EntradaMenudeo.nextVal FROM DUAL");
         return Integer.parseInt(query.getSingleResult().toString());
     
     }
 
-    @Override
+    
     public int getFolio(BigDecimal idSucursal) {
         Query query = em.createNativeQuery("select count(*) from ENTRADAMERCANCIAMENUDEO where ID_SUCURSAL_FK=?");
         query.setParameter(1, idSucursal);
         return Integer.parseInt(query.getSingleResult().toString());
         }
 
-    @Override
+    
     public int buscaMaxMovimiento(EntradaMenudeo entrada) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
+    
     public List<Object[]> getEntradaById(BigDecimal id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
+    
     public List<Object[]> getEntradaProductoByIntervalDate(Date fechaInicio, Date fechaFin, BigDecimal idSucursal,String idSubproductoPk) {
        int cont = 0;
         System.out.println("EJB==============>"+idSubproductoPk);

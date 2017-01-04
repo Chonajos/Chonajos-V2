@@ -16,17 +16,18 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author freddy
  */
-@Stateless(mappedName = "ejbPagoBancario")
-public class EjbPagoBancario implements NegocioPagosBancarios{
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+@Repository
+public class EjbPagoBancario  {
+    @PersistenceContext
+    private EntityManager em;
 
-    @Override
+       
     public int insertaPagoBancario(PagosBancarios pb) {
         System.out.println("Objeto: "+pb.toString());
           try {
@@ -59,7 +60,7 @@ public class EjbPagoBancario implements NegocioPagosBancarios{
     
     }
 
-    @Override
+       
     public int updatePagoBancario(PagosBancarios pb) {
        try {
             System.out.println("ejb UPDATE" + pb.toString());
@@ -74,7 +75,7 @@ public class EjbPagoBancario implements NegocioPagosBancarios{
         }
     }
 
-    @Override
+       
     public List<Object[]> getPagosPendientes() {
         Query query = em.createNativeQuery("select pb.*,cj.NOMBRE,con.NOMBRE,ta.NOMBRE_ABONO,usu.NOMBRE_USUARIO,cue.NOMBRE_BANCO from PAGOS_BANCARIOS pb\n" +
 "inner join caja cj on cj.ID_CAJA_PK = pb.ID_CAJA_FK\n" +
@@ -86,7 +87,7 @@ public class EjbPagoBancario implements NegocioPagosBancarios{
         return query.getResultList();
     }
 
-    @Override
+       
     public int getNextVal() {
         try {
             Query query = em.createNativeQuery("select S_PAGOS_BANCARIOS.nextval from dual");

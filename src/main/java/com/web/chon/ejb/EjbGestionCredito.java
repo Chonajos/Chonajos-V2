@@ -10,18 +10,19 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author juan
  */
-@Stateless(mappedName = "ejbGestionCredito")
-public class EjbGestionCredito implements NegocioGestionCredito {
+@Repository
+public class EjbGestionCredito   {
 
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
 
-    @Override
+      
     public int insert(GestionCredito gestionCredito) {
 
         try {
@@ -44,7 +45,7 @@ public class EjbGestionCredito implements NegocioGestionCredito {
         }
     }
 
-    @Override
+      
     public int update(GestionCredito gestionCredito) {
         try {
 
@@ -59,7 +60,7 @@ public class EjbGestionCredito implements NegocioGestionCredito {
         }
     }
 
-    @Override
+      
     public int delete(BigDecimal idGestionCredito) {
         try {
 
@@ -75,7 +76,7 @@ public class EjbGestionCredito implements NegocioGestionCredito {
         }
     }
 
-    @Override
+      
     public List<Object[]> getAll() {
         try {
 
@@ -91,7 +92,7 @@ public class EjbGestionCredito implements NegocioGestionCredito {
         }
     }
 
-    @Override
+      
     public List<Object[]> getById(BigDecimal idGestionCredito) {
         try {
 
@@ -108,7 +109,7 @@ public class EjbGestionCredito implements NegocioGestionCredito {
         }
     }
 
-    @Override
+      
     public int getNextVal() {
         Query query = em.createNativeQuery("SELECT S_GESTION_CREDITO.nextVal FROM DUAL");
         return Integer.parseInt(query.getSingleResult().toString());

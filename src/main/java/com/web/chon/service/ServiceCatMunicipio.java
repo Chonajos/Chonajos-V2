@@ -5,6 +5,7 @@
  */
 package com.web.chon.service;
 import com.web.chon.dominio.Municipios;
+import com.web.chon.ejb.EjbCatMunicipio;
 import com.web.chon.negocio.NegocioCatMunicipio;
 import com.web.chon.util.Utilidades;
 import java.math.BigDecimal;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +25,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class ServiceCatMunicipio implements IfaceCatMunicipio
 {
-    NegocioCatMunicipio ejb;
+    
+    @Autowired
+    EjbCatMunicipio ejb;
 
     @Override
     public ArrayList<Municipios> getMunicipios(int idMunicipio)
@@ -31,8 +35,6 @@ public class ServiceCatMunicipio implements IfaceCatMunicipio
         try
        {
             ArrayList <Municipios> lista_municipios= new ArrayList<Municipios>();
-            
-            ejb = (NegocioCatMunicipio) Utilidades.getEJBRemote("ejbCatMunicipio", NegocioCatMunicipio.class.getName());
             List<Object[]> lstObject = ejb.getMunicipios(idMunicipio);
              
             for(Object[] obj: lstObject )

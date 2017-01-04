@@ -6,26 +6,26 @@
 package com.web.chon.ejb;
 
 import com.web.chon.dominio.AbonoDocumentos;
-import com.web.chon.negocio.NegocioAbonoDocumento;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author JesusAlfredo
  */
-@Stateless(mappedName = "ejbAbonoDocumento")
-public class EjbAbonoDocumento implements NegocioAbonoDocumento{
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+@Repository
+public class EjbAbonoDocumento  {
+   @PersistenceContext
+    private EntityManager em;
 
-    @Override
+
+       
     public int insert(AbonoDocumentos abonoDocumento) {
                try {
             System.out.println("EJB: ==========" + abonoDocumento.toString());
@@ -61,33 +61,33 @@ public class EjbAbonoDocumento implements NegocioAbonoDocumento{
     
     }
 
-    @Override
+       
     public int update(AbonoDocumentos abonoDocumentos) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
+       
     public int delete(BigDecimal idAbonoDocumento) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
+       
     public List<Object[]> getById(BigDecimal idAbonoDocumento) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
+       
     public List<Object[]> getAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
+       
     public int getNextVal() {
        Query query = em.createNativeQuery("SELECT S_ABONO_DOCUMENTOS.nextVal FROM DUAL");
         return Integer.parseInt(query.getSingleResult().toString());
     }
 
-    @Override
+       
     public List<Object[]> getChequesPendientes(String fechaInicio, String fechaFin, BigDecimal idSucursal, BigDecimal idClienteFk, BigDecimal filtro, BigDecimal filtroStatus) {
         System.out.println("Fecha fin: " + fechaFin);
         System.out.println("IdSucursalEJB: " + idSucursal);
@@ -131,7 +131,7 @@ public class EjbAbonoDocumento implements NegocioAbonoDocumento{
 
     }
 
-    @Override
+       
     public BigDecimal getTotalAbonadoByIdDocumento(BigDecimal idDocumentoFk) {
         System.out.println("IdDocumento: "+idDocumentoFk);
        Query query = em.createNativeQuery("select NVL(sum(ad.MONTO_ABONO),0) as total_abonado from ABONO_DOCUMENTOS ad where ad.ID_DOCUMENTO_FK=?");

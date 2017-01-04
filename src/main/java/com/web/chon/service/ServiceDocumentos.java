@@ -6,6 +6,7 @@
 package com.web.chon.service;
 
 import com.web.chon.dominio.Documento;
+import com.web.chon.ejb.EjbDocumentos;
 import com.web.chon.negocio.NegocioDocumentos;
 import com.web.chon.util.TiempoUtil;
 import com.web.chon.util.Utilidades;
@@ -24,29 +25,21 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ServiceDocumentos implements IfaceDocumentos {
-
-    NegocioDocumentos ejb;
+@Autowired
+    EjbDocumentos ejb;
      @Autowired  IfaceAbonoDocumentos ifaceAbonoDocumentos;
     
-    private void getEjb() {
-        if (ejb == null) {
-            try {
-                ejb = (NegocioDocumentos) Utilidades.getEJBRemote("ejbDocumentos", NegocioDocumentos.class.getName());
-            } catch (Exception ex) {
-                Logger.getLogger(ServiceDocumentos.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
+    
 
     @Override
     public int insertarDocumento(Documento documento) {
-       getEjb();
+          
        return ejb.insertarDocumento(documento);
     }
     
     @Override
     public int getNextVal() {
-        getEjb();
+           
         
         return ejb.nextVal();
     }
@@ -73,14 +66,14 @@ public class ServiceDocumentos implements IfaceDocumentos {
 
     @Override
     public int updateDocumentoById(Documento dc) {
-       getEjb();
+          
        return ejb.updateDocumento(dc);
     
     }
 
     @Override
     public ArrayList<Documento> getDocumentos(Date fechaInicio, Date fechaFin, BigDecimal idSucursalFk, BigDecimal idClienteFk, BigDecimal idFormaPagoFk, BigDecimal idStatusFk,BigDecimal filtroFecha) {
-        getEjb();
+           
         ArrayList<Documento> lstDocumentos = new ArrayList<Documento>();
         List<Object[]> lstObject = new ArrayList<Object[]>();
         lstObject = ejb.getDocumentos(TiempoUtil.getFechaDDMMYYYY(fechaInicio), TiempoUtil.getFechaDDMMYYYY(fechaFin),idSucursalFk,idClienteFk,idFormaPagoFk,idStatusFk,filtroFecha);
@@ -115,7 +108,7 @@ public class ServiceDocumentos implements IfaceDocumentos {
 
     @Override
     public int cambiarFormaPago(Documento d) {
-        getEjb();
+           
        return ejb.cambiarFormaPago(d);
     
     }

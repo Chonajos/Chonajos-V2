@@ -1,26 +1,24 @@
 package com.web.chon.ejb;
-
-import com.web.chon.negocio.NegocioBuscaVenta;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author freddy
  */
-@Stateless(mappedName = "ejbBuscaVenta")
-public class EjbBuscaVenta implements NegocioBuscaVenta {
+@Repository
+public class EjbBuscaVenta   {
 
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+     @PersistenceContext
+    private EntityManager em;
 
-    @Override
+       
     public List<Object[]> getVentaById(int idVenta) {
         try {
 
@@ -54,7 +52,7 @@ public class EjbBuscaVenta implements NegocioBuscaVenta {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
+       
     public int updateVenta(int idVenta, int idUsuario) {
 
         try {
@@ -71,7 +69,7 @@ public class EjbBuscaVenta implements NegocioBuscaVenta {
         }
     }
 
-    @Override
+       
     public List<Object[]> getVentaMayoreoById(int idVenta, int idSucursal) {
 
         try {
@@ -107,7 +105,7 @@ public class EjbBuscaVenta implements NegocioBuscaVenta {
         }
     }
 
-    @Override
+       
     public int updateStatusVentaMayoreo(int idVenta, int idUsuario) {
         System.out.println("Entro a EJB");
         System.out.println("idusuario:" + idUsuario);
@@ -127,7 +125,7 @@ public class EjbBuscaVenta implements NegocioBuscaVenta {
         }
     }
 
-    @Override
+       
     public int cancelarVenta(int idVenta, int idUsuario, String comentarios) {
         System.out.println("idVenta: " + idVenta);
         System.out.println("idUsuario: " + idUsuario);
@@ -147,7 +145,7 @@ public class EjbBuscaVenta implements NegocioBuscaVenta {
         }
     }
 
-    @Override
+       
     public int cancelarVentaMayoreo(int idVenta, int idUsuario, String comentarios) {
         System.out.println("idVenta: " + idVenta);
         System.out.println("idUsuario: " + idUsuario);
@@ -168,7 +166,7 @@ public class EjbBuscaVenta implements NegocioBuscaVenta {
 
     }
 
-    @Override
+       
     public List<Object[]> getVentaMayoreoByIdBuscaVenta(int idVenta, int idSucursal) {
         System.out.println("EJB BuscaVenta ");
         try {
@@ -202,7 +200,7 @@ public class EjbBuscaVenta implements NegocioBuscaVenta {
 
     }
 
-    @Override
+       
     public List<Object[]> buscaVentaCancelar(int idVenta, int idSucursal) {
         System.out.println("EJB BuscaVentaCancelar ");
         try {
@@ -223,7 +221,7 @@ public class EjbBuscaVenta implements NegocioBuscaVenta {
 
     }
 
-    @Override
+       
     public List<Object[]> getVentaMenudeoByfolioAndIdSuc(BigDecimal folio, int idSucursal) {
 
         try {

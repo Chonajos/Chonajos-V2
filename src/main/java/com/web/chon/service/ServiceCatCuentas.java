@@ -6,13 +6,11 @@
 package com.web.chon.service;
 
 import com.web.chon.dominio.CuentaBancaria;
-import com.web.chon.negocio.NegocioCatCuentas;
-import com.web.chon.util.Utilidades;
+import com.web.chon.ejb.EjbCatCuentas;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -21,23 +19,12 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ServiceCatCuentas implements IfaceCatalogoCuentas {
-    NegocioCatCuentas ejb;
-    
-    private void getEjb() {
-        if (ejb == null) {
-            try {
-                ejb = (NegocioCatCuentas) Utilidades.getEJBRemote("ejbCredito", NegocioCatCuentas.class.getName());
-            } catch (Exception ex) {
-                Logger.getLogger(ServiceCatCuentas.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-    
-    
-    
+    @Autowired
+    EjbCatCuentas ejb;
+   
     @Override
     public ArrayList<CuentaBancaria> getCuentas() {
-         getEjb();
+            
         ArrayList<CuentaBancaria> lstCuentas = new ArrayList<CuentaBancaria>();
         List<Object[]> lstObject = new ArrayList<Object[]>();
         lstObject = ejb.getCuentas();

@@ -5,28 +5,28 @@
  */
 package com.web.chon.ejb;
 
-import com.web.chon.negocio.NegocioTopVentas;
+
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author freddy
  */
-@Stateless(mappedName = "ejbTopVentas")
-public class EjbTopVentas implements NegocioTopVentas {
+@Repository
+public class EjbTopVentas   {
 
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+   @PersistenceContext
+    private EntityManager em;
+ 
 
-    @Override
+       
     public List<Object[]> getMenudeo(String fechaInicio, String fechaFin, String orden, BigDecimal rows) {
         Query query;
 
@@ -67,7 +67,7 @@ public class EjbTopVentas implements NegocioTopVentas {
         }
     }
 
-    @Override
+       
     public List<Object[]> getMayoreo(String fechaInicio, String fechaFin, String orden, BigDecimal rows) {
         Query query;
         try {

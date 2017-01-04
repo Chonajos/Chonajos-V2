@@ -6,28 +6,28 @@
 package com.web.chon.ejb;
 
 import com.web.chon.dominio.Cliente;
-import com.web.chon.negocio.NegocioCatCliente;
+
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
+
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author fredy
  */
-@Stateless(mappedName = "ejbCatCliente")
-public class EjbCatCliente implements NegocioCatCliente {
+@Repository
+public class EjbCatCliente  {
 
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
-
-    @Override
+    @PersistenceContext
+    private EntityManager em;
+       
     public List<Object[]> getClientes() {
         try {
 
@@ -58,7 +58,7 @@ public class EjbCatCliente implements NegocioCatCliente {
         }
     }
 
-    @Override
+       
     public List<Object[]> getClienteById(int idCliente) {
         try {
 
@@ -73,7 +73,7 @@ public class EjbCatCliente implements NegocioCatCliente {
         }
     }
 
-    @Override
+       
     public int deleteCliente(int idCliente) {
         try {
 
@@ -90,7 +90,7 @@ public class EjbCatCliente implements NegocioCatCliente {
         }
     }
 
-    @Override
+       
     public int updateCliente(Cliente clie) {
 
         try {
@@ -142,7 +142,7 @@ public class EjbCatCliente implements NegocioCatCliente {
 
     }
 
-    @Override
+       
     public int insertCliente(Cliente clie) {
 
         //System.out.println("EJB_INSERTA_CLIENTE");
@@ -193,20 +193,20 @@ public class EjbCatCliente implements NegocioCatCliente {
 
     }
 
-    @Override
+       
     public int getNextVal() {
         Query query = em.createNativeQuery("SELECT S_CLIENTE.nextVal FROM DUAL");
         return Integer.parseInt(query.getSingleResult().toString());
     }
 
-    @Override
+       
     public List<Object[]> getClienteByNombreCompleto(String nombreCliente) {
         Query query = em.createNativeQuery("SELECT * FROM CLIENTE WHERE UPPER(TRIM(NOMBRE) ||' '|| TRIM(APELLIDO_PATERNO) ||' '|| TRIM(APELLIDO_MATERNO) )  LIKE UPPER('%" + nombreCliente + "%') and STATUS =1");
 
         return query.getResultList();
     }
 
-    @Override
+       
     public List<Object[]> getClienteCreditoById(int idCliente) {
         try {
 
@@ -239,7 +239,7 @@ public class EjbCatCliente implements NegocioCatCliente {
         }
     }
 
-    @Override
+       
     public List<Object[]> getCreditoClienteByIdCliente(BigDecimal idCliente) {
         try {
 
@@ -260,7 +260,7 @@ public class EjbCatCliente implements NegocioCatCliente {
         }
     }
 
-    @Override
+       
     public List<Object[]> getClientesActivos() {
         try {
 

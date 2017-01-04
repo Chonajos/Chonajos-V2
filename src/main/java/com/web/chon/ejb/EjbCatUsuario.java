@@ -9,18 +9,19 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author juan
  */
-@Stateless(mappedName = "ejbCatUsuario")
-public class EjbCatUsuario implements NegocioCatUsuario {
+@Repository
+public class EjbCatUsuario   {
 
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+     @PersistenceContext
+    private EntityManager em;
 
-    @Override
+       
     public List<Object[]> getUsuarios() {
         try {
 
@@ -38,7 +39,7 @@ public class EjbCatUsuario implements NegocioCatUsuario {
         }
     }
 
-    @Override
+       
     public List<Object[]> getUsuarioById(int idUsuario) {
         try {
             Query query = em.createNativeQuery("SELECT * FROM Usuario WHERE ID_USUARIO_PK = ?");
@@ -52,7 +53,7 @@ public class EjbCatUsuario implements NegocioCatUsuario {
         }
     }
 
-    @Override
+       
     public int deleteUsuario(int idUsuario) {
         try {
 
@@ -68,7 +69,7 @@ public class EjbCatUsuario implements NegocioCatUsuario {
         }
     }
 
-    @Override
+       
     public int updateUsuario(Usuario usuario) {
 
         try {
@@ -95,7 +96,7 @@ public class EjbCatUsuario implements NegocioCatUsuario {
 
     }
 
-    @Override
+       
     public int insertUsuario(Usuario usuario) {
         System.out.println("ejb");
         try {
@@ -132,12 +133,12 @@ public class EjbCatUsuario implements NegocioCatUsuario {
         }
     }
 
-    @Override
+       
     public int insertarUsuario(Usuario usuario) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
+       
     public List<Object[]> getUsuarioByNombreCompleto(String nombreUsuario, int idSucursal) {
         Query query;
 
@@ -152,7 +153,7 @@ public class EjbCatUsuario implements NegocioCatUsuario {
         return query.getResultList();
     }
 
-    @Override
+       
     public List<Object[]> getUsuarioByClave(String clave, int idSucursal) {
         try {
             Query query;
@@ -174,7 +175,7 @@ public class EjbCatUsuario implements NegocioCatUsuario {
         }
     }
 
-    @Override
+       
     public List<Object[]> getUsuariosbyIdSucursal(int idSucursal) {
         
         try {

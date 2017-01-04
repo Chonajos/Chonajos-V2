@@ -7,8 +7,7 @@ package com.web.chon.service;
 
 import com.web.chon.dominio.MayoreoProductoEntradaProducto;
 import com.web.chon.dominio.VentaProductoMayoreo;
-import com.web.chon.negocio.NegocioVentaMayoreoProducto;
-import com.web.chon.util.Utilidades;
+import com.web.chon.ejb.EjbVentaMayoreoProducto;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -16,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -25,35 +25,27 @@ import org.springframework.stereotype.Service;
 @Service
 public class ServiceVentaMayoreoProducto implements IfaceVentaMayoreoProducto {
 
-    NegocioVentaMayoreoProducto ejb;
+    @Autowired
+    EjbVentaMayoreoProducto ejb;
 
-    private void getEjb() {
-        try {
-            if (ejb == null) {
-                ejb = (NegocioVentaMayoreoProducto) Utilidades.getEJBRemote("ejbVentaMayoreoProducto", NegocioVentaMayoreoProducto.class.getName());
-            }
-
-        } catch (Exception ex) {
-            Logger.getLogger(ServiceVentaMayoreoProducto.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+   
 
     @Override
     public int insertarVentaMayoreoProducto(VentaProductoMayoreo venta) {
-        getEjb();
+           
         return ejb.insertarVentaProducto(venta);
     }
 
     @Override
     public int getNextVal() {
-        getEjb();
+           
         return ejb.getNextVal();
     }
 
     @Override
     public ArrayList<VentaProductoMayoreo> getProductosbyIdVmFk(BigDecimal idVmFk) {
         try {
-            getEjb();
+               
             ArrayList<VentaProductoMayoreo> lstProductos = new ArrayList<VentaProductoMayoreo>();
             List<Object[]> lstObject = ejb.getProductos(idVmFk);
             for (Object[] obj : lstObject) {
@@ -97,7 +89,7 @@ public class ServiceVentaMayoreoProducto implements IfaceVentaMayoreoProducto {
 
     @Override
     public ArrayList<VentaProductoMayoreo> buscaVentaCancelar(BigDecimal idVenta, BigDecimal idSucursal) {
-        getEjb();
+           
         try {
             ArrayList<VentaProductoMayoreo> lstVentas = new ArrayList<VentaProductoMayoreo>();
             List<Object[]> lstObject = ejb.buscaVentaCancelar(idVenta, idSucursal);
@@ -119,7 +111,7 @@ public class ServiceVentaMayoreoProducto implements IfaceVentaMayoreoProducto {
 
     @Override
     public ArrayList<MayoreoProductoEntradaProducto> getVentaByIdSucursalAndCarro(BigDecimal idSucursal, BigDecimal carro,String fechaInicio,String fechaFin) {
-        getEjb();
+           
         try {
             ArrayList<MayoreoProductoEntradaProducto> lstMayoreoProductoEntradaProducto = new ArrayList<MayoreoProductoEntradaProducto>();
             List<Object[]> lstObject = ejb.getVentaByIdSucursalAndCarro(idSucursal, carro,fechaInicio,fechaFin);

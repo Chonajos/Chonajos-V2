@@ -7,6 +7,7 @@ package com.web.chon.service;
 
 import com.web.chon.dominio.Pagina;
 import com.web.chon.dominio.Provedor;
+import com.web.chon.ejb.EjbCatProvedores;
 import com.web.chon.negocio.NegocioCatProvedores;
 
 import com.web.chon.util.Utilidades;
@@ -16,6 +17,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -26,17 +28,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class ServiceCatProvedores implements IfaceCatProvedores {
 
-    NegocioCatProvedores ejb;
+    @Autowired
+    EjbCatProvedores ejb;
 
-    public void getEjb() {
-        if (ejb == null) {
-            try {
-                ejb = (NegocioCatProvedores) Utilidades.getEJBRemote("ejbCatProvedores", NegocioCatProvedores.class.getName());
-            } catch (Exception ex) {
-                Logger.getLogger(ServiceCatSucursales.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
+   
 
     @Override
     public int deleteProvedor(BigDecimal idProvedor) {
@@ -46,7 +41,7 @@ public class ServiceCatProvedores implements IfaceCatProvedores {
     @Override
     public int updateProvedor(Provedor pro) {
         try {
-            getEjb();
+               
 
             return ejb.updateProvedor(pro);
 
@@ -59,7 +54,7 @@ public class ServiceCatProvedores implements IfaceCatProvedores {
     @Override
     public int insertProvedor(Provedor pro) {
         try {
-            getEjb();
+               
 
             return ejb.insertProvedor(pro);
 
@@ -72,7 +67,7 @@ public class ServiceCatProvedores implements IfaceCatProvedores {
     @Override
     public int getNextVal() {
 
-        getEjb();
+           
         return ejb.getNextVal();
 
     }
@@ -86,7 +81,7 @@ public class ServiceCatProvedores implements IfaceCatProvedores {
     public Pagina<Provedor> findAllDominio(Provedor filters, int first, int pageSize) {
 
         System.out.println("ServiceCatProvedores FindAllDominio");
-        getEjb();
+           
 
         long size = ejb.getSizeListProvedores();
         if (first != 0) {
@@ -149,7 +144,7 @@ public class ServiceCatProvedores implements IfaceCatProvedores {
 
     @Override
     public Provedor getById(BigDecimal dominio) {
-        getEjb();
+           
         List<Object[]> lstObject = ejb.getById(dominio);
         Provedor provedor = new Provedor();
         for (Object[] obj : lstObject) {
@@ -187,7 +182,7 @@ public class ServiceCatProvedores implements IfaceCatProvedores {
 
         try {
             System.out.println("ServiceCatProvedores getSucursales()");
-            getEjb();
+               
             List<Object[]> lstObject = ejb.getProvedores();
             ArrayList<Provedor> lista_provedores = new ArrayList<Provedor>();
             for (Object[] obj : lstObject) {
@@ -223,7 +218,7 @@ public class ServiceCatProvedores implements IfaceCatProvedores {
 
     @Override
     public ArrayList<Provedor> getProvedorByNombreCompleto(String nombreCompleto) {
-        getEjb();
+           
 
         ArrayList<Provedor> lstProvedor = new ArrayList<Provedor>();
         List<Object[]> lstObject = ejb.getProvedorByNombreCompleto(nombreCompleto);
@@ -247,7 +242,7 @@ public class ServiceCatProvedores implements IfaceCatProvedores {
     @Override
     public ArrayList<Provedor> getProvedoresByIdSucursal(BigDecimal idSucursal) {
 
-        getEjb();
+           
 
         ArrayList<Provedor> lstProvedor = new ArrayList<Provedor>();
         List<Object[]> lstObject = ejb.getProvedoresByIdSucursal(idSucursal);

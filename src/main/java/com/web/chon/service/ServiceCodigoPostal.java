@@ -6,6 +6,7 @@
 package com.web.chon.service;
 
 import com.web.chon.dominio.CodigoPostal;
+import com.web.chon.ejb.EjbCatCodigosPostales;
 
 import com.web.chon.negocio.NegocioCatCodigosPostales;
 
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -23,17 +25,15 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ServiceCodigoPostal implements IfaceCatCodigosPostales {
-    NegocioCatCodigosPostales ejb;
+    @Autowired
+    EjbCatCodigosPostales ejb;
     @Override
     public ArrayList<CodigoPostal> getCodigoPostalById(String codigo_postal) 
     {
          try
        {
             ArrayList <CodigoPostal> lista_codigos= new ArrayList<CodigoPostal>();
-            
-            ejb = (NegocioCatCodigosPostales) Utilidades.getEJBRemote("ejbCatCodigosPostales", NegocioCatCodigosPostales.class.getName());
             List<Object[]> lstObject = ejb.getCodigosByCP(codigo_postal);
-             
             for(Object[] obj: lstObject )
             {
                 CodigoPostal colonia = new CodigoPostal();
@@ -66,7 +66,6 @@ public class ServiceCodigoPostal implements IfaceCatCodigosPostales {
        {
             ArrayList <CodigoPostal> lista_codigos= new ArrayList<CodigoPostal>();
             
-            ejb = (NegocioCatCodigosPostales) Utilidades.getEJBRemote("ejbCatCodigosPostales", NegocioCatCodigosPostales.class.getName());
             List<Object[]> lstObject = ejb.getCodigosByIdMun(idMunicipioPK);
              
             for(Object[] obj: lstObject )

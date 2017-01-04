@@ -6,27 +6,26 @@
 package com.web.chon.ejb;
 
 import com.web.chon.dominio.AjusteExistenciaMenudeo;
-import com.web.chon.negocio.NegocioAjusteExistenciaMenudeo;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Juan
  */
-@Stateless(mappedName = "ejbAjusteExistenciaMenudeo")
-public class EjbAjusteExistenciaMenudeo implements NegocioAjusteExistenciaMenudeo {
+@Repository
+public class EjbAjusteExistenciaMenudeo   {
 
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
 
-    @Override
+       
     public int insert(AjusteExistenciaMenudeo data) {
 
         try {
@@ -53,7 +52,7 @@ public class EjbAjusteExistenciaMenudeo implements NegocioAjusteExistenciaMenude
         }
     }
 
-    @Override
+       
     public List<Object[]> getAll() {
 
         try {
@@ -69,7 +68,7 @@ public class EjbAjusteExistenciaMenudeo implements NegocioAjusteExistenciaMenude
 
     }
 
-    @Override
+       
     public List<Object[]> getAllByIdSucursal(BigDecimal idSucursal) {
         try {
 

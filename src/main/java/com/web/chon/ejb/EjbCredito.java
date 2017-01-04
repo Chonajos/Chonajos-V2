@@ -1,28 +1,28 @@
 package com.web.chon.ejb;
 
 import com.web.chon.dominio.Credito;
-import com.web.chon.negocio.NegocioCredito;
+
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.xml.transform.Source;
+import org.springframework.stereotype.Repository;
+
 
 /**
  *
  * @author juan
  */
-@Stateless(mappedName = "ejbCredito")
-public class EjbCredito implements NegocioCredito {
+@Repository
+public class EjbCredito   {
 
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
 
-    @Override
+       
     public int insert(Credito credito, int IdCredito) {
 
         try {
@@ -54,7 +54,7 @@ public class EjbCredito implements NegocioCredito {
         }
     }
 
-    @Override
+       
     public int update(Credito credito) {
         try {
             System.out.println(credito.toString());
@@ -81,7 +81,7 @@ public class EjbCredito implements NegocioCredito {
         }
     }
 
-    @Override
+       
     public int activarCredito(Credito credito) {
         try {
             System.out.println(credito.toString());
@@ -96,7 +96,7 @@ public class EjbCredito implements NegocioCredito {
         }
     }
 
-    @Override
+       
     public int delete(BigDecimal idCredito) {
         try {
 
@@ -113,7 +113,7 @@ public class EjbCredito implements NegocioCredito {
         }
     }
 
-    @Override
+       
     public List<Object[]> getAll() {
         try {
 
@@ -129,7 +129,7 @@ public class EjbCredito implements NegocioCredito {
         }
     }
 
-    @Override
+       
     public List<Object[]> getById(BigDecimal idCredito) {
         try {
 
@@ -147,7 +147,7 @@ public class EjbCredito implements NegocioCredito {
         }
     }
 
-    @Override
+       
     public List<Object[]> getCreditosActivos(BigDecimal idCliente, BigDecimal idAbonoPk) {
         System.out.println("idCliente: " + idCliente);
         System.out.println("Abono: " + idAbonoPk);
@@ -215,7 +215,7 @@ public class EjbCredito implements NegocioCredito {
 //        }
     }
 
-    @Override
+       
     public int updateStatus(BigDecimal idCreditoPk, BigDecimal estatus) {
         try {
 
@@ -232,7 +232,7 @@ public class EjbCredito implements NegocioCredito {
 
     }
 
-    @Override
+       
     public int updateACuenta(Credito credito) {
         try {
             Query query = em.createNativeQuery("UPDATE CREDITO SET STATUSACUENTA = ? WHERE ID_CREDITO_PK = ?");
@@ -248,7 +248,7 @@ public class EjbCredito implements NegocioCredito {
 
     }
 
-    @Override
+       
     public int nextVal() {
         try {
             Query query = em.createNativeQuery("select S_CREDITO.nextval from dual");
@@ -259,7 +259,7 @@ public class EjbCredito implements NegocioCredito {
         }
     }
 
-    @Override
+       
     public List<Object[]> getTotalAbonado(BigDecimal idCredito) {
         try {
 
@@ -317,7 +317,7 @@ public class EjbCredito implements NegocioCredito {
         }
     }
 
-    @Override
+       
     public List<Object[]> getCreditosByIdVentaMenudeo(BigDecimal idVenta) {
 
         try {
@@ -335,7 +335,7 @@ public class EjbCredito implements NegocioCredito {
         }
     }
 
-    @Override
+       
     public List<Object[]> getCreditosByIdVentaMayoreo(BigDecimal idVentaMayoreo) {
         System.out.println("entro ejbCredito: " + idVentaMayoreo);
         try {
@@ -352,7 +352,7 @@ public class EjbCredito implements NegocioCredito {
         }
     }
 
-    @Override
+       
     public int eliminarCreditoByIdCreditoPk(BigDecimal idCreditoPk) {
         System.out.println("Parametro : " + idCreditoPk);
         try {

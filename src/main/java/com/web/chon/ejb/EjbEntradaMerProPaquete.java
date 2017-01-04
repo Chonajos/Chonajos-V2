@@ -15,17 +15,18 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author JesusAlfredo
  */
-@Stateless(mappedName = "ejbEntradaMerProPaquete")
-public class EjbEntradaMerProPaquete  implements NegocioEntradaMerProPaquete{
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+@Repository
+public class EjbEntradaMerProPaquete {
+    @PersistenceContext
+    private EntityManager em;
 
-    @Override
+  
     public int insertPaquete(EntradaMercanciaProductoPaquete paquete) {
        try {
             Query query = em.createNativeQuery("INSERT INTO ENTRADA_PAQUETES (ID_PAQUETE_PK,KILOS,CANTIDAD,TARA,PESO_NETO,ID_EMP_FK,ID_STATUS_FK)VALUES (?,?,?,?,?,?,?)");
@@ -43,7 +44,7 @@ public class EjbEntradaMerProPaquete  implements NegocioEntradaMerProPaquete{
         }
     
     }
-    @Override
+    
     public int updatePaquete(BigDecimal idEmpFk) {
         //System.out.println("IDEMPFK: "+idEmpFk);
        try {
@@ -57,7 +58,7 @@ public class EjbEntradaMerProPaquete  implements NegocioEntradaMerProPaquete{
     
     }
 
-    @Override
+    
     public List<Object[]> getPaquetesById(BigDecimal id) {
        Query query = em.createNativeQuery("select * from ENTRADA_PAQUETES where ID_EMP_FK = ?");
         query.setParameter(1, id);
@@ -65,13 +66,13 @@ public class EjbEntradaMerProPaquete  implements NegocioEntradaMerProPaquete{
     }
     
     
-    @Override
+    
     public int getNextVal() {
         Query query = em.createNativeQuery("SELECT S_ENTRADA_PAQUETES.nextVal FROM DUAL");
         return Integer.parseInt(query.getSingleResult().toString());
     }
 
-    @Override
+   
     public int eliminarPaquete(BigDecimal id) {
         try {
             Query query = em.createNativeQuery("DELETE ENTRADA_PAQUETES WHERE ID_PAQUETE_PK = ?");

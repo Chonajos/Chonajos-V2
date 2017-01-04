@@ -7,6 +7,7 @@ package com.web.chon.service;
 
 import com.web.chon.dominio.EntradaMenudeo;
 import com.web.chon.dominio.EntradaMenudeoProducto;
+import com.web.chon.ejb.EjbEntradaMenudeo;
 import com.web.chon.negocio.NegocioEntradaMenudeo;
 import com.web.chon.util.Utilidades;
 import java.math.BigDecimal;
@@ -25,24 +26,16 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ServiceEntradaMenudeo implements IfaceEntradaMenudeo {
-
-    NegocioEntradaMenudeo ejb;
+    @Autowired
+    EjbEntradaMenudeo ejb;
     @Autowired
     private IfaceEntradaMenudeoProducto ifaceEntradaMenudeoProducto;
 
-    public void getEjb() {
-        if (ejb == null) {
-            try {
-                ejb = (NegocioEntradaMenudeo) Utilidades.getEJBRemote("ejbEntradaMenudeo", NegocioEntradaMenudeo.class.getName());
-            } catch (Exception ex) {
-                Logger.getLogger(ServiceEntradaMenudeo.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
+    
 
     @Override
     public int insertEntradaMercancia(EntradaMenudeo entrada) {
-        getEjb();
+           
         return ejb.insertEntradaMenudeo(entrada);
     }
 
@@ -53,7 +46,7 @@ public class ServiceEntradaMenudeo implements IfaceEntradaMenudeo {
 
     @Override
     public int getNextVal() {
-        getEjb();
+           
         try {
             return ejb.getNextVal();
 
@@ -65,7 +58,7 @@ public class ServiceEntradaMenudeo implements IfaceEntradaMenudeo {
 
     @Override
     public int getFolio(BigDecimal idSucursal) {
-        getEjb();
+           
         try {
             return ejb.getFolio(idSucursal);
 
@@ -78,7 +71,7 @@ public class ServiceEntradaMenudeo implements IfaceEntradaMenudeo {
 
     @Override
     public ArrayList<EntradaMenudeo> getEntradaProductoByIntervalDate(Date fechaFiltroInicio, Date fechaFiltroFin, BigDecimal idSucursal, String idSubproductoPk) {
-        getEjb();
+           
         System.out.println("Service////////////////" + idSubproductoPk);
         List<Object[]> lstObject = new ArrayList<Object[]>();
         ArrayList<EntradaMenudeo> lstEntradaMercancia2 = new ArrayList<EntradaMenudeo>();

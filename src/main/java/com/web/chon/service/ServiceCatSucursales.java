@@ -7,6 +7,7 @@ package com.web.chon.service;
 
 import com.web.chon.dominio.Pagina;
 import com.web.chon.dominio.Sucursal;
+import com.web.chon.ejb.EjbCatSucursales;
 import com.web.chon.negocio.NegocioCatSucursales;
 import com.web.chon.util.Utilidades;
 import java.math.BigDecimal;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -23,24 +25,16 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ServiceCatSucursales implements IfaceCatSucursales {
+    @Autowired
+    EjbCatSucursales ejb;
 
-    NegocioCatSucursales ejb;
-
-    public void getEjb() {
-        if (ejb == null) {
-            try {
-                ejb = (NegocioCatSucursales) Utilidades.getEJBRemote("ejbCatSucursales", NegocioCatSucursales.class.getName());
-            } catch (Exception ex) {
-                Logger.getLogger(ServiceCatSucursales.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
+    
+    
 
     @Override
     public ArrayList<Sucursal> getSucursales() {
         try {
             ArrayList<Sucursal> lista_sucursales = new ArrayList<Sucursal>();
-            ejb = (NegocioCatSucursales) Utilidades.getEJBRemote("ejbCatSucursales", NegocioCatSucursales.class.getName());
             List<Object[]> lstObject = ejb.getSucursales();
 
             for (Object[] obj : lstObject) {
@@ -65,43 +59,24 @@ public class ServiceCatSucursales implements IfaceCatSucursales {
 
     @Override
     public int deleteSucursal(BigDecimal idSucursal) {
-        try {
-            ejb = (NegocioCatSucursales) Utilidades.getEJBRemote("ejbCatSucursales", NegocioCatSucursales.class.getName());
-            return ejb.deleteSucursal(idSucursal);
-        } catch (Exception ex) {
-            Logger.getLogger(NegocioCatSucursales.class.getName()).log(Level.SEVERE, null, ex);
-            return 0;
-        }
+           return ejb.deleteSucursal(idSucursal);
     }
 
     @Override
     public int updateSucursal(Sucursal sucu) {
-        try {
-            ejb = (NegocioCatSucursales) Utilidades.getEJBRemote("ejbCatSucursales", NegocioCatSucursales.class.getName());
-            return ejb.updateSucursal(sucu);
+        return ejb.updateSucursal(sucu);
 
-        } catch (Exception ex) {
-            Logger.getLogger(NegocioCatSucursales.class.getName()).log(Level.SEVERE, null, ex);
-            return 0;
-        }
     }
 
     @Override
-    public int insertSucursal(Sucursal sucu) {
-        try {
-            ejb = (NegocioCatSucursales) Utilidades.getEJBRemote("ejbCatSucursales", NegocioCatSucursales.class.getName());
-            return ejb.insertSucursal(sucu);
-        } catch (Exception ex) {
-            Logger.getLogger(NegocioCatSucursales.class.getName()).log(Level.SEVERE, null, ex);
-            return 0;
-        }
+    public int insertSucursal(Sucursal sucu) 
+    {
+        return ejb.insertSucursal(sucu);
     }
 
     @Override
     public int getNextVal() 
     {
-        
-       getEjb();
        return ejb.getNextVal();
     }
 
@@ -113,12 +88,8 @@ public class ServiceCatSucursales implements IfaceCatSucursales {
     @Override
     public Pagina<Sucursal> findAllDominio(Sucursal filters, int first, int pageSize) {
 
-        System.out.println("ServiceCatSucursales FindAllDominio");
-        getEjb();
         
         long size = ejb.getSizeListSucursales();
-        System.out.println("size "+size);
-        System.out.println("first "+first +"  paguezise "+pageSize);
         if(first!=0)
         {
             first++;

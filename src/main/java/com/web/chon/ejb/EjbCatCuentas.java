@@ -5,25 +5,24 @@
  */
 package com.web.chon.ejb;
 
-import com.web.chon.negocio.NegocioCatCuentas;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author JesusAlfredo
  */
-@Stateless(mappedName = "ejbCatCuentas")
-public class EjbCatCuentas  implements NegocioCatCuentas{
-     @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+@Repository
+public class EjbCatCuentas   {
+      @PersistenceContext
+    private EntityManager em;
 
-    @Override
+       
     public List<Object[]> getCuentas() {
         try 
         {

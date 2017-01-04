@@ -3,23 +3,23 @@ package com.web.chon.ejb;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import com.web.chon.negocio.NegocioUsuarioLogin;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Juan
  */
-@Stateless(mappedName = "ejbUsuarioLogin")
-public class EjbUsuarioLogin implements NegocioUsuarioLogin {
+@Repository
+public class EjbUsuarioLogin  {
 
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
 
-    @Override
+       
     public List<Object[]> getMenuByUser(String perfilId) {
 
         try {
@@ -36,7 +36,7 @@ public class EjbUsuarioLogin implements NegocioUsuarioLogin {
 
     }
 
-    @Override
+       
     public List<Object[]> getUser(String idUser) {
         try {
             Query query = em.createNativeQuery(" SELECT USU.CLAVE_USUARIO, "

@@ -1,6 +1,7 @@
 package com.web.chon.service;
 
 import com.web.chon.dominio.EntregaMercancia;
+import com.web.chon.ejb.EjbEntregaMercancia;
 import com.web.chon.negocio.NegocioEntregaMercancia;
 import com.web.chon.util.TiempoUtil;
 import com.web.chon.util.Utilidades;
@@ -10,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -18,25 +20,14 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ServiceEntregaMercancia implements IfaceEntregaMercancia {
+@Autowired
+    EjbEntregaMercancia ejb;
 
-    NegocioEntregaMercancia ejb;
-
-    public void getEjb() {
-        if (ejb == null) {
-            try {
-                ejb = (NegocioEntregaMercancia) Utilidades.getEJBRemote("ejbEntregaMercancia", NegocioEntregaMercancia.class.getName());
-            } catch (Exception ex) {
-                Logger.getLogger(ServiceEntregaMercancia.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
+    
 
     @Override
     public ArrayList<EntregaMercancia> getByIdSucursalAndFolioSucursal(BigDecimal idSucursal, BigDecimal folioSucursal) {
         try {
-
-            getEjb();
-
             ArrayList<EntregaMercancia> lstEntregaMercancia = new ArrayList<EntregaMercancia>();
             List<Object[]> lstObject = new ArrayList<Object[]>();
 
@@ -83,7 +74,7 @@ public class ServiceEntregaMercancia implements IfaceEntregaMercancia {
 
     @Override
     public int insert(EntregaMercancia entregaMercancia) {
-        getEjb();
+           
 
         return ejb.insertar(entregaMercancia);
 
@@ -93,7 +84,7 @@ public class ServiceEntregaMercancia implements IfaceEntregaMercancia {
     public ArrayList<EntregaMercancia> getByIdVentaMayoreoProducto(BigDecimal idVentaMayoreoProducto) {
         try {
 
-            getEjb();
+               
 
             ArrayList<EntregaMercancia> lstEntregaMercancia = new ArrayList<EntregaMercancia>();
             List<Object[]> lstObject = new ArrayList<Object[]>();

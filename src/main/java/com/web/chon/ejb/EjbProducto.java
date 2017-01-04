@@ -4,27 +4,25 @@ package com.web.chon.ejb;
 
 
 import com.web.chon.dominio.Producto;
-import com.web.chon.negocio.NegocioProducto;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  * Ejb para el catalogo de categorias
  * @author Juan de la Cruz
  */
-@Stateless(mappedName = "ejbProducto")
-public class EjbProducto implements NegocioProducto {
+@Repository
+public class EjbProducto   {
 
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
- 
+    @PersistenceContext
+    private EntityManager em;
 
-    @Override
+       
     public List<Object[]> getProductos() {
         try {
 
@@ -40,7 +38,7 @@ public class EjbProducto implements NegocioProducto {
         }
     }
 
-    @Override
+       
     public int deleteProducto(String idProducto) {
         try {
             Query query = em.createNativeQuery("delete Producto where ID_PRODUCTO_PK = ?");
@@ -55,7 +53,7 @@ public class EjbProducto implements NegocioProducto {
     
     }
 
-    @Override
+       
     public int insertarProducto(Producto producto) {
         try {
             System.out.println("insert : " + producto.getNombreProducto() + " " + producto.getDescripcionProducto());
@@ -73,7 +71,7 @@ public class EjbProducto implements NegocioProducto {
         
     }
 
-    @Override
+       
     public int updateProducto(Producto producto) {
         try {
 
@@ -91,7 +89,7 @@ public class EjbProducto implements NegocioProducto {
         }
     }
 
-    @Override
+       
     public int getLastIdCategoria() {
         Query query = em.createNativeQuery("SELECT MAX(ID_PRODUCTO_PK)+1 ID_PRODUCTO_PK FROM PRODUCTO");
         String lastId = query.getSingleResult().toString();

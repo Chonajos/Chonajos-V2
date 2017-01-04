@@ -5,6 +5,7 @@
  */
 package com.web.chon.service;
 import com.web.chon.dominio.AbonoDocumentos;
+import com.web.chon.ejb.EjbAbonoDocumento;
 import com.web.chon.negocio.NegocioAbonoDocumento;
 import com.web.chon.util.TiempoUtil;
 import com.web.chon.util.Utilidades;
@@ -14,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -23,16 +25,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class ServiceAbonoDocumentos implements IfaceAbonoDocumentos{
 
-    NegocioAbonoDocumento ejb;
-    private void getEjb() {
-        if (ejb == null) {
-            try {
-                ejb = (NegocioAbonoDocumento) Utilidades.getEJBRemote("ejbAbonoDocumento", NegocioAbonoDocumento.class.getName());
-            } catch (Exception ex) {
-                Logger.getLogger(ServiceAbonoCredito.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
+    @Autowired
+    EjbAbonoDocumento ejb;
+    
     @Override
     public int update(AbonoDocumentos abonoDocumentos) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -55,19 +50,19 @@ public class ServiceAbonoDocumentos implements IfaceAbonoDocumentos{
 
     @Override
     public int getNextVal() {
-       getEjb();
+          
        return ejb.getNextVal();
     }
 
     @Override
     public int insert(AbonoDocumentos abonoDocumentos) {
-        getEjb();
+           
        return ejb.insert(abonoDocumentos);
     }
 
     @Override
     public ArrayList<AbonoDocumentos> getCheques(Date fechaInicio, Date fechaFin, BigDecimal idSucursalFk, BigDecimal idClienteFk, BigDecimal filtro, BigDecimal filtroStatus) {
-        getEjb();
+           
         ArrayList<AbonoDocumentos> lstAbonoCredito = new ArrayList<AbonoDocumentos>();
         List<Object[]> lstObject = new ArrayList<Object[]>();
         lstObject = ejb.getChequesPendientes(TiempoUtil.getFechaDDMMYYYY(fechaInicio), TiempoUtil.getFechaDDMMYYYY(fechaFin),idSucursalFk,idClienteFk,filtro,filtroStatus);
@@ -100,7 +95,7 @@ public class ServiceAbonoDocumentos implements IfaceAbonoDocumentos{
 
     @Override
     public BigDecimal getTotalAbonadoByIdDocumento(BigDecimal idDocumentoFk) {
-        getEjb();
+           
         return ejb.getTotalAbonadoByIdDocumento(idDocumentoFk);
     
     }

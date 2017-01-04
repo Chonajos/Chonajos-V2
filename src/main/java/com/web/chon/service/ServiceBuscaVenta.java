@@ -3,8 +3,7 @@ package com.web.chon.service;
 import com.web.chon.dominio.BuscaVenta;
 import com.web.chon.dominio.VentaMayoreo;
 import com.web.chon.dominio.VentaProductoMayoreo;
-import com.web.chon.negocio.NegocioBuscaVenta;
-import com.web.chon.util.Utilidades;
+import com.web.chon.ejb.EjbBuscaVenta;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.ArrayList;
@@ -12,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -21,24 +21,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class ServiceBuscaVenta implements IfaceBuscaVenta {
 
-    NegocioBuscaVenta ejb;
+    @Autowired
+    EjbBuscaVenta ejb;
 
-    private void getEjb() {
-        try {
-            if (ejb == null) {
-                ejb = (NegocioBuscaVenta) Utilidades.getEJBRemote("ejbBuscaVenta", NegocioBuscaVenta.class.getName());
-            }
-
-        } catch (Exception ex) {
-            Logger.getLogger(ServiceBuscaVenta.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+    
 
     @Override
     public ArrayList<BuscaVenta> getVentaById(int idVenta) {
         try {
             ArrayList<BuscaVenta> lstVentas = new ArrayList<BuscaVenta>();
-            ejb = (NegocioBuscaVenta) Utilidades.getEJBRemote("ejbBuscaVenta", NegocioBuscaVenta.class.getName());
             List<Object[]> lstObject = ejb.getVentaById(idVenta);
             for (Object[] obj : lstObject) {
 
@@ -80,7 +71,6 @@ public class ServiceBuscaVenta implements IfaceBuscaVenta {
     public ArrayList<BuscaVenta> getVentaMayoreoById(int idVenta, int idSucursal) {
         try {
             ArrayList<BuscaVenta> lstVentas = new ArrayList<BuscaVenta>();
-            ejb = (NegocioBuscaVenta) Utilidades.getEJBRemote("ejbBuscaVenta", NegocioBuscaVenta.class.getName());
             List<Object[]> lstObject = ejb.getVentaMayoreoById(idVenta, idSucursal);
             for (Object[] obj : lstObject) {
 
@@ -126,7 +116,6 @@ public class ServiceBuscaVenta implements IfaceBuscaVenta {
     public ArrayList<BuscaVenta> getVentaMayoreoByIdBuscaVenta(int idVenta, int idSucursal) {
         try {
             ArrayList<BuscaVenta> lstVentas = new ArrayList<BuscaVenta>();
-            ejb = (NegocioBuscaVenta) Utilidades.getEJBRemote("ejbBuscaVenta", NegocioBuscaVenta.class.getName());
             List<Object[]> lstObject = ejb.getVentaMayoreoByIdBuscaVenta(idVenta, idSucursal);
             for (Object[] obj : lstObject) {
 
@@ -182,19 +171,19 @@ public class ServiceBuscaVenta implements IfaceBuscaVenta {
 
     @Override
     public int updateStatusVentaMayoreo(int idVenta, int idUsuario) {
-        getEjb();
+           
         return ejb.updateStatusVentaMayoreo(idVenta, idUsuario);
     }
 
     @Override
     public int cancelarVenta(int idVenta, int idUsuario, String comentarios) {
-        getEjb();
+           
         return ejb.cancelarVenta(idVenta, idUsuario, comentarios);
     }
 
     @Override
     public int cancelarVentaMayoreo(int idVenta, int idUsuario, String comentarios) {
-        getEjb();
+           
         return ejb.cancelarVentaMayoreo(idVenta, idUsuario, comentarios);
 
     }
@@ -204,7 +193,6 @@ public class ServiceBuscaVenta implements IfaceBuscaVenta {
 
         try {
             ArrayList<BuscaVenta> lstVentas = new ArrayList<BuscaVenta>();
-            ejb = (NegocioBuscaVenta) Utilidades.getEJBRemote("ejbBuscaVenta", NegocioBuscaVenta.class.getName());
             List<Object[]> lstObject = ejb.buscaVentaCancelar(idVenta, idSucursal);
             for (Object[] obj : lstObject) {
                 BuscaVenta busca_venta = new BuscaVenta();
@@ -228,7 +216,6 @@ public class ServiceBuscaVenta implements IfaceBuscaVenta {
 
         try {
             ArrayList<BuscaVenta> lstVentas = new ArrayList<BuscaVenta>();
-            ejb = (NegocioBuscaVenta) Utilidades.getEJBRemote("ejbBuscaVenta", NegocioBuscaVenta.class.getName());
             List<Object[]> lstObject = ejb.getVentaMenudeoByfolioAndIdSuc(folioVenta, idSucursal);
 
             VentaMayoreo venta = new VentaMayoreo();

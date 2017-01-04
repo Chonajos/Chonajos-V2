@@ -9,15 +9,13 @@ package com.web.chon.service;
 import com.web.chon.dominio.OperacionesCaja;
 import com.web.chon.dominio.TipoOperacion;
 import com.web.chon.dominio.Usuario;
-import com.web.chon.util.Utilidades;
+import com.web.chon.ejb.EjbOperacionesCaja;
 import java.math.BigDecimal;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.springframework.stereotype.Service;
-import com.web.chon.negocio.NegocioOperacionesCaja;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -25,35 +23,27 @@ import java.util.List;
  */
 @Service
 public class ServiceOperacionesCaja implements IfaceOperacionesCaja {
-    NegocioOperacionesCaja ejb;
-    private void getEjb() 
-    {
-        if (ejb == null) {
-            try {
-                ejb = (NegocioOperacionesCaja) Utilidades.getEJBRemote("ejbOperacionesCaja", NegocioOperacionesCaja.class.getName());
-            } catch (Exception ex) {
-                Logger.getLogger(ServiceOperacionesCaja.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
+    @Autowired
+    EjbOperacionesCaja ejb;
+  
 
 
     @Override
     public int getNextVal() {
-       getEjb();
+          
        return ejb.getNextVal();
     
     }
 
     @Override
     public int insertaOperacion(OperacionesCaja es) {
-       getEjb();
+          
        return ejb.insertaOperacion(es);
     }
 
     @Override
     public int updateOperacion(OperacionesCaja es) {
-        getEjb();
+           
         return ejb.updateOperacion(es);
     }
 
@@ -64,7 +54,7 @@ public class ServiceOperacionesCaja implements IfaceOperacionesCaja {
 
     @Override
     public ArrayList<OperacionesCaja> getOperacionesBy(BigDecimal idCajaFk, BigDecimal idOperacionFk, BigDecimal idConceptoFk, String fechaInicio, String fechaFin, BigDecimal idStatusFk, BigDecimal idUserFk,BigDecimal idCorte,BigDecimal inout) {
-        getEjb();
+           
         int i = 1;
         ArrayList<OperacionesCaja> listaOperaciones = new ArrayList<OperacionesCaja>();
         List<Object[]> lstObject = ejb.getOperacionesBy(idCajaFk, idOperacionFk, idConceptoFk, fechaInicio, fechaFin, idStatusFk, idUserFk,idCorte,inout);
@@ -115,7 +105,7 @@ public class ServiceOperacionesCaja implements IfaceOperacionesCaja {
 
     @Override
     public ArrayList<OperacionesCaja> getTransferenciasEntrantes(BigDecimal idCajaFk) {
-        getEjb();
+           
         int i = 1;
         ArrayList<OperacionesCaja> listaOperaciones = new ArrayList<OperacionesCaja>();
         List<Object[]> lstObject = ejb.getTransferenciasEntrantes(idCajaFk);
@@ -167,13 +157,13 @@ public class ServiceOperacionesCaja implements IfaceOperacionesCaja {
 
     @Override
     public int updateStatusConcepto(BigDecimal idOperacionPk, BigDecimal idStatusFk,BigDecimal idConceptoFk) {
-        getEjb();
+           
         return ejb.updateStatusConceptoOperacion(idOperacionPk, idStatusFk,idConceptoFk);
     }
 
     @Override
     public ArrayList<TipoOperacion> getOperacionesCorteBy(BigDecimal idCajaFk, BigDecimal idUserFk, BigDecimal idES) {
-        getEjb();
+           
         int i = 1;
         ArrayList<TipoOperacion> lista = new ArrayList<TipoOperacion>();
         List<Object[]> lstObject = ejb.getOperacionesCorteBy(idCajaFk, idUserFk, idES);
@@ -194,7 +184,7 @@ public class ServiceOperacionesCaja implements IfaceOperacionesCaja {
 
     @Override
     public ArrayList<OperacionesCaja> getOperaciones(BigDecimal idCajaFk, BigDecimal idUserFk) {
-        getEjb();
+           
         ArrayList<OperacionesCaja> listaOperaciones = new ArrayList<OperacionesCaja>();
         List<Object[]> lstObject = ejb.getOperaciones(idCajaFk,idUserFk);
         for (Object[] obj : lstObject) 
@@ -221,14 +211,14 @@ public class ServiceOperacionesCaja implements IfaceOperacionesCaja {
 
     @Override
     public int updateCorte(BigDecimal idOperacionPk, BigDecimal idCorteFk) {
-        getEjb();
+           
         return ejb.updateCorteCaja(idOperacionPk, idCorteFk);
     
     }
 
     @Override
     public ArrayList<OperacionesCaja> getCheques(BigDecimal idCajaFk, BigDecimal idUserFk,BigDecimal idINOUT) {
-       getEjb();
+          
        int i = 1;
         ArrayList<OperacionesCaja> listaOperaciones = new ArrayList<OperacionesCaja>();
         List<Object[]> lstObject = ejb.getCheques(idCajaFk, idUserFk,idINOUT);
@@ -257,7 +247,7 @@ public class ServiceOperacionesCaja implements IfaceOperacionesCaja {
     @Override
     public ArrayList<OperacionesCaja> getDepositosEntrantes() 
     {
-        getEjb();
+           
         int i = 1;
         ArrayList<OperacionesCaja> listaOperaciones = new ArrayList<OperacionesCaja>();
         List<Object[]> lstObject = ejb.getDepositosEntrantes();
@@ -290,7 +280,7 @@ public class ServiceOperacionesCaja implements IfaceOperacionesCaja {
 
     @Override
     public ArrayList<Usuario> getResponsables(BigDecimal idCajaFk) {
-        getEjb();
+           
         ArrayList<Usuario> listaResponsables = new ArrayList<Usuario>();
         List<Object[]> lstObject = ejb.getResponsables(idCajaFk);
         for (Object[] obj : lstObject) 
@@ -306,7 +296,7 @@ public class ServiceOperacionesCaja implements IfaceOperacionesCaja {
     @Override
     public ArrayList<OperacionesCaja> getDetalles(BigDecimal idCajaFk, BigDecimal idUserFk, BigDecimal entrada_salida, BigDecimal idStatusFk) {
         System.out.println("Entro a Metodo Get Detalles");
-        getEjb();
+           
         ArrayList<OperacionesCaja> listaOperaciones = new ArrayList<OperacionesCaja>();
         List<Object[]> lstObject = ejb.getDetalles(idCajaFk,idUserFk,entrada_salida,idStatusFk);
         int count = 1;
@@ -357,7 +347,7 @@ public class ServiceOperacionesCaja implements IfaceOperacionesCaja {
     @Override
     public ArrayList<OperacionesCaja> getDetallesCorte(BigDecimal idCajaFk, BigDecimal idUserFk, BigDecimal entrada_salida, BigDecimal idStatusFk,BigDecimal idCorteFk) {
         System.out.println("Entro a Metodo Get Detalles");
-        getEjb();
+           
         ArrayList<OperacionesCaja> listaOperaciones = new ArrayList<OperacionesCaja>();
         List<Object[]> lstObject = ejb.getDetallesCorte(idCajaFk,idUserFk,entrada_salida,idStatusFk,idCorteFk);
         int count = 1;
@@ -406,8 +396,8 @@ public class ServiceOperacionesCaja implements IfaceOperacionesCaja {
     }
     @Override
     public ArrayList<TipoOperacion> getOperacionesByIdCorteCajaFk(BigDecimal idCorteCajaFk,BigDecimal entrada_salida) {
-        getEjb();
-        getEjb();
+           
+           
         int i = 1;
         ArrayList<TipoOperacion> lista = new ArrayList<TipoOperacion>();
          

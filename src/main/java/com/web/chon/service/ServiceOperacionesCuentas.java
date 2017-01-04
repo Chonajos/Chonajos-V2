@@ -6,13 +6,10 @@
 package com.web.chon.service;
 
 import com.web.chon.dominio.OperacionesCuentas;
-import com.web.chon.negocio.NegocioOperacionesCuentas;
-
-import com.web.chon.util.Utilidades;
+import com.web.chon.ejb.EjbOperacionesCuentas;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -22,22 +19,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class ServiceOperacionesCuentas implements IfaceOperacionesCuentas {
 
-    NegocioOperacionesCuentas ejb;
-    private void getEjb() 
-    {
-        if (ejb == null) {
-            try {
-                ejb = (NegocioOperacionesCuentas) Utilidades.getEJBRemote("ejbOperacionesCuentas", NegocioOperacionesCuentas.class.getName());
-            } catch (Exception ex) {
-                Logger.getLogger(ServiceOperacionesCuentas.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
+    @Autowired
+    EjbOperacionesCuentas ejb;
+    
     
     
     @Override
     public int insertaOperacion(OperacionesCuentas es) {
-        getEjb();
+           
         return ejb.insertaOperacion(es);
     
     }
@@ -54,7 +43,7 @@ public class ServiceOperacionesCuentas implements IfaceOperacionesCuentas {
 
     @Override
     public int getNextVal() {
-       getEjb();
+          
        return ejb.getNextVal();
     }
     

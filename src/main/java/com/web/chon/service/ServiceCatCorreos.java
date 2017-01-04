@@ -4,16 +4,12 @@
  * and open the template in the editor.
  */
 package com.web.chon.service;
-
-import com.web.chon.dominio.Cliente;
 import com.web.chon.dominio.Correos;
-import com.web.chon.negocio.NegocioCatCorreos;
-import com.web.chon.util.Utilidades;
+import com.web.chon.ejb.EjbCatCorreos;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -23,36 +19,25 @@ import org.springframework.stereotype.Service;
 @Service
 public class ServiceCatCorreos implements IfaceCatCorreos {
 
-    NegocioCatCorreos ejb;
+    @Autowired
+    EjbCatCorreos ejb;
 
     @Override
     public int insertCorreo(Correos co) {
-        try {
-            ejb = (NegocioCatCorreos) Utilidades.getEJBRemote("ejbCatCorreos", NegocioCatCorreos.class.getName());
-        } catch (Exception ex) {
-            Logger.getLogger(ServiceCatCorreos.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        System.out.println("Correo Service: " + co.toString());
+        
         return ejb.insertCorreo(co);
     }
 
     @Override
     public int deleteCorreos(Correos co) {
-        try {
-
-            ejb = (NegocioCatCorreos) Utilidades.getEJBRemote("ejbCatCorreos", NegocioCatCorreos.class.getName());
-        } catch (Exception ex) {
-            Logger.getLogger(ServiceCatCorreos.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        System.out.println("service delete correos");
+       
         return ejb.deleteCorreos(co);
     }
 
     @Override
     public ArrayList<Correos> SearchCorreosbyidClientPk(BigDecimal idClientepk) {
-        try {
+    
             ArrayList<Correos> lista_correos = new ArrayList<Correos>();
-            ejb = (NegocioCatCorreos) Utilidades.getEJBRemote("ejbCatCorreos", NegocioCatCorreos.class.getName());
             List<Object[]> lstObject = ejb.SearchCorreosbyidClientPk(idClientepk);
             for (Object[] obj : lstObject) {
                 Correos c = new Correos();
@@ -62,13 +47,7 @@ public class ServiceCatCorreos implements IfaceCatCorreos {
                 c.setTipo(obj[3] == null ? "" : obj[3].toString());
                 lista_correos.add(c);
             }
-
             return lista_correos;
-        } catch (Exception ex) {
-            Logger.getLogger(ServiceCatCorreos.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
-
     }
 
     @Override
@@ -76,10 +55,10 @@ public class ServiceCatCorreos implements IfaceCatCorreos {
     {
         if(co.getIdcorreo()==0)
         {
-            System.out.println("No se actualiza, se inserta correo nuevo.");
+           
             return ejb.insertCorreo(co);
         }
-        System.out.println("service update correos:");
+        
         return ejb.updateCorreos(co);
     }
 

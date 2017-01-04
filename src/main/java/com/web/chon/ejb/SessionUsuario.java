@@ -6,25 +6,24 @@
 package com.web.chon.ejb;
 
 import com.web.chon.dominio.Usuario;
-import com.web.chon.negocio.NegocioLogin;
 import java.math.BigDecimal;
 import java.util.List;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author marcogante
  */
-@Stateless(mappedName = "ejbUsuario")
-public class SessionUsuario implements NegocioLogin {
+@Repository
+public class SessionUsuario   {
 
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
 
-    @Override
+       
     public Usuario validarLogin(Usuario obj) throws Exception {
         Usuario usuario = new Usuario();
         try {

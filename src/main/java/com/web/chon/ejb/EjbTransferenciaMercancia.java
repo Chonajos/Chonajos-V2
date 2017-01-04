@@ -6,25 +6,24 @@
 package com.web.chon.ejb;
 
 import com.web.chon.dominio.TransferenciaMercancia;
-import com.web.chon.negocio.NegocioTransferenciaMercancia;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author marcogante
  */
-@Stateless(mappedName = "ejbTransferenciaMercancia")
-public class EjbTransferenciaMercancia implements NegocioTransferenciaMercancia {
+@Repository
+public class EjbTransferenciaMercancia   {
 
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
 
-    @Override
+       
     public int insertaTransferencia(TransferenciaMercancia tm) {
         System.out.println("EJB_INSERTA_TRANSFERENCIA" + tm.toString());
         try {

@@ -16,6 +16,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 //import javax.sql.DataSource;
 //import oracle.jdbc.OracleDriver;
 //import oracle.jdbc.OracleResultSet;
@@ -31,13 +32,13 @@ import javax.persistence.Query;
  *
  * @author Juan de la Cruz
  */
-@Stateless(mappedName = "ejbSubProducto")
-public class EjbSubProducto implements NegocioSubProducto {
+@Repository
+public class EjbSubProducto {
 
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
 
-    @Override
+       
     public List<Object[]> getSubProductos() {
         try {
 
@@ -53,7 +54,7 @@ public class EjbSubProducto implements NegocioSubProducto {
         }
     }
 
-    @Override
+       
     public int deleteSubProducto(String idSubProducto) {
         try {
 
@@ -69,7 +70,7 @@ public class EjbSubProducto implements NegocioSubProducto {
 
     }
 
-    @Override
+       
     public int insertarSubProducto(Subproducto subProducto) {
         try {
             Query query = em.createNativeQuery("INSERT INTO SUBPRODUCTO (ID_SUBPRODUCTO_PK,NOMBRE_SUBPRODUCTO,DESCRIPCION_SUBPRODUCTO,ID_PRODUCTO_FK,URL_IMAGEN_SUBPRODUCTO) values(?,?,?,?,?)");
@@ -88,7 +89,7 @@ public class EjbSubProducto implements NegocioSubProducto {
 
     }
 
-    @Override
+       
     public int updateSubProducto(Subproducto subProducto) {
         try {
 
@@ -108,7 +109,7 @@ public class EjbSubProducto implements NegocioSubProducto {
         }
     }
 
-    @Override
+       
     public int getLastIdProducto(String idCategoria) {
         Query query = em.createNativeQuery("SELECT MAX(SUBSTR(ID_SUBPRODUCTO_PK,5,8)+1 ) ID_SUBPRODUCTO_PK from SUBPRODUCTO where ID_PRODUCTO_FK = ?");
         query.setParameter(1, idCategoria);
@@ -116,7 +117,7 @@ public class EjbSubProducto implements NegocioSubProducto {
         return Integer.parseInt(lastId);
     }
 
-    @Override
+       
     public List<Object[]> getProductoById(String idProducto) {
         Query query = em.createNativeQuery("SELECT * FROM SUBPRODUCTO WHERE ID_SUBPRODUCTO_PK = ?");
         query.setParameter(1, idProducto);
@@ -124,14 +125,14 @@ public class EjbSubProducto implements NegocioSubProducto {
         return query.getResultList();
     }
 
-    @Override
+       
     public List<Object[]> getSubProductoByNombre(String idProducto) {
         Query query = em.createNativeQuery("SELECT ID_SUBPRODUCTO_PK,NOMBRE_SUBPRODUCTO FROM SUBPRODUCTO WHERE UPPER(NOMBRE_SUBPRODUCTO) LIKE '%" + idProducto + "%'");
 
         return query.getResultList();
     }
 
-    @Override
+       
     public List<Object[]> getSubProductosIdSucursal(BigDecimal idSucursal) {
         try {
 

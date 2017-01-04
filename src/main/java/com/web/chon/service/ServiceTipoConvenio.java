@@ -6,6 +6,7 @@
 package com.web.chon.service;
 
 import com.web.chon.dominio.TipoConvenio;
+import com.web.chon.ejb.EjbConvenio;
 import com.web.chon.util.Utilidades;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.stereotype.Service;
 import com.web.chon.negocio.NegocioConvenio;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -21,24 +23,16 @@ import com.web.chon.negocio.NegocioConvenio;
  */
 @Service
 public class ServiceTipoConvenio implements IfaceTipoCovenio {
+    @Autowired
+    EjbConvenio ejb;
 
-    NegocioConvenio ejb;
-
-    public void getEjb() {
-        if (ejb == null) {
-            try {
-                ejb = (NegocioConvenio) Utilidades.getEJBRemote("ejbConvenio", NegocioConvenio.class.getName());
-            } catch (Exception ex) {
-                Logger.getLogger(ServiceCatSucursales.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
+    
 
     @Override
     public ArrayList<TipoConvenio> getTipos() {
         try {
             ArrayList<TipoConvenio> lstTipoOrden = new ArrayList<TipoConvenio>();
-            getEjb();
+               
 
             List<Object[]> lstObject = ejb.getTipos();
 

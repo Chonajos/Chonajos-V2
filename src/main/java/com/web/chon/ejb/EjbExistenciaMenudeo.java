@@ -15,19 +15,20 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 
 /**
  *
  * @author freddy
  */
-@Stateless(mappedName = "ejbExistenciaMenudeo")
-public class EjbExistenciaMenudeo implements NegocioExistenciaMenudeo {
+@Repository
+public class EjbExistenciaMenudeo  {
 
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
 
-    @Override
+    
     public int insertaExistenciaMenudeo(ExistenciaMenudeo e) {
         try {
 
@@ -46,7 +47,7 @@ public class EjbExistenciaMenudeo implements NegocioExistenciaMenudeo {
 
     }
 
-    @Override
+   
     public int updateExistenciaMenudeo(ExistenciaMenudeo existenciaMenudeo) {
         try {
             Query query = em.createNativeQuery("UPDATE EXISTENCIAMENUDEO SET KILOS = ?, CANTIDADEMPAQUE = ? WHERE ID_EXMEN_PK = ?");
@@ -62,7 +63,7 @@ public class EjbExistenciaMenudeo implements NegocioExistenciaMenudeo {
 
     }
 
-    @Override
+    
     public List<Object[]> getExistenciasMenudeoByIdSucursal(BigDecimal idSucursal) {
         try {
             Query query = em.createNativeQuery("SELECT EXM.ID_EXMEN_PK,EXM.ID_SUBPRODUCTO_FK,EXM.ID_SUCURSAL_FK,EXM.KILOS,EXM.CANTIDADEMPAQUE,EXM.IDTIPOEMPAQUEFK,EXM.IDSTATUSFK,SUB.NOMBRE_SUBPRODUCTO,TE.NOMBRE_EMPAQUE  FROM EXISTENCIAMENUDEO EXM "
@@ -78,7 +79,7 @@ public class EjbExistenciaMenudeo implements NegocioExistenciaMenudeo {
         }
     }
 
-    @Override
+    
     public List<Object[]> getExistenciasMenudeoById(BigDecimal id) {
         try {
             Query query = em.createNativeQuery("SELECT EXM.ID_EXMEN_PK,EXM.ID_SUBPRODUCTO_FK,EXM.ID_SUCURSAL_FK,EXM.KILOS,EXM.CANTIDADEMPAQUE,EXM.IDTIPOEMPAQUEFK,EXM.IDSTATUSFK, "
@@ -96,12 +97,12 @@ public class EjbExistenciaMenudeo implements NegocioExistenciaMenudeo {
         }
     }
 
-    @Override
+    
     public List<Object[]> getExistenciasMenudeo(BigDecimal id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
+  
     public List<Object[]> getExistenciasRepetidasById(String ID_SUBPRODUCTO_FK, BigDecimal ID_SUCURSAL_FK) {
         try {
             Query query = em.createNativeQuery("select exm.ID_EXMEN_PK,exm.ID_SUBPRODUCTO_FK,exm.ID_SUCURSAL_FK,NVL(exm.KILOS,0),NVL(exm.CANTIDADEMPAQUE,0),\n"
@@ -120,14 +121,14 @@ public class EjbExistenciaMenudeo implements NegocioExistenciaMenudeo {
         }
     }
 
-    @Override
+    
     public int getNextVal() {
         Query query = em.createNativeQuery("SELECT S_EXISTENCIAMENUDEO.nextVal FROM DUAL");
         return Integer.parseInt(query.getSingleResult().toString());
 
     }
 
-    @Override
+    
     public List<Object[]> getExistenciasMenudeoByIdSucursalAndIdSubproducto(BigDecimal idSucursal, String idSubProducto) {
         try {
             StringBuilder queryBuffer = new StringBuilder("SELECT EXM.ID_EXMEN_PK,EXM.ID_SUBPRODUCTO_FK,EXM.ID_SUCURSAL_FK,EXM.KILOS,EXM.CANTIDADEMPAQUE,EXM.IDTIPOEMPAQUEFK,EXM.IDSTATUSFK,SUB.NOMBRE_SUBPRODUCTO,TE.NOMBRE_EMPAQUE  FROM EXISTENCIAMENUDEO EXM INNER JOIN SUBPRODUCTO SUB ON SUB.ID_SUBPRODUCTO_PK = EXM.ID_SUBPRODUCTO_FK INNER JOIN TIPO_EMPAQUE TE ON TE.ID_TIPO_EMPAQUE_PK = EXM.IDTIPOEMPAQUEFK ");
@@ -154,7 +155,7 @@ public class EjbExistenciaMenudeo implements NegocioExistenciaMenudeo {
         }
     }
 
-    @Override
+    
     public List<Object[]> getRelacion(BigDecimal idSucursal, String idSubproducto) {
         try {
             Query query = em.createNativeQuery("SELECT (SELECT SUM(EMP.KILOS_TOTALES) FROM ENTRADAMENUDEOPRODUCTO EMP\n" +

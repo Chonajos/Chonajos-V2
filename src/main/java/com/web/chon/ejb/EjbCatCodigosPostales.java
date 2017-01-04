@@ -5,27 +5,27 @@
  */
 package com.web.chon.ejb;
 
-import com.web.chon.negocio.NegocioCatCodigosPostales;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author freddy
  */
 
-@Stateless(mappedName = "ejbCatCodigosPostales")
-public class EjbCatCodigosPostales implements NegocioCatCodigosPostales{
+@Repository
+public class EjbCatCodigosPostales  {
     
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+     @PersistenceContext
+    private EntityManager em;
 
-    @Override
+       
     public List<Object[]> getCodigosByCP(String cp) 
     {
         try {
@@ -50,7 +50,7 @@ public class EjbCatCodigosPostales implements NegocioCatCodigosPostales{
        
     }
 
-    @Override
+       
     public List<Object[]> getCodigosByIdMun(int idMun) 
     {
         

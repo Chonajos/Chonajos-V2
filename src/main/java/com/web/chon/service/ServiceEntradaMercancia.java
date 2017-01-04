@@ -4,6 +4,7 @@ import com.web.chon.dominio.CarroDetalleGeneral;
 import com.web.chon.dominio.EntradaMercancia;
 import com.web.chon.dominio.MayoreoProductoEntradaProducto;
 import com.web.chon.dominio.Pagina;
+import com.web.chon.ejb.EjbEntradaMercancia;
 
 import com.web.chon.negocio.NegocioEntradaMercancia;
 import com.web.chon.util.Utilidades;
@@ -28,29 +29,22 @@ public class ServiceEntradaMercancia implements IfaceEntradaMercancia {
     IfaceEntradaMercanciaProducto ifaceEntradaMercanciaProducto;
     @Autowired
     IfaceVentaMayoreoProducto ifaceVentaMayoreoProducto;
-    NegocioEntradaMercancia ejb;
+    @Autowired
+    EjbEntradaMercancia ejb;
 
-    public void getEjb() {
-        if (ejb == null) {
-            try {
-                ejb = (NegocioEntradaMercancia) Utilidades.getEJBRemote("ejbEntradaMercancia", NegocioEntradaMercancia.class.getName());
-            } catch (Exception ex) {
-                Logger.getLogger(ServiceCatSucursales.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
+    
 
     @Override
     public int insertEntradaMercancia(EntradaMercancia entrada) {
 
-        getEjb();
+           
         return ejb.insertEntradaMercancia(entrada);
 
     }
 
     @Override
     public int buscaMaxMovimiento(EntradaMercancia entrada) {
-        getEjb();
+           
         try {
             return ejb.buscaMaxMovimiento(entrada);
         } catch (Exception ex) {
@@ -62,7 +56,7 @@ public class ServiceEntradaMercancia implements IfaceEntradaMercancia {
 
     @Override
     public int getNextVal() {
-        getEjb();
+           
         try {
             return ejb.getNextVal();
 
@@ -75,7 +69,7 @@ public class ServiceEntradaMercancia implements IfaceEntradaMercancia {
 
     @Override
     public ArrayList<EntradaMercancia> getEntradaProductoByIntervalDate(Date fechaInicio, Date fechaFin, BigDecimal idSucursal, BigDecimal idProvedor,BigDecimal carro) {
-        getEjb();
+           
 
         List<Object[]> lstObject = new ArrayList<Object[]>();
         ArrayList<EntradaMercancia> lstEntradaMercancia2 = new ArrayList<EntradaMercancia>();
@@ -123,7 +117,7 @@ public class ServiceEntradaMercancia implements IfaceEntradaMercancia {
 
     @Override
     public EntradaMercancia getById(BigDecimal dominio) {
-        getEjb();
+           
         List<Object[]> object = ejb.getEntradaById(dominio);
         EntradaMercancia entra = new EntradaMercancia();
         for (Object[] obj : object) {
@@ -146,7 +140,7 @@ public class ServiceEntradaMercancia implements IfaceEntradaMercancia {
 
     @Override
     public int update(EntradaMercancia dominio) {
-        getEjb();
+           
         try {
             return ejb.updateEntradaMercancia(dominio);
 
@@ -172,7 +166,7 @@ public class ServiceEntradaMercancia implements IfaceEntradaMercancia {
         try {
             ArrayList<EntradaMercancia> lstEntradas = new ArrayList<EntradaMercancia>();
 
-            getEjb();
+               
             List<Object[]> object = ejb.getSubEntradaByNombre(nombre);
 
             for (Object[] obj : object) {
@@ -196,7 +190,7 @@ public class ServiceEntradaMercancia implements IfaceEntradaMercancia {
 
     @Override
     public int getCarroSucursal(BigDecimal idSucursal) {
-        getEjb();
+           
         try {
             return ejb.getCarroSucursal(idSucursal);
         } catch (Exception ex) {
@@ -207,7 +201,7 @@ public class ServiceEntradaMercancia implements IfaceEntradaMercancia {
 
     @Override
     public int deleteEntradaMercancia(EntradaMercancia entrada) {
-        getEjb();
+           
         try {
             return ejb.deleteEntradaMercancia(entrada);
         } catch (Exception ex) {
@@ -218,7 +212,7 @@ public class ServiceEntradaMercancia implements IfaceEntradaMercancia {
 
     @Override
     public int updateEntradaMercancia(EntradaMercancia entrada) {
-        getEjb();
+           
         try {
             return ejb.updateEntradaMercancia(entrada);
         } catch (Exception ex) {
@@ -230,7 +224,7 @@ public class ServiceEntradaMercancia implements IfaceEntradaMercancia {
 
     @Override
     public EntradaMercancia getEntradaByIdEmPFk(BigDecimal idEmPFk) {
-        getEjb();
+           
         List<Object[]> lstObject = new ArrayList<Object[]>();
         lstObject = ejb.getEntradaByIdEmPFk(idEmPFk);
         EntradaMercancia dominio = new EntradaMercancia();
@@ -259,7 +253,7 @@ public class ServiceEntradaMercancia implements IfaceEntradaMercancia {
 
     @Override
     public EntradaMercancia getEntradaByIdPk(BigDecimal idPk) {
-        getEjb();
+           
         List<Object[]> lstObject = new ArrayList<Object[]>();
         lstObject = ejb.getEntradaByIdPk(idPk);
         EntradaMercancia dominio = new EntradaMercancia();
@@ -286,7 +280,7 @@ public class ServiceEntradaMercancia implements IfaceEntradaMercancia {
     @Override
     public ArrayList<EntradaMercancia> getCarrosByIdSucursalAnsIdProvedor(BigDecimal idSucursal, BigDecimal idProvedor) {
 
-        getEjb();
+           
 
         List<Object[]> lstObject = new ArrayList<Object[]>();
         ArrayList<EntradaMercancia> lstEntradaMercancia = new ArrayList<EntradaMercancia>();
@@ -308,7 +302,7 @@ public class ServiceEntradaMercancia implements IfaceEntradaMercancia {
     @Override
     public ArrayList<CarroDetalleGeneral> getReporteGeneralCarro(BigDecimal idSucursal, BigDecimal idProvedor, BigDecimal carro,String fechaInicio,String fechaFin) {
 
-        getEjb();
+           
 
         List<Object[]> lstObject = new ArrayList<Object[]>();
         ArrayList<CarroDetalleGeneral> lstCarroDetalleGeneral = new ArrayList<CarroDetalleGeneral>();

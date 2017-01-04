@@ -2,14 +2,13 @@ package com.web.chon.service;
 
 import com.web.chon.dominio.AccesMenu;
 import com.web.chon.dominio.Pagina;
-import com.web.chon.negocio.NegocioAccesMenu;
-
-import com.web.chon.util.Utilidades;
+import com.web.chon.ejb.EjbAccesMenu;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -21,24 +20,15 @@ import org.springframework.stereotype.Service;
 
 public class ServiceAccesMenu implements IfaceAccesMenu {
 
-    NegocioAccesMenu ejb;
-
-    public void getEjb() {
-        if (ejb == null) {
-            try {
-                ejb = (NegocioAccesMenu) Utilidades.getEJBRemote("ejbAccesMenu", NegocioAccesMenu.class.getName());
-            } catch (Exception ex) {
-                Logger.getLogger(ServiceAccesMenu.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
+    @Autowired
+    EjbAccesMenu ejb;
 
     @Override
     public List<AccesMenu> getAccesosMenuPorIdRol(BigDecimal idRol) {
         try {
             ArrayList<AccesMenu> lstMenuAcces = new ArrayList<AccesMenu>();
 
-            getEjb();
+               
             List<Object[]> lstObject = ejb.getAccesosMenuPorIdRol(idRol);
 
             for (Object[] obj : lstObject) {
@@ -85,7 +75,7 @@ public class ServiceAccesMenu implements IfaceAccesMenu {
     public int create(AccesMenu dominio) {
         try {
 
-            getEjb();
+               
 
             List<Object[]> lstExiste = ejb.exist(dominio.getIdRol(), dominio.getIdMenu());
             if (dominio.isEstatus()) {

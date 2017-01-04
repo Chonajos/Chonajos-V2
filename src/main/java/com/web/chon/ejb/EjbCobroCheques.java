@@ -11,20 +11,19 @@ package com.web.chon.ejb;
  */
 
 import com.web.chon.dominio.CobroCheques;
-import com.web.chon.negocio.NegocioCobroCheques;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
-@Stateless(mappedName = "ejbCobroCheques")
-public class EjbCobroCheques implements NegocioCobroCheques {
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+@Repository
+public class EjbCobroCheques   {
+   @PersistenceContext
+    private EntityManager em;
 
-    @Override
+       
     public int insertarDocumento(CobroCheques cc) 
     {
         try {
@@ -49,7 +48,7 @@ public class EjbCobroCheques implements NegocioCobroCheques {
         
         
     }
-    @Override
+       
     public int nextVal() {
         try {
             Query query = em.createNativeQuery("select S_COBRO_CHEQUES.nextval from dual");

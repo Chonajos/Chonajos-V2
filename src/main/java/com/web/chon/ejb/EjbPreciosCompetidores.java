@@ -6,28 +6,26 @@
 package com.web.chon.ejb;
 
 import com.web.chon.dominio.PreciosCompetencia;
-import com.web.chon.negocio.NegocioPreciosCompetidores;
 import com.web.chon.util.TiempoUtil;
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author freddy
  */
-@Stateless(mappedName = "ejbPreciosCompetidores")
-public class EjbPreciosCompetidores implements NegocioPreciosCompetidores {
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+@Repository
+public class EjbPreciosCompetidores   {
+    @PersistenceContext
+    private EntityManager em;
 
-    @Override
+       
     public List<Object[]> getPreciosCompetidores(String fecha) {
         
         StringBuffer query = new StringBuffer("select pc.ID_PC_PK,pc.ID_COMPETIDOR_FK,pc.ID_SUBPRODUCTO_FK, pc.FECHA_REGISTRO, pc.PRECIO_VENTA, \n" +
@@ -46,13 +44,13 @@ public class EjbPreciosCompetidores implements NegocioPreciosCompetidores {
     
     
 
-    @Override
+       
     public int getNextVal() {
         Query query = em.createNativeQuery("SELECT S_PRECIOSCOMPETENCIA.nextVal FROM DUAL");
         return Integer.parseInt(query.getSingleResult().toString());
     }
 
-    @Override
+       
     public int insertPreciosCompetidores(PreciosCompetencia pc) 
     {
         // System.out.println("EJB_INSERTA_PreciosCompetidor======"+pc.toString());
@@ -71,7 +69,7 @@ public class EjbPreciosCompetidores implements NegocioPreciosCompetidores {
         }
     }
 
-    @Override
+       
     public int updatePreciosCompetidores(PreciosCompetencia pc) {
        try {
             //System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%"+pc.toString());
@@ -90,12 +88,12 @@ public class EjbPreciosCompetidores implements NegocioPreciosCompetidores {
         }
     }
 
-    @Override
+       
     public List<Object[]> getCometidoresById(BigDecimal idPreciosCompetidores) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
+       
     public int deletePreciosCompetidores(PreciosCompetencia pc) {
        try {
             
@@ -111,7 +109,7 @@ public class EjbPreciosCompetidores implements NegocioPreciosCompetidores {
         
     }
 
-    @Override
+       
     public List<Object[]> getPreciosCompetenciasByCompetidorProducto(PreciosCompetencia pc) {
         String tiempoTemporal = TiempoUtil.getFechaDDMMYYYY(pc.getFechaRegistro());
         StringBuffer query = new StringBuffer("select pc.ID_PC_PK,pc.ID_COMPETIDOR_FK,pc.ID_SUBPRODUCTO_FK, pc.FECHA_REGISTRO, pc.PRECIO_VENTA, \n" +

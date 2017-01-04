@@ -4,17 +4,14 @@
  * and open the template in the editor.
  */
 package com.web.chon.service;
-
-import com.web.chon.dominio.Subproducto;
 import com.web.chon.dominio.Usuario;
-import com.web.chon.negocio.NegocioCatUsuario;
-import com.web.chon.negocio.NegocioSubProducto;
-import com.web.chon.util.Utilidades;
+import com.web.chon.ejb.EjbCatUsuario;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -24,14 +21,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class ServiceCatUsuario implements IfaceCatUsuario {
 
-    NegocioCatUsuario ejb;
+    @Autowired
+    EjbCatUsuario ejb;
 
     @Override
     public ArrayList<Usuario> getUsuarios() {
         try {
             ArrayList<Usuario> lstUsuario = new ArrayList<Usuario>();
-            ejb = (NegocioCatUsuario) Utilidades.getEJBRemote("ejbCatUsuario", NegocioCatUsuario.class.getName());
-
+            
             List<Object[]> lstObject = ejb.getUsuarios();
 
             for (Object[] obj : lstObject) {
@@ -63,8 +60,7 @@ public class ServiceCatUsuario implements IfaceCatUsuario {
     public Usuario getUsuariosById(int idProducto) {
         try {
             Usuario usuario = new Usuario();
-            ejb = (NegocioCatUsuario) Utilidades.getEJBRemote("ejbCatUsuario", NegocioCatUsuario.class.getName());
-
+           
             List<Object[]> lstObject = ejb.getUsuarioById(idProducto);
 
             for (Object[] obj : lstObject) {
@@ -110,7 +106,6 @@ public class ServiceCatUsuario implements IfaceCatUsuario {
     public ArrayList<Usuario> getUsuarioByNombreCompleto(String nombre, int idSucursal) {
         try {
             ArrayList<Usuario> lstUsuario = new ArrayList<Usuario>();
-            ejb = (NegocioCatUsuario) Utilidades.getEJBRemote("ejbCatUsuario", NegocioCatUsuario.class.getName());
             List<Object[]> object = ejb.getUsuarioByNombreCompleto(nombre, idSucursal);
 
             for (Object[] obj : object) {
@@ -136,8 +131,6 @@ public class ServiceCatUsuario implements IfaceCatUsuario {
         try {
 
             Usuario usuario = new Usuario();
-            ejb = (NegocioCatUsuario) Utilidades.getEJBRemote("ejbCatUsuario", NegocioCatUsuario.class.getName());
-
             List<Object[]> lstObject = ejb.getUsuarioByClave(clave,idSucursal);
 
             for (Object[] obj : lstObject) {
@@ -166,8 +159,7 @@ public class ServiceCatUsuario implements IfaceCatUsuario {
        
         try {
             ArrayList<Usuario> lstUsuario = new ArrayList<Usuario>();
-            ejb = (NegocioCatUsuario) Utilidades.getEJBRemote("ejbCatUsuario", NegocioCatUsuario.class.getName());
-
+            
             List<Object[]> lstObject = ejb.getUsuariosbyIdSucursal(idSucursal);
 
             for (Object[] obj : lstObject) {

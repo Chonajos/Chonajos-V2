@@ -14,18 +14,19 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author jramirez
  */
-@Stateless(mappedName = "ejbApartado")
-public class EjbApartado implements NegocioApartado{
+@Repository
+public class EjbApartado  {
 
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
     
-    @Override
+       
     public int insert(Apartado apartado) {
         try {
             Query query = em.createNativeQuery("INSERT INTO  APARTADO_VENTA (ID_APARTADO_PK ,"
@@ -47,13 +48,13 @@ public class EjbApartado implements NegocioApartado{
         
     }
 
-    @Override
+       
     public int getNextVal() {
         Query query = em.createNativeQuery("SELECT S_APARTADO_VENTA.nextVal FROM DUAL");
         return Integer.parseInt(query.getSingleResult().toString());
     }
 
-    @Override
+       
     public BigDecimal montoApartado(BigDecimal idVentaFk,BigDecimal idTipoFk) 
     {
         Query query;

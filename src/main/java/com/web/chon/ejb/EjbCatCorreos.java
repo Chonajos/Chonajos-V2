@@ -6,28 +6,26 @@
 package com.web.chon.ejb;
 
 import com.web.chon.dominio.Correos;
-import com.web.chon.negocio.NegocioCatCorreos;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author freddy
  */
-@Stateless(mappedName = "ejbCatCorreos")
-public class EjbCatCorreos implements NegocioCatCorreos {
+@Repository
+public class EjbCatCorreos   {
 
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
 
-    @Override
+       
     public int insertCorreo(Correos co) 
     {
         try 
@@ -62,7 +60,7 @@ public class EjbCatCorreos implements NegocioCatCorreos {
         }
     }
 
-    @Override
+       
     public int deleteCorreos(Correos co)
     {
         
@@ -81,7 +79,7 @@ public class EjbCatCorreos implements NegocioCatCorreos {
       
     }
 
-    @Override
+       
     public List<Object[]> SearchCorreosbyidClientPk(BigDecimal idClientepk)
     {
         System.out.println("EJB_BUSCA_CORREOS POR ID CLIENTE");
@@ -100,7 +98,7 @@ public class EjbCatCorreos implements NegocioCatCorreos {
         
     }
 
-    @Override
+       
     public int updateCorreos(Correos c) 
     {
         try 

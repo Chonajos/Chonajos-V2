@@ -1,28 +1,28 @@
 package com.web.chon.ejb;
 
 import com.web.chon.dominio.TipoCredito;
-import com.web.chon.negocio.NegocioTipoCredito;
+
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author juan
  */
-@Stateless(mappedName = "ejbTipoCredito")
-public class EjbTipoCredito implements NegocioTipoCredito {
+@Repository
+public class EjbTipoCredito   {
 
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
 
-
-    @Override
+       
     public int insert(TipoCredito tipoCredito) {
 
         try {
@@ -38,7 +38,7 @@ public class EjbTipoCredito implements NegocioTipoCredito {
         }
     }
 
-    @Override
+       
     public int update(TipoCredito tipoCredito) {
          try {
             
@@ -51,7 +51,7 @@ public class EjbTipoCredito implements NegocioTipoCredito {
         }
     }
 
-    @Override
+       
     public int delete(BigDecimal idTipoCredito) {
          try {
             
@@ -67,7 +67,7 @@ public class EjbTipoCredito implements NegocioTipoCredito {
         }
     }
 
-    @Override
+       
     public List<Object[]> getAll() {
          try {
             
@@ -83,7 +83,7 @@ public class EjbTipoCredito implements NegocioTipoCredito {
         }
     }
 
-    @Override
+       
     public List<Object[]> getById(BigDecimal idTipoCredito) {
          try {
             

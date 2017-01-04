@@ -6,6 +6,7 @@
 package com.web.chon.service;
 
 import com.web.chon.dominio.EntradaMercanciaProductoPaquete;
+import com.web.chon.ejb.EjbEntradaMerProPaquete;
 import com.web.chon.negocio.NegocioEntradaMerProPaquete;
 import com.web.chon.util.Utilidades;
 import java.math.BigDecimal;
@@ -15,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -23,28 +25,20 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ServiceEntraMercPaquete implements IfaceEntMerProPaq {
+    @Autowired
+    EjbEntradaMerProPaquete ejb;
 
-    NegocioEntradaMerProPaquete ejb;
-
-    public void getEjb() {
-        if (ejb == null) {
-            try {
-                ejb = (NegocioEntradaMerProPaquete) Utilidades.getEJBRemote("ejbEntradaMerProPaquete", NegocioEntradaMerProPaquete.class.getName());
-            } catch (Exception ex) {
-                Logger.getLogger(ServiceEntraMercPaquete.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
+    
 
     @Override
     public int insertPaquete(EntradaMercanciaProductoPaquete paquete) {
-        getEjb();
+           
         return ejb.insertPaquete(paquete);
     }
 
     @Override
     public ArrayList<EntradaMercanciaProductoPaquete> getPaquetesByIdEmp(BigDecimal idEmpPk) {
-        getEjb();
+           
         List<Object[]> lstObject = new ArrayList<Object[]>();
         ArrayList<EntradaMercanciaProductoPaquete> paquetes = new ArrayList<EntradaMercanciaProductoPaquete>();
         lstObject = ejb.getPaquetesById(idEmpPk);
@@ -70,19 +64,19 @@ public class ServiceEntraMercPaquete implements IfaceEntMerProPaq {
 
     @Override
     public int getNextVal() {
-        getEjb();
+           
         return ejb.getNextVal();
     }
 
     @Override
     public int eliminarPaquete(BigDecimal id) {
-       getEjb();
+          
         return ejb.eliminarPaquete(id);
     }
 
     @Override
     public int updatePaquete(BigDecimal idEmpFk) {
-        getEjb();
+           
         return ejb.updatePaquete(idEmpFk);
     }
     

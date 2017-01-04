@@ -2,6 +2,7 @@ package com.web.chon.service;
 
 import com.web.chon.dominio.GestionCredito;
 import com.web.chon.dominio.ResultadoGestion;
+import com.web.chon.ejb.EjbResultadoGestion;
 import com.web.chon.negocio.NegocioResultadoGestion;
 import com.web.chon.util.Utilidades;
 import java.math.BigDecimal;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,40 +19,32 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ServiceResultadoGestion implements IfaceResultadoGestion {
+    @Autowired
+    EjbResultadoGestion ejb;
 
-    NegocioResultadoGestion ejb;
-
-    private void getEjb() {
-        if (ejb == null) {
-            try {
-                ejb = (NegocioResultadoGestion) Utilidades.getEJBRemote("ejbResultadoGestion", NegocioResultadoGestion.class.getName());
-            } catch (Exception ex) {
-                Logger.getLogger(ServiceResultadoGestion.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
+    
 
     @Override
     public int update(ResultadoGestion resultadoGestion) {
-        getEjb();
+           
         return ejb.update(resultadoGestion);
     }
 
     @Override
     public int insert(ResultadoGestion resultadoGestion) {
-        getEjb();
+           
         return ejb.insert(resultadoGestion);
     }
 
     @Override
     public int delete(BigDecimal idResultadoGestion) {
-        getEjb();
+           
         return ejb.delete(idResultadoGestion);
     }
 
     @Override
     public ArrayList<ResultadoGestion> getAll() {
-        getEjb();
+           
         ArrayList<ResultadoGestion> lstResultadoGestion = new ArrayList<ResultadoGestion>();
         List<Object[]> lstObject = new ArrayList<Object[]>();
         lstObject = ejb.getAll();
@@ -69,7 +63,7 @@ public class ServiceResultadoGestion implements IfaceResultadoGestion {
 
 //    @Override
 //    public ResultadoGestion getById(BigDecimal idResultadoGestion) {
-//        getEjb();
+//           
 //        ResultadoGestion resultadoGestion = new ResultadoGestion();
 //        List<Object[]> lstObject = new ArrayList<Object[]>();
 //        lstObject = ejb.get();
@@ -85,7 +79,7 @@ public class ServiceResultadoGestion implements IfaceResultadoGestion {
 
     @Override
     public int getNextVal() {
-        getEjb();
+           
         try {
             return ejb.getNextVal();
 

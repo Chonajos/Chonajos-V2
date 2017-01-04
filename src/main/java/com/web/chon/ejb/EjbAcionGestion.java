@@ -1,28 +1,27 @@
 package com.web.chon.ejb;
 
-import com.web.chon.dominio.AbonoCredito;
 import com.web.chon.dominio.AcionGestion;
-import com.web.chon.negocio.NegocioAcionGestion;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author juan
  */
-@Stateless(mappedName = "ejbAcionGestion")
-public class EjbAcionGestion implements NegocioAcionGestion {
+@Repository
+public class EjbAcionGestion  
+        {
 
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
 
-    @Override
+       
     public int insert(AcionGestion acionGestion) {
 
         try {
@@ -41,7 +40,7 @@ public class EjbAcionGestion implements NegocioAcionGestion {
         }
     }
 
-    @Override
+       
     public int update(AcionGestion acionGestion) {
         try {
 
@@ -57,7 +56,7 @@ public class EjbAcionGestion implements NegocioAcionGestion {
         }
     }
 
-    @Override
+       
     public int delete(BigDecimal idAcionGestion) {
         try {
 
@@ -73,7 +72,7 @@ public class EjbAcionGestion implements NegocioAcionGestion {
         }
     }
 
-    @Override
+       
     public List<Object[]> getAll() {
         try {
 
@@ -89,7 +88,7 @@ public class EjbAcionGestion implements NegocioAcionGestion {
         }
     }
 
-    @Override
+       
     public List<Object[]> getById(BigDecimal idAcionGestion) {
         try {
 
@@ -106,13 +105,13 @@ public class EjbAcionGestion implements NegocioAcionGestion {
         }
     }
 
-    @Override
+       
     public int getNextVal() {
         Query query = em.createNativeQuery("SELECT S_ACION_GESTION.nextVal FROM DUAL");
         return Integer.parseInt(query.getSingleResult().toString());
     }
 
-    @Override
+       
     public List<Object[]> getByIdResultadoGestion(BigDecimal idResultadoGestion) {
         try {
 

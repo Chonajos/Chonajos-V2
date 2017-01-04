@@ -15,17 +15,17 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author JesusAlfredo
  */
-@Stateless(mappedName = "ejbOperacionesCuentas")
-public class EjbOperacionesCuentas implements NegocioOperacionesCuentas{
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
-
-    @Override
+@Repository
+public class EjbOperacionesCuentas  {
+    @PersistenceContext
+    private EntityManager em;
+       
     public int insertaOperacion(OperacionesCuentas es) {
         System.out.println("=================================================ejb insert" + es.toString());
             
@@ -50,17 +50,17 @@ public class EjbOperacionesCuentas implements NegocioOperacionesCuentas{
     
     }
 
-    @Override
+       
     public int updateOperacion(OperacionesCuentas es) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
+       
     public List<Object[]> getOperacionesByIdCuenta(BigDecimal idCuentaFk) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
+       
     public int getNextVal() {
          try {
             Query query = em.createNativeQuery("select S_OPERACIONES_CUENTAS.nextval from dual");

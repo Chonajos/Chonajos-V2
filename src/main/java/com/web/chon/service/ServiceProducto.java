@@ -2,12 +2,12 @@
 package com.web.chon.service;
 
 import com.web.chon.dominio.Producto;
-import com.web.chon.negocio.NegocioProducto;
-import com.web.chon.util.Utilidades;
+import com.web.chon.ejb.EjbProducto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,15 +17,14 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ServiceProducto implements IfaceProducto {
-
-    NegocioProducto ejb;
+    @Autowired
+    EjbProducto ejb;
 
     @Override
     public ArrayList<Producto> getProductos() {
         try {
             ArrayList<Producto> lstProducto = new ArrayList<Producto>();
-            ejb = (NegocioProducto) Utilidades.getEJBRemote("ejbProducto", NegocioProducto.class.getName());
-
+            
             List<Object[]> lstObject = ejb.getProductos();
 
             for (Object[] obj : lstObject) {
@@ -89,7 +88,6 @@ public class ServiceProducto implements IfaceProducto {
     public int getLastIdCategoria() {
         try {
             int idCategoria =0;
-            ejb = (NegocioProducto) Utilidades.getEJBRemote("ejbProducto", NegocioProducto.class.getName());
             idCategoria = ejb.getLastIdCategoria();
             return idCategoria;
         } catch (Exception ex) {

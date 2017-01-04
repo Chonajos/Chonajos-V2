@@ -2,35 +2,25 @@
 package com.web.chon.service;
 
 import com.web.chon.dominio.TipoCredito;
-import com.web.chon.negocio.NegocioTipoCredito;
-import com.web.chon.util.Utilidades;
+import com.web.chon.ejb.EjbTipoCredito;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
  * @author Juan de la Cruz
  */
 public class ServiceTipoCredito implements IfaceTipoCredito {
-    
-   NegocioTipoCredito ejb;
+    @Autowired
+   EjbTipoCredito ejb;
 
-    private void getEjb() {
-        if (ejb == null) {
-            try {
-                ejb = (NegocioTipoCredito) Utilidades.getEJBRemote("ejbTipoCredito", NegocioTipoCredito.class.getName());
-            } catch (Exception ex) {
-                Logger.getLogger(ServiceTipoCredito.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
+    
 
     @Override
     public ArrayList<TipoCredito> getAll() {
-        getEjb();
+           
         ArrayList<TipoCredito> lstTipoCredito = new ArrayList<TipoCredito>();
         List<Object[]> lstObject = new ArrayList<Object[]>();
         lstObject = ejb.getAll();
@@ -49,7 +39,7 @@ public class ServiceTipoCredito implements IfaceTipoCredito {
 
     @Override
     public TipoCredito getById(BigDecimal idTipoCredito) {
-        getEjb();
+           
         List<Object[]> lstObject = new ArrayList<Object[]>();
         lstObject = ejb.getAll();
         TipoCredito tipoCredito = new TipoCredito();
@@ -66,19 +56,19 @@ public class ServiceTipoCredito implements IfaceTipoCredito {
 
     @Override
     public int delete(BigDecimal idTipoCredito) {
-        getEjb();
+           
         return ejb.delete(idTipoCredito);
     }
 
     @Override
     public int update(TipoCredito tipoCredito) {
-        getEjb();
+           
         return ejb.update(tipoCredito);
     }
 
     @Override
     public int insert(TipoCredito tipoCredito) {
-        getEjb();
+           
         return ejb.insert(tipoCredito);
     }
     

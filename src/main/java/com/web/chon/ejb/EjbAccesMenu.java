@@ -10,18 +10,19 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Juan de la Cruz
  */
-@Stateless(mappedName = "ejbAccesMenu")
-public class EjbAccesMenu implements NegocioAccesMenu {
+@Repository
+public class EjbAccesMenu   {
 
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+   @PersistenceContext
+    private EntityManager em;
 
-    @Override
+       
     public List<Object[]> getAccesosMenuPorIdRol(BigDecimal idRol) {
 
         try {
@@ -37,7 +38,7 @@ public class EjbAccesMenu implements NegocioAccesMenu {
         }
     }
 
-    @Override
+       
     public int delete(BigDecimal idRol, BigDecimal idMenu) {
 
         try {
@@ -54,7 +55,7 @@ public class EjbAccesMenu implements NegocioAccesMenu {
         }
     }
 
-    @Override
+       
     public int create(BigDecimal idRol, BigDecimal idMenu) {
         try {
             System.out.println("ejb "+idRol +" idmenu "+idMenu);
@@ -70,7 +71,7 @@ public class EjbAccesMenu implements NegocioAccesMenu {
         }
     }
 
-    @Override
+       
     public List<Object[]> exist(BigDecimal idRol, BigDecimal idMenu) {
 
         try {

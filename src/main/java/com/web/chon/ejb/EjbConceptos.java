@@ -12,17 +12,18 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author JesusAlfredo
  */
-@Stateless(mappedName = "ejbConceptos")
-public class EjbConceptos implements NegocioConceptos{
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+@Repository
+public class EjbConceptos  {
+    @PersistenceContext
+    private EntityManager em;
 
-    @Override
+       
     public List<Object[]> getConceptosByTipoOperacion(BigDecimal idTipoOperacionFk)
     {
         Query query = em.createNativeQuery("select * from CONCEPTOS where ID_TIPO_OPERACION_FK = ?");
@@ -30,7 +31,7 @@ public class EjbConceptos implements NegocioConceptos{
         return query.getResultList();
     }
 
-    @Override
+       
     public List<Object[]> getConceptos() {
        Query query = em.createNativeQuery("select * from CONCEPTOS");
         return query.getResultList();

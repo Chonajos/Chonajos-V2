@@ -13,17 +13,18 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import com.web.chon.negocio.NegocioConvenio;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author marcogante
  */
-@Stateless(mappedName = "ejbConvenio")
-public class EjbConvenio implements NegocioConvenio{
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+@Repository
+public class EjbConvenio  {
+    @PersistenceContext
+    private EntityManager em;
 
-    @Override
+       
     public List<Object[]> getTipos() 
     {
         try {

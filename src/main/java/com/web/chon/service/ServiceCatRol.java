@@ -2,15 +2,13 @@ package com.web.chon.service;
 
 import com.web.chon.dominio.Pagina;
 import com.web.chon.dominio.Rol;
-
-import com.web.chon.negocio.NegocioCatRol;
-
-import com.web.chon.util.Utilidades;
+import com.web.chon.ejb.EjbCatRol;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -22,23 +20,15 @@ import org.springframework.stereotype.Service;
 
 public class ServiceCatRol implements IfaceCatRol {
 
-    NegocioCatRol ejb;
+    @Autowired
+    EjbCatRol ejb;
 
-    public void getEjb() {
-        if (ejb == null) {
-            try {
-                ejb = (NegocioCatRol) Utilidades.getEJBRemote("ejbCatRol", NegocioCatRol.class.getName());
-            } catch (Exception ex) {
-                Logger.getLogger(ServiceCatRol.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-
+    
 
     @Override
     public int getNextVal() {
         
-        getEjb();
+           
         
         return ejb.getNextVal();
     }
@@ -56,13 +46,13 @@ public class ServiceCatRol implements IfaceCatRol {
     @Override
     public int create(Rol rol) {
 
-        getEjb();
+           
         return ejb.insert(rol);
     }
 
     @Override
     public int update(Rol rol) {
-        getEjb();
+           
         return ejb.update(rol);
     }
 
@@ -72,7 +62,7 @@ public class ServiceCatRol implements IfaceCatRol {
         try {
             ArrayList<Rol> lstRol = new ArrayList<Rol>();
 
-            getEjb();
+               
             
             List<Object[]> lstObject = ejb.getAll();
 
@@ -94,7 +84,7 @@ public class ServiceCatRol implements IfaceCatRol {
 
     @Override
     public int delete(BigDecimal id) {
-        getEjb();
+           
         return ejb.delete(id.intValue());
     }
 
@@ -103,10 +93,10 @@ public class ServiceCatRol implements IfaceCatRol {
 
         List<Object[]> lstObject = null;
         Rol rol = new Rol();
-        getEjb();
+           
         lstObject = ejb.getById(idRol.intValue());
 
-        getEjb();
+           
         for (Object[] obj : lstObject) {
 
             rol.setIdRolPk(obj[0] == null ? null : new BigDecimal(obj[0].toString()));

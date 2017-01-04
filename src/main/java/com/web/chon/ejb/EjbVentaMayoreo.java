@@ -11,18 +11,19 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.jboss.logging.Logger;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author freddy
  */
-@Stateless(mappedName = "ejbVentaMayoreo")
-public class EjbVentaMayoreo implements NegocioVentaMayoreo {
+@Repository
+public class EjbVentaMayoreo   {
 
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
 
-    @Override
+       
     public int insertarVenta(VentaMayoreo venta) {
         Query query = em.createNativeQuery("INSERT INTO VENTA_MAYOREO(ID_VENTA_MAYOREO_PK,ID_CLIENTE_FK,ID_VENDEDOR_FK,FECHA_VENTA,ID_SUCURSAL_FK,ID_TIPO_VENTA_FK,ID_STATUS_FK,VENTASUCURSAL) VALUES(?,?,?,sysdate,?,?,?,?)");
         query.setParameter(1, venta.getIdVentaMayoreoPk());
@@ -35,14 +36,14 @@ public class EjbVentaMayoreo implements NegocioVentaMayoreo {
         return query.executeUpdate();
     }
 
-    @Override
+       
     public int getNextVal() {
         Query query = em.createNativeQuery("SELECT s_venta_Mayoreo.nextVal FROM DUAL");
         return Integer.parseInt(query.getSingleResult().toString());
 
     }
 
-    @Override
+       
     public List<Object[]> getVentasByInterval(String fechaInicio, String fechaFin, BigDecimal idSucursal, BigDecimal idStatusVenta, BigDecimal idTipoVenta, String idSubProducto, BigDecimal idCliente) {
         Query query;
         int cont = 0;
@@ -137,14 +138,14 @@ public class EjbVentaMayoreo implements NegocioVentaMayoreo {
 
     }
 
-    @Override
+       
     public int getVentaSucursal(BigDecimal idSucursal) {
         Query query = em.createNativeQuery("select NVL(max(VENTASUCURSAL),0) from VENTA_MAYOREO where ID_SUCURSAL_FK=?");
         query.setParameter(1, idSucursal);
         return Integer.parseInt(query.getSingleResult().toString());
     }
 
-    @Override
+       
     public int updateEstatusVentaByFolioSucursalAndIdSucursal(BigDecimal folioSucursal, BigDecimal idSucursal, BigDecimal estatusVenta) {
         try {
             Query query = em.createNativeQuery("UPDATE VENTA_MAYOREO SET ID_STATUS_FK = ? WHERE ID_SUCURSAL_FK = ? AND VENTASUCURSAL =?");
@@ -163,7 +164,7 @@ public class EjbVentaMayoreo implements NegocioVentaMayoreo {
         }
     }
 
-    @Override
+       
     public int cancelarVentaMayoreo(BigDecimal idVenta, BigDecimal idUsuario, String comentarios) {
         System.out.println("idVenta: " + idVenta);
         System.out.println("idUsuario: " + idUsuario);
@@ -184,7 +185,7 @@ public class EjbVentaMayoreo implements NegocioVentaMayoreo {
 
     }
 
-    @Override
+       
     public List<Object[]> getVentaMayoreoByFolioidSucursalFk(BigDecimal idFolio, BigDecimal idSucursal) {
         try {
             Query query = em.createNativeQuery("select vm.ID_VENTA_MAYOREO_PK,vm.ID_CLIENTE_FK,vm.ID_VENDEDOR_FK,vm.FECHA_VENTA,\n"
@@ -209,7 +210,7 @@ public class EjbVentaMayoreo implements NegocioVentaMayoreo {
 
     }
 
-    @Override
+       
     public List<Object[]> getDetalleReporteVentas(BigDecimal carro, BigDecimal idSucursal, BigDecimal idTipoVenta) {
 
         try {
@@ -241,7 +242,7 @@ public class EjbVentaMayoreo implements NegocioVentaMayoreo {
 
     }
 
-    @Override
+       
     public List<Object[]> getReporteVentas(BigDecimal carro, BigDecimal idSucursal, BigDecimal idTipoVenta) {
 
         try {
@@ -272,7 +273,7 @@ public class EjbVentaMayoreo implements NegocioVentaMayoreo {
         }
     }
 
-    @Override
+       
     public List<Object[]> getDetalleVentasCarro(BigDecimal idSucursal, BigDecimal carro) {
         try {
             Query query = em.createNativeQuery("SELECT VM.ID_VENTA_MAYOREO_PK,VM.FECHA_VENTA,VM.VENTASUCURSAL,TV.NOMBRE_TIPO_VENTA,CRE.ESTATUS_CREDITO,SC.NOMBRE_STATUS, "

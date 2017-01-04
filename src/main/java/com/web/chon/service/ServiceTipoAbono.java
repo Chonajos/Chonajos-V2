@@ -5,6 +5,7 @@
  */
 package com.web.chon.service;
 import com.web.chon.dominio.TipoAbono;
+import com.web.chon.ejb.EjbTipoAbono;
 import com.web.chon.negocio.NegocioTipoAbono;
 import com.web.chon.util.Utilidades;
 import java.math.BigDecimal;
@@ -13,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -21,21 +23,14 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ServiceTipoAbono implements IfaceTipoAbono {
-    NegocioTipoAbono ejb;
+    @Autowired
+    EjbTipoAbono ejb;
 
-    private void getEjb() {
-        if (ejb == null) {
-            try {
-                ejb = (NegocioTipoAbono) Utilidades.getEJBRemote("ejbTipoAbono", NegocioTipoAbono.class.getName());
-            } catch (Exception ex) {
-                Logger.getLogger(ServiceTipoAbono.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
+    
 
     @Override
     public ArrayList<TipoAbono> getAll() {
-       getEjb();
+          
         ArrayList<TipoAbono> lstCredito = new ArrayList<TipoAbono>();
         List<Object[]> lstObject = new ArrayList<Object[]>();
         lstObject = ejb.getAll();

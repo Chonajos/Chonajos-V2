@@ -15,18 +15,19 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author freddy
  */
-@Stateless(mappedName = "ejbExistenciaProducto")
-public class EjbExistenciaProducto implements NegocioExistenciaProducto {
+@Repository
+public class EjbExistenciaProducto   {
 
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
 
-    @Override
+    
     public int insertaExistencia(ExistenciaProducto e) {
 
         //System.out.println("Entrada_Porducto Existencia Nuevo =============: " + e.toString());
@@ -58,7 +59,7 @@ public class EjbExistenciaProducto implements NegocioExistenciaProducto {
         }
     }
 
-    @Override
+    
     public List<Object[]> getExistenciaById(BigDecimal idExistencia) {
         try {
 
@@ -71,7 +72,7 @@ public class EjbExistenciaProducto implements NegocioExistenciaProducto {
 
     }
 
-    @Override
+    
     public List<Object[]> getExistenciaProductoId(BigDecimal idSucursal, String idSubproductoFk, BigDecimal idTipoEmpaqueFk, BigDecimal idBodegaFk, BigDecimal idProvedorFk) {
         try {
 
@@ -85,7 +86,7 @@ public class EjbExistenciaProducto implements NegocioExistenciaProducto {
         }
     }
 
-    @Override
+   
     public int updateCantidadKilo(ExistenciaProducto e) {
 
         //System.out.println("EJBUPDATEPRODUCTO:--------------------"+e.toString());
@@ -105,7 +106,7 @@ public class EjbExistenciaProducto implements NegocioExistenciaProducto {
         }
     }
 
-    @Override
+  
     public int update(ExistenciaProducto e) {
 
         try {
@@ -140,7 +141,7 @@ public class EjbExistenciaProducto implements NegocioExistenciaProducto {
         }
     }
 
-    @Override
+     
     public List<Object[]> getExistencias(BigDecimal idSucursal, BigDecimal idBodega, BigDecimal idProvedor, String idProducto, BigDecimal idEmpaque, BigDecimal idConvenio, BigDecimal idEmpPK, BigDecimal carro) {
 
         try {
@@ -254,7 +255,7 @@ public class EjbExistenciaProducto implements NegocioExistenciaProducto {
         }
     }
 
-    @Override
+     
     public List<Object[]> getExistenciasRepetidas(BigDecimal idSucursal, String idSubproductoFk, BigDecimal idTipoEmpaqueFk, BigDecimal idBodegaFk, BigDecimal idProvedorFk, BigDecimal idTipoConvenio, BigDecimal idEMProducto) {
 
         try {
@@ -277,7 +278,7 @@ public class EjbExistenciaProducto implements NegocioExistenciaProducto {
 
     }
 
-    @Override
+     
     public int updatePrecio(ExistenciaProducto ep) {
         try {
 
@@ -297,7 +298,7 @@ public class EjbExistenciaProducto implements NegocioExistenciaProducto {
         }
     }
 
-    @Override
+     
     public List<Object[]> getExistenciasCancelar(BigDecimal idExistencia) {
         System.out.println("Ejecuto Get Existencias para Cancelar");
         try {
@@ -313,7 +314,7 @@ public class EjbExistenciaProducto implements NegocioExistenciaProducto {
         }
     }
 
-    @Override
+     
     public int deleteExistenciaProducto(ExistenciaProducto exp) {
         try {
             Query query = em.createNativeQuery("delete from EXISTENCIA_PRODUCTO exp where exp.ID_EMP_FK = ?");
@@ -326,7 +327,7 @@ public class EjbExistenciaProducto implements NegocioExistenciaProducto {
 
     }
 
-    @Override
+     
     public List<Object[]> getExistenciaByIdEmpFk(BigDecimal idEmpFk) {
         try {
             Query query = em.createNativeQuery("select exp.* from EXISTENCIA_PRODUCTO exp where exp.ID_EMP_FK =?");
@@ -342,7 +343,7 @@ public class EjbExistenciaProducto implements NegocioExistenciaProducto {
 
     }
 
-    @Override
+     
     public int getNextVal() {
         try {
             Query query = em.createNativeQuery("select S_EXISTENCIA_PRODUCTO.NextVal from dual");
@@ -354,7 +355,7 @@ public class EjbExistenciaProducto implements NegocioExistenciaProducto {
 
     }
 
-    @Override
+    
     public List<Object[]> getExistenciaByBarCode(String idSubProducto, BigDecimal idTipoEmpaqueFk, BigDecimal idTipoConvenioFk, BigDecimal idCarro, BigDecimal idSucursalFk) {
         try {
 

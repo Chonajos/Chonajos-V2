@@ -7,15 +7,15 @@ package com.web.chon.service;
 
 
 import com.web.chon.dominio.EntradaMenudeoProducto;
+import com.web.chon.ejb.EjbEntradaMenudeoProducto;
 import com.web.chon.negocio.NegocioMenudeoProducto;
 import com.web.chon.util.Utilidades;
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -24,33 +24,26 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ServiceEntradaMenudeoProducto implements IfaceEntradaMenudeoProducto{
-    NegocioMenudeoProducto ejb;
+    @Autowired
+    EjbEntradaMenudeoProducto ejb;
 
-    public void getEjb() {
-        if (ejb == null) {
-            try {
-                ejb = (NegocioMenudeoProducto) Utilidades.getEJBRemote("ejbEntradaMenudeoProducto", NegocioMenudeoProducto.class.getName());
-            } catch (Exception ex) {
-                Logger.getLogger(ServiceEntradaMenudeoProducto.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
+    
 
     @Override
     public int insertEntradaMercanciaProducto(EntradaMenudeoProducto producto) {
-       getEjb();
+          
         return ejb.insertEntradaMenudeoProducto(producto);
     }
 
     @Override
     public int getNextVal() {
-        getEjb();
+           
         return ejb.getNextVal();
     }
 
     @Override
     public ArrayList<EntradaMenudeoProducto> getEntradaProductoById(BigDecimal id) {
-       getEjb();
+          
 
         List<Object[]> lstObject = new ArrayList<Object[]>();
         ArrayList<EntradaMenudeoProducto> lstEntradaMercancia2 = new ArrayList<EntradaMenudeoProducto>();

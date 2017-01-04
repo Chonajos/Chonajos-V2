@@ -13,6 +13,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
@@ -20,13 +21,13 @@ import javax.persistence.Query;
  *
  * @author Juan de la Cruz
  */
-@Stateless(mappedName = "ejbMantenimientoPrecio")
-public class EjbMantenimientoPrecio implements NegocioMantenimientoPrecio {
+@Repository
+public class EjbMantenimientoPrecio   {
 
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
-
-    @Override
+    @PersistenceContext
+    private EntityManager em;
+    
+       
     public List<Object[]> getPrecioByIdEmpaqueAndIdProducto(String idProducto, int idEmpaque, int idSucursal) {
         Query query = em.createNativeQuery("SELECT * FROM MANTENIMIENTO_PRECIO WHERE TRIM(ID_SUBPRODUCTO_FK) = ? AND ID_TIPO_EMPAQUE_FK = ? AND ID_SUCURSAL_FK = ? ");
         query.setParameter(1, idProducto);
@@ -36,7 +37,7 @@ public class EjbMantenimientoPrecio implements NegocioMantenimientoPrecio {
         return query.getResultList();
     }
 
-    @Override
+       
     public int insertarMantenimientoPrecio(MantenimientoPrecios mantenimientoPrecios) {
         try {
             System.out.println("data ejb insert:" + mantenimientoPrecios.toString());
@@ -58,7 +59,7 @@ public class EjbMantenimientoPrecio implements NegocioMantenimientoPrecio {
         }
     }
 
-    @Override
+       
      public int updateMantenimientoPrecio(MantenimientoPrecios mantenimientoPrecios) {
         try {
 
@@ -82,7 +83,7 @@ public class EjbMantenimientoPrecio implements NegocioMantenimientoPrecio {
         }
     }
 
-    @Override
+       
     public List<Object[]> getAllByIdSucAndIdSubProducto(BigDecimal idSucursal, String idSubProducto, Date fechaMercado) {
 
         String fechaTemporalFin = TiempoUtil.getFechaDDMMYYYY(fechaMercado);

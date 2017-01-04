@@ -13,18 +13,20 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author freddy
  */
-@Stateless(mappedName = "ejbCatMotivos")
-public class EjbCatMotivos implements NegocioCatMotivos 
+@Repository
+public class EjbCatMotivos   
 {
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+     @PersistenceContext
+    private EntityManager em;
 
-    @Override
+
+       
     public List<Object[]> getMotivos() 
     {
         try {

@@ -2,17 +2,16 @@ package com.web.chon.service;
 
 import com.web.chon.dominio.AnalisisMercado;
 import com.web.chon.dominio.Pagina;
+import com.web.chon.ejb.EjbAnalisisMercado;
 import com.web.chon.util.TiempoUtil;
 import com.web.chon.util.Utilidades;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import com.web.chon.negocio.NegocioAnalisisMercado;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -21,25 +20,17 @@ import com.web.chon.negocio.NegocioAnalisisMercado;
 @Service
 public class ServiceAnalisisMercado implements IfaceAnalisisMercado {
 
-    NegocioAnalisisMercado ejb;
+    @Autowired
+    EjbAnalisisMercado ejb;
 
     @Override
     public int saveEntradaProductoCentral(AnalisisMercado entradaMercancia) {
 
-        getEjb();
+           
         System.out.println(entradaMercancia.toString());
         return ejb.saveEntradaProductoCentral(entradaMercancia);
     }
 
-    public void getEjb() {
-        if (ejb == null) {
-            try {
-                ejb = (NegocioAnalisisMercado) Utilidades.getEJBRemote("ejbAnalisisMercado", NegocioAnalisisMercado.class.getName());
-            } catch (Exception ex) {
-                Logger.getLogger(ServiceAnalisisMercado.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
 
     @Override
     public Pagina<AnalisisMercado> findAll(Pageable pageable) {
@@ -58,7 +49,7 @@ public class ServiceAnalisisMercado implements IfaceAnalisisMercado {
 
     @Override
     public int update(AnalisisMercado dto) {
-        getEjb();
+           
         return ejb.update(dto);
     }
 
@@ -88,7 +79,7 @@ public class ServiceAnalisisMercado implements IfaceAnalisisMercado {
 
         Date fechaFin = fechaInicio;
 
-        getEjb();
+           
 
         ArrayList<AnalisisMercado> lstEntradaMercancia = new ArrayList<AnalisisMercado>();
         ArrayList<AnalisisMercado> lstEntradaMercanciaDate = new ArrayList<AnalisisMercado>();
@@ -275,10 +266,10 @@ public class ServiceAnalisisMercado implements IfaceAnalisisMercado {
     public AnalisisMercado getEntradaProductoByIdProducto(String idProducto, String fecha) {
         List<Object[]> lstObject = null;
         AnalisisMercado dominio = new AnalisisMercado();
-        getEjb();
+           
         lstObject = ejb.getEntradaProductoByIdProducto(idProducto, fecha);
 
-        getEjb();
+           
         for (Object[] obj : lstObject) {
 
             dominio.setIdEntrada(obj[0] != null ? new BigDecimal(obj[0].toString()) : new BigDecimal(0));
@@ -304,7 +295,7 @@ public class ServiceAnalisisMercado implements IfaceAnalisisMercado {
         BigDecimal remanete = new BigDecimal(0);
         List<String> lstFecha = TiempoUtil.getintervalWeekDDMMYYYYbyDay(fechaRemanente);
 
-        getEjb();
+           
         remanete = ejb.getRemanente(lstFecha.get(0), lstFecha.get(6), idProducto);
 
         return remanete;
@@ -324,10 +315,10 @@ public class ServiceAnalisisMercado implements IfaceAnalisisMercado {
         System.out.println("idProducto "+idProducto);
         System.out.println("nombreDia "+nombreDia);
         ArrayList<AnalisisMercado> lstAnalisisMercado = new ArrayList<AnalisisMercado>();
-        getEjb();
+           
         lstObject = ejb.getAnalisMercadoByNameDayOfYear(fechaInicio, fechaFin, idProducto, nombreDia);
 
-        getEjb();
+           
         for (Object[] obj : lstObject) {
             AnalisisMercado dominio = new AnalisisMercado();
         

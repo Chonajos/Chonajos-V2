@@ -1,27 +1,26 @@
 package com.web.chon.ejb;
 
 import com.web.chon.dominio.AbonoCredito;
-import com.web.chon.negocio.NegocioAbonoCredito;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author juan
  */
-@Stateless(mappedName = "ejbAbonoCredito")
-public class EjbAbonoCredito implements NegocioAbonoCredito {
+@Repository
+public class EjbAbonoCredito   {
 
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
 
-    @Override
+       
     public int insert(AbonoCredito abonoCredito) {
 
         try {
@@ -56,7 +55,7 @@ public class EjbAbonoCredito implements NegocioAbonoCredito {
         }
     }
 
-    @Override
+       
     public int update(AbonoCredito abonoCredito) {
         try {
 
@@ -75,7 +74,7 @@ public class EjbAbonoCredito implements NegocioAbonoCredito {
         }
     }
 
-    @Override
+       
     public int delete(BigDecimal idAbonoCredito) {
         try {
 
@@ -91,7 +90,7 @@ public class EjbAbonoCredito implements NegocioAbonoCredito {
         }
     }
 
-    @Override
+       
     public List<Object[]> getAll() {
         try {
 
@@ -107,7 +106,7 @@ public class EjbAbonoCredito implements NegocioAbonoCredito {
         }
     }
 
-    @Override
+       
     public List<Object[]> getById(BigDecimal idAbonoCredito) {
         try {
 
@@ -124,13 +123,13 @@ public class EjbAbonoCredito implements NegocioAbonoCredito {
         }
     }
 
-    @Override
+       
     public int getNextVal() {
         Query query = em.createNativeQuery("SELECT S_ABONO_CREDITO.nextVal FROM DUAL");
         return Integer.parseInt(query.getSingleResult().toString());
     }
 
-    @Override
+       
     public List<Object[]> getByIdCredito(BigDecimal idAbonoCredito) {
         try {
             Query query = em.createNativeQuery("select * from ABONO_CREDITO abc\n"
@@ -145,7 +144,7 @@ public class EjbAbonoCredito implements NegocioAbonoCredito {
         }
     }
 
-    @Override
+       
     public List<Object[]> getChequesPendientes(String fechaInicio, String fechaFin, BigDecimal idSucursal, BigDecimal idClienteFk, BigDecimal filtro, BigDecimal filtroStatus) {
         
 
@@ -188,7 +187,7 @@ public class EjbAbonoCredito implements NegocioAbonoCredito {
 
     }
 
-    @Override
+       
     public List<Object[]> getByIdVentaMayoreoFk(BigDecimal idVentaMayoreoFk) {
         try {
 
@@ -208,7 +207,7 @@ public class EjbAbonoCredito implements NegocioAbonoCredito {
 
     }
 
-    @Override
+       
     public List<Object[]> getByIdVentaMenudeoFk(BigDecimal idVentaMenudeoFk) {
         try {
 
@@ -228,7 +227,7 @@ public class EjbAbonoCredito implements NegocioAbonoCredito {
 
     }
 
-    @Override
+       
     public List<Object[]> getAbonosByIdCredito(BigDecimal idCredito) {
 
         try {
@@ -248,7 +247,7 @@ public class EjbAbonoCredito implements NegocioAbonoCredito {
         }
     }
 
-    @Override
+       
     public List<Object[]> getHistorialAbonos(BigDecimal idClienteFk, BigDecimal idCajeroFk, String fechaInicio, String fechaFin, BigDecimal idTipoPagoFk, BigDecimal idAbonoPk, BigDecimal idCreditoFk) {
         System.out.println("Variables: idCliente: "+idClienteFk +" idCajero: "+idCajeroFk+" idTipoPago: "+idTipoPagoFk +" idAbonoPk: "+idAbonoPk  +" idCredito: "+idCreditoFk);
         StringBuffer cadena = new StringBuffer("select ab.ID_ABONO_CREDITO_PK as folio,(CLI.NOMBRE||' '||CLI.APELLIDO_PATERNO ||' '||CLI.APELLIDO_MATERNO ) AS CLIENTE,\n" +

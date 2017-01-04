@@ -1,27 +1,27 @@
 package com.web.chon.ejb;
 
 import com.web.chon.dominio.ResultadoGestion;
-import com.web.chon.negocio.NegocioResultadoGestion;
+
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author juan
  */
-@Stateless(mappedName = "ejbResultadoGestion")
-public class EjbResultadoGestion implements NegocioResultadoGestion {
+@Repository
+public class EjbResultadoGestion  {
 
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
 
-    @Override
+       
     public int insert(ResultadoGestion resultadoGestion) {
 
         try {
@@ -37,7 +37,7 @@ public class EjbResultadoGestion implements NegocioResultadoGestion {
         }
     }
 
-    @Override
+       
     public int update(ResultadoGestion resultadoGestion) {
         try {
 
@@ -53,7 +53,7 @@ public class EjbResultadoGestion implements NegocioResultadoGestion {
         }
     }
 
-    @Override
+       
     public int delete(BigDecimal idResultadoGestion) {
         try {
 
@@ -69,7 +69,7 @@ public class EjbResultadoGestion implements NegocioResultadoGestion {
         }
     }
 
-    @Override
+       
     public List<Object[]> getAll() {
         try {
 
@@ -85,7 +85,7 @@ public class EjbResultadoGestion implements NegocioResultadoGestion {
         }
     }
 
-    @Override
+       
     public int getNextVal() {
         Query query = em.createNativeQuery("SELECT S_RESULTADO_GESTION.nextVal FROM DUAL");
         return Integer.parseInt(query.getSingleResult().toString());

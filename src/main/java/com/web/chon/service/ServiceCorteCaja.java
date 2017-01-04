@@ -6,6 +6,7 @@
 package com.web.chon.service;
 
 import com.web.chon.dominio.CorteCaja;
+import com.web.chon.ejb.EjbCorteCaja;
 import com.web.chon.negocio.NegocioCorteCaja;
 import com.web.chon.util.Utilidades;
 import java.math.BigDecimal;
@@ -15,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -24,39 +26,31 @@ import org.springframework.stereotype.Service;
 @Service
 public class ServiceCorteCaja implements IfaceCorteCaja {
 
-    NegocioCorteCaja ejb;
+    @Autowired
+    EjbCorteCaja ejb;
 
-    private void getEjb() {
-        if (ejb == null) {
-            try {
-                ejb = (NegocioCorteCaja) Utilidades.getEJBRemote("ejbCorteCaja", NegocioCorteCaja.class.getName());
-            } catch (Exception ex) {
-                Logger.getLogger(ServiceCorteCaja.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
 
     @Override
     public int insertCorte(CorteCaja cc) {
-        getEjb();
+           
         return ejb.insertCorte(cc);
     }
 
     @Override
     public int updateCorte(CorteCaja cc) {
-        getEjb();
+           
         return ejb.updateCorte(cc);
     }
 
     @Override
     public int getNextVal() {
-        getEjb();
+           
         return ejb.getNextVal();
     }
 
     @Override
     public ArrayList<CorteCaja> getCortesByIdCajaFk(BigDecimal idDestinoFK, String fechaIni, String fechaFin) {
-        getEjb();
+           
         ArrayList<CorteCaja> lstCortes = new ArrayList<CorteCaja>();
         List<Object[]> lstObject = new ArrayList<Object[]>();
         lstObject = ejb.getCortesByIdCajaFk(idDestinoFK, fechaIni, fechaFin);
@@ -85,7 +79,7 @@ public class ServiceCorteCaja implements IfaceCorteCaja {
 
     @Override
     public CorteCaja getCorteByidPk(BigDecimal idPk) {
-        getEjb();
+           
         List<Object[]> lstObject = new ArrayList<Object[]>();
         lstObject = ejb.getCorteByidPk(idPk);
         CorteCaja corte = new CorteCaja();
@@ -112,7 +106,7 @@ public class ServiceCorteCaja implements IfaceCorteCaja {
 
     @Override
     public CorteCaja getLastCorteByCaja(BigDecimal idCajaPk) {
-        getEjb();
+           
         List<Object[]> lstObject = new ArrayList<Object[]>();
         lstObject = ejb.getLastCorteByCaja(idCajaPk);
         BigDecimal cero = new BigDecimal(0);
@@ -139,7 +133,7 @@ public class ServiceCorteCaja implements IfaceCorteCaja {
     }
      @Override
     public CorteCaja getLastCorteByCajaHistorial(BigDecimal idCajaPk,BigDecimal idCorteFk) {
-        getEjb();
+           
         List<Object[]> lstObject = new ArrayList<Object[]>();
         lstObject = ejb.getLastCorteByCajaHistorial(idCajaPk,idCorteFk);
         BigDecimal cero = new BigDecimal(0);
@@ -167,7 +161,7 @@ public class ServiceCorteCaja implements IfaceCorteCaja {
 
     @Override
     public ArrayList<CorteCaja> getCortesByFechaCajaUsuario(BigDecimal idCajaFk, BigDecimal idUsuarioFk, String fecha) {
-        getEjb();
+           
         ArrayList<CorteCaja> lstCortes = new ArrayList<CorteCaja>();
         List<Object[]> lstObject = new ArrayList<Object[]>();
         lstObject = ejb.getCortesByFechaCajaUsuario(idCajaFk, idUsuarioFk, fecha);

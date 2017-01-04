@@ -1,26 +1,25 @@
 package com.web.chon.ejb;
 import com.web.chon.dominio.Documento;
-import com.web.chon.negocio.NegocioDocumentos;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.ejb.Stateless;
+import java.util.logging.Logger;;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author JesusAlfredo
  */
-@Stateless(mappedName = "ejbDocumentos")
-public class EjbDocumentos implements NegocioDocumentos {
+@Repository
+public class EjbDocumentos  {
 
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
 
-    @Override
+       
     public int insertarDocumento(Documento documento) {
 
         System.out.println("EJBDOCUMENTOS: " + documento.toString());
@@ -51,27 +50,27 @@ public class EjbDocumentos implements NegocioDocumentos {
         }
     }
 
-    @Override
+       
     public List<Object[]> getDocumentoByIdDocumentoPk(BigDecimal idDocumento) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
+       
     public List<Object[]> getDocumentoByIdAbonoFk(BigDecimal idAbonoFk) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
+       
     public List<Object[]> getDocumentosByIdClienteFk(BigDecimal idClienteFk) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
+       
     public List<Object[]> getDocumentosByIdStatusFk(BigDecimal idStatusFk) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
+       
     public int nextVal() {
         try {
             Query query = em.createNativeQuery("select S_DOCUMENTOS_COBRAR.nextval from dual");
@@ -82,7 +81,7 @@ public class EjbDocumentos implements NegocioDocumentos {
         }
     }
 
-    @Override
+       
     public int updateDocumento(Documento documento) {
         System.out.println("EJBDOCUMENTOS: " + documento.toString());
         try {
@@ -100,7 +99,7 @@ public class EjbDocumentos implements NegocioDocumentos {
         }
     }
 
-    @Override
+       
     public List<Object[]> getDocumentos(String fechaInicio, String fechaFin, BigDecimal idSucursal, BigDecimal idClienteFk, BigDecimal filtroFormaPago, BigDecimal filtroStatus, BigDecimal filtroFecha) {
 
         System.out.println("Fecha fin: " + fechaFin);
@@ -158,7 +157,7 @@ public class EjbDocumentos implements NegocioDocumentos {
 
     }
 
-    @Override
+       
     public int cambiarFormaPago(Documento d) {
         System.out.println("EJBDOCUMENTOS: " + d.toString());
         try {

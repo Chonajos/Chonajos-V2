@@ -10,22 +10,22 @@ import com.web.chon.negocio.NegocioBajaClientes;
 import java.math.BigDecimal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author freddy
  */
-@Stateless(mappedName = "ejbBajaClientes")
+@Repository
 public class EjbBajaClientes implements NegocioBajaClientes
 {
-     @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
 
-    @Override
+       
     public int insertCliente(BajaClientes clie)
     {
        System.out.println("EJB_INSERTA_BAJA_CLIENTE");
@@ -44,7 +44,7 @@ public class EjbBajaClientes implements NegocioBajaClientes
         
     }
 
-    @Override
+       
     public int deleteClienteBajas(BigDecimal idCliente) 
     {
        try {

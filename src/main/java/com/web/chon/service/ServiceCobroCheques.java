@@ -6,10 +6,8 @@
 package com.web.chon.service;
 
 import com.web.chon.dominio.CobroCheques;
-import com.web.chon.negocio.NegocioCobroCheques;
-import com.web.chon.util.Utilidades;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.web.chon.ejb.EjbCobroCheques;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,27 +17,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class ServiceCobroCheques implements IfaceCobroCheques{
     
-    NegocioCobroCheques ejb;
+    @Autowired
+    EjbCobroCheques ejb;
     
-    private void getEjb() {
-        if (ejb == null) {
-            try {
-                ejb = (NegocioCobroCheques) Utilidades.getEJBRemote("ejbCobroCheques", NegocioCobroCheques.class.getName());
-            } catch (Exception ex) {
-                Logger.getLogger(ServiceCobroCheques.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
+    
 
     @Override
     public int insertarDocumento(CobroCheques cc) {
-        getEjb();
+           
         return ejb.insertarDocumento(cc);
     }
 
     @Override
     public int nextVal() {
-        getEjb();
+           
         return ejb.nextVal();
     }
 }

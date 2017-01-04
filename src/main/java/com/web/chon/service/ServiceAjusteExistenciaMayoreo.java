@@ -2,11 +2,10 @@
 package com.web.chon.service;
 
 import com.web.chon.dominio.AjusteExistenciaMayoreo;
-import com.web.chon.negocio.NegocioAjusteExistenciaMayoreo;
-import com.web.chon.util.Utilidades;
+import com.web.chon.ejb.EjbAjusteExistenciaMayoreo;
 import java.math.BigDecimal;
 import java.util.List;
-import org.jboss.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,23 +15,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class ServiceAjusteExistenciaMayoreo implements IfaceAjusteExistenciaMayoreo {
 
-    NegocioAjusteExistenciaMayoreo ejb;
+    @Autowired
+    EjbAjusteExistenciaMayoreo ejb;
 
-    private void getEjb() {
-        try {
-
-            if (ejb == null) {
-                ejb = (NegocioAjusteExistenciaMayoreo) Utilidades.getEJBRemote("ejbAjusteExistenciaMayoreo", NegocioAjusteExistenciaMayoreo.class.getName());
-            }
-
-        } catch (Exception ex) {
-            Logger.getLogger(ServiceAjusteExistenciaMayoreo.class.getName()).log(Logger.Level.INFO, "Error al Obtener el ejb", ex);
-        }
-    }
 
     @Override
     public int insert(AjusteExistenciaMayoreo data) {
-        getEjb();
+           
 
         return ejb.insert(data);
     }

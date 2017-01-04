@@ -15,18 +15,19 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author freddy
  */
-@Stateless(mappedName = "ejbEntradaMercanciaProducto")
-public class EjbEntradaMercanciaProducto implements NegocioEntradaMercanciaProducto {
+@Repository
+public class EjbEntradaMercanciaProducto  {
 
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+   @PersistenceContext
+    private EntityManager em;
 
-    @Override
+   
     public int insertEntradaMercanciaProducto(EntradaMercanciaProducto producto) {
         //System.out.println("EJB_INSERTA_ENTRADAMERCANCIA Producto");
         try {
@@ -53,7 +54,6 @@ public class EjbEntradaMercanciaProducto implements NegocioEntradaMercanciaProdu
 
     }
 
-    @Override
     public List<Object[]> getEntradaProductoByIdEM(BigDecimal idEntradaProducto) {
 
         Query query = em.createNativeQuery("SELECT EMP.*, SUB.NOMBRE_SUBPRODUCTO, "
@@ -72,14 +72,14 @@ public class EjbEntradaMercanciaProducto implements NegocioEntradaMercanciaProdu
 
     }
 
-    @Override
+    
     public int getNextVal() {
 
         Query query = em.createNativeQuery("SELECT S_ENTRADAMERCANCIAPRODUCTO.nextVal FROM DUAL");
         return Integer.parseInt(query.getSingleResult().toString());
     }
 
-    @Override
+    
     public int deleteEntradaProducto(EntradaMercanciaProducto ep) {
         //System.out.println("EJB_DELETE EntradaProducto");
         try {
@@ -95,7 +95,7 @@ public class EjbEntradaMercanciaProducto implements NegocioEntradaMercanciaProdu
         }
     }
 
-    @Override
+    
     public List<Object[]> getTotalVentasByIdEMP(BigDecimal idEmP) {
 
         try {
@@ -117,7 +117,7 @@ public class EjbEntradaMercanciaProducto implements NegocioEntradaMercanciaProdu
         }
     }
 
-    @Override
+    
     public int updateEntradaMercanciaProducto(EntradaMercanciaProducto producto) {
         //System.out.println("=============================================================");
         //System.out.println("Producto: " + producto.toString());
@@ -148,7 +148,7 @@ public class EjbEntradaMercanciaProducto implements NegocioEntradaMercanciaProdu
 
     }
 
-    @Override
+    
     public List<Object[]> getEntradaMercanciaProductoByIdEmpPk(BigDecimal idEmpPk) {
         try {
 

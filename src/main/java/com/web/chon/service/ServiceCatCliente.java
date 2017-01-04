@@ -6,6 +6,7 @@
 package com.web.chon.service;
 
 import com.web.chon.dominio.Cliente;
+import com.web.chon.ejb.EjbCatCliente;
 import com.web.chon.negocio.NegocioCatCliente;
 import com.web.chon.util.Utilidades;
 import java.math.BigDecimal;
@@ -15,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -24,14 +26,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class ServiceCatCliente implements IfaceCatCliente {
 
-    NegocioCatCliente ejb;
+    @Autowired
+    EjbCatCliente ejb;
 
     @Override
     public ArrayList<Cliente> getClientes() {
         //throw new UnsupportedOperationException("Not supported yet.");
         try {
             ArrayList<Cliente> lista_clientes = new ArrayList<Cliente>();
-            ejb = (NegocioCatCliente) Utilidades.getEJBRemote("ejbCatCliente", NegocioCatCliente.class.getName());
             List<Object[]> lstObject = ejb.getClientes();
 
             for (Object[] obj : lstObject) {
@@ -103,7 +105,6 @@ public class ServiceCatCliente implements IfaceCatCliente {
     public Cliente getClienteById(int idCliente) {
         try {
             Cliente cliente = new Cliente();
-            ejb = (NegocioCatCliente) Utilidades.getEJBRemote("ejbCatCliente", NegocioCatCliente.class.getName());
             List<Object[]> lstObject = ejb.getClienteById(idCliente);
 
             for (Object[] obj : lstObject) {
@@ -145,7 +146,6 @@ public class ServiceCatCliente implements IfaceCatCliente {
     public ArrayList<Cliente> getClienteByNombreCompleto(String nombre) {
         try {
             ArrayList<Cliente> lstCliente = new ArrayList<Cliente>();
-            ejb = (NegocioCatCliente) Utilidades.getEJBRemote("ejbCatCliente", NegocioCatCliente.class.getName());
             List<Object[]> object = ejb.getClienteByNombreCompleto(nombre.trim());
 
             for (Object[] obj : object) {
@@ -168,21 +168,13 @@ public class ServiceCatCliente implements IfaceCatCliente {
 
     @Override
     public int getNextVal() {
-        try {
-            ejb = (NegocioCatCliente) Utilidades.getEJBRemote("ejbCatCliente", NegocioCatCliente.class.getName());
-            return ejb.getNextVal();
-        } catch (Exception ex) {
-            Logger.getLogger(ServiceCatCliente.class.getName()).log(Level.SEVERE, null, ex);
-            return 0;
-        }
-
+     return ejb.getNextVal();
     }
 
     @Override
     public Cliente getClienteCreditoById(int idCliente) {
         try {
             Cliente cliente = new Cliente();
-            ejb = (NegocioCatCliente) Utilidades.getEJBRemote("ejbCatCliente", NegocioCatCliente.class.getName());
             List<Object[]> lstObject = ejb.getClienteCreditoById(idCliente);
 
             for (Object[] obj : lstObject) {
@@ -209,8 +201,7 @@ public class ServiceCatCliente implements IfaceCatCliente {
     public Cliente getCreditoClienteByIdCliente(BigDecimal idCliente) {
         try {
             Cliente cliente = new Cliente();
-            ejb = (NegocioCatCliente) Utilidades.getEJBRemote("ejbCatCliente", NegocioCatCliente.class.getName());
-            List<Object[]> lstObject = ejb.getCreditoClienteByIdCliente(idCliente);
+           List<Object[]> lstObject = ejb.getCreditoClienteByIdCliente(idCliente);
 
             for (Object[] obj : lstObject) {
                 cliente.setId_cliente(obj[0] == null ? null : new BigDecimal(obj[0].toString()));
@@ -235,7 +226,6 @@ public class ServiceCatCliente implements IfaceCatCliente {
     public ArrayList<Cliente> getClientesActivos() {
         try {
             ArrayList<Cliente> lista_clientes = new ArrayList<Cliente>();
-            ejb = (NegocioCatCliente) Utilidades.getEJBRemote("ejbCatCliente", NegocioCatCliente.class.getName());
             List<Object[]> lstObject = ejb.getClientes();
 
             for (Object[] obj : lstObject) {

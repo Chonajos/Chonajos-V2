@@ -6,6 +6,7 @@
 package com.web.chon.service;
 
 import com.web.chon.dominio.RegistroEntradaSalida;
+import com.web.chon.ejb.EjbRegEntSal;
 import com.web.chon.negocio.NegocioRegEntSal;
 import com.web.chon.util.TiempoUtil;
 import com.web.chon.util.Utilidades;
@@ -15,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -23,22 +25,14 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ServiceRegEntSal implements  IfaceRegistroEntradaSalida{
+    @Autowired
+    EjbRegEntSal ejb;
 
-    NegocioRegEntSal ejb;
-
-    public void getEjb() {
-        if (ejb == null) {
-            try {
-                ejb = (NegocioRegEntSal) Utilidades.getEJBRemote("ejbRegEntSal", NegocioRegEntSal.class.getName());
-            } catch (Exception ex) {
-                Logger.getLogger(ServiceRegEntSal.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
+     
     @Override
     public ArrayList<RegistroEntradaSalida> getUsuarioByIdUsuario(BigDecimal idUsuarioFK, Date fechaHoy) {
         
-        getEjb();
+           
         try {
             ArrayList<RegistroEntradaSalida> lstTop = new ArrayList<RegistroEntradaSalida>();
             List<Object[]> lstObject = ejb.getUsuarioByIdUsuario(idUsuarioFK, TiempoUtil.getFechaDDMMYYYY(fechaHoy));
@@ -70,27 +64,27 @@ public class ServiceRegEntSal implements  IfaceRegistroEntradaSalida{
 
     @Override
     public int updateSalidabyIdReg(RegistroEntradaSalida data) {
-       getEjb();
+          
        return ejb.updateSalidabyIdReg(data);
     }
 
     @Override
     public int insertEntradabyIdReg(RegistroEntradaSalida data) {
-       getEjb();
+          
        return ejb.insertEntradabyIdReg(data);
         
     }
 
     @Override
     public int getNextVal() {
-        getEjb();
+           
         return ejb.getNextVal();
     
     }
 
     @Override
     public ArrayList<RegistroEntradaSalida> getRegistros(BigDecimal idUsuarioFK, Date fechaInicio, Date fechaFin) {
-       getEjb();
+          
         
         try {
             ArrayList<RegistroEntradaSalida> lstTop = new ArrayList<RegistroEntradaSalida>();
@@ -123,7 +117,7 @@ public class ServiceRegEntSal implements  IfaceRegistroEntradaSalida{
 
     @Override
     public ArrayList<RegistroEntradaSalida> getALL(Date fechaInicio, Date fechaFin) {
-       getEjb();
+          
         
         try {
             ArrayList<RegistroEntradaSalida> lstTop = new ArrayList<RegistroEntradaSalida>();

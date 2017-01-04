@@ -9,17 +9,14 @@ import com.web.chon.dominio.CarroDetalle;
 import com.web.chon.dominio.OperacionesVentasMayoreo;
 import com.web.chon.dominio.VentaMayoreo;
 import com.web.chon.dominio.VentaProductoMayoreo;
-import com.web.chon.negocio.NegocioVentaMayoreo;
+import com.web.chon.ejb.EjbVentaMayoreo;
 import com.web.chon.util.TiempoUtil;
-import com.web.chon.util.Utilidades;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,37 +27,29 @@ import org.springframework.stereotype.Service;
 @Service
 public class ServiceVentaMayoreo implements IfaceVentaMayoreo {
 
-    NegocioVentaMayoreo ejb;
+    @Autowired
+    EjbVentaMayoreo ejb;
 
     @Autowired
     IfaceVentaMayoreoProducto ifaceVentaMayoreoProducto;
 
-    private void getEjb() {
-        try {
-            if (ejb == null) {
-                ejb = (NegocioVentaMayoreo) Utilidades.getEJBRemote("ejbVentaMayoreo", NegocioVentaMayoreo.class.getName());
-            }
-
-        } catch (Exception ex) {
-            Logger.getLogger(ServiceVentaMayoreo.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+    
 
     @Override
     public int insertarVenta(VentaMayoreo venta) {
-        getEjb();
+           
         return ejb.insertarVenta(venta);
     }
 
     @Override
     public int getNextVal() {
-        getEjb();
+           
         return ejb.getNextVal();
     }
 
     @Override
     public ArrayList<VentaMayoreo> getVentasByIntervalDate(Date fechaInicio, Date fechaFin, BigDecimal idSucursal, BigDecimal idStatusVenta, BigDecimal idTipoVenta, String idSubProductoFk, BigDecimal idCliente) {
-        getEjb();
+           
         ArrayList<VentaMayoreo> lstVenta = new ArrayList<VentaMayoreo>();
         List<Object[]> lstObject = ejb.getVentasByInterval(TiempoUtil.getFechaDDMMYYYY(fechaInicio), TiempoUtil.getFechaDDMMYYYY(fechaFin), idSucursal, idStatusVenta, idTipoVenta, idSubProductoFk, idCliente);
         BigDecimal ganacias = new BigDecimal(0);
@@ -96,13 +85,13 @@ public class ServiceVentaMayoreo implements IfaceVentaMayoreo {
 
     @Override
     public int getVentaSucursal(BigDecimal idSucursal) {
-        getEjb();
+           
         return ejb.getVentaSucursal(idSucursal);
     }
 
     @Override
     public int updateEstatusVentaByFolioSucursalAndIdSucursal(BigDecimal folioSucursal, BigDecimal idSucursal, BigDecimal estatusVenta) {
-        getEjb();
+           
 
         return ejb.updateEstatusVentaByFolioSucursalAndIdSucursal(folioSucursal, idSucursal, estatusVenta);
 
@@ -110,14 +99,14 @@ public class ServiceVentaMayoreo implements IfaceVentaMayoreo {
 
     @Override
     public int cancelarVentaMayoreo(BigDecimal idVenta, BigDecimal idUsuario, String comentarios) {
-        getEjb();
+           
         return ejb.cancelarVentaMayoreo(idVenta, idUsuario, comentarios);
 
     }
 
     @Override
     public VentaMayoreo getVentaMayoreoByFolioidSucursalFk(BigDecimal idFolio, BigDecimal idSucursal) {
-        getEjb();
+           
         List<Object[]> Object = ejb.getVentaMayoreoByFolioidSucursalFk(idFolio, idSucursal);
         VentaMayoreo venta = new VentaMayoreo();
         for (Object[] obj : Object) {
@@ -157,7 +146,7 @@ public class ServiceVentaMayoreo implements IfaceVentaMayoreo {
     @Override
     public ArrayList<OperacionesVentasMayoreo> getReporteVentasByCarroAndIdSucursalAndTipoVenta(BigDecimal carro, BigDecimal idSucursal, BigDecimal idTipoVenta) {
         try {
-            getEjb();
+               
 
             List<Object[]> lstObjectPrincipal = new ArrayList<Object[]>();
             List<Object[]> lstObjectSecundario = new ArrayList<Object[]>();
@@ -261,7 +250,7 @@ public class ServiceVentaMayoreo implements IfaceVentaMayoreo {
     @Override
     public ArrayList<CarroDetalle> getDetalleVentasCarro(BigDecimal idSucursal, BigDecimal carro) {
         try {
-            getEjb();
+               
 
             List<Object[]> lstObject = new ArrayList<Object[]>();
             lstObject = ejb.getDetalleVentasCarro(idSucursal, carro);

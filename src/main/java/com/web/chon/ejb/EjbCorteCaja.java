@@ -6,29 +6,28 @@
 package com.web.chon.ejb;
 
 import com.web.chon.dominio.CorteCaja;
-import com.web.chon.negocio.NegocioCorteCaja;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author JesusAlfredo
  */
-@Stateless(mappedName = "ejbCorteCaja")
-public class EjbCorteCaja implements NegocioCorteCaja {
+@Repository
+public class EjbCorteCaja   {
 
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
 
     
 
-    @Override
+       
     public int insertCorte(CorteCaja cc) {
         System.out.println("insert corte :" + cc.toString());
         Query query = em.createNativeQuery("INSERT INTO Corte_Caja(ID_CORTE_CAJA_PK,ID_CAJA_FK,FECHA,CANT_CHEQUES_ANT,"
@@ -54,7 +53,7 @@ public class EjbCorteCaja implements NegocioCorteCaja {
 
    
 
-    @Override
+       
     public int updateCorte(CorteCaja cc) {
        System.out.println("update corte :" + cc.toString());
         Query query = em.createNativeQuery("UPDATE Corte_Caja SET ID_CAJA_FK = ?,FECHA = ?,CANT_CHEQUES_ANT = ?,MONTO_CHEQUES_ANT = ?,SALDO_ANTERIOR = ? ,CANT_CHEQUES_NUEVOS = ?,NUEVO_SALDO = ?,COMENTARIOS = ?,ID_USER_FK = ?,ID_STATUS_FK=? WHERE ID_CORTE_CAJA_PK = ?");
@@ -75,7 +74,7 @@ public class EjbCorteCaja implements NegocioCorteCaja {
 
    
 
-    @Override
+       
     public int getNextVal() {
         try {
             Query query = em.createNativeQuery("select S_CORTE_CAJA.nextval from dual");
@@ -86,7 +85,7 @@ public class EjbCorteCaja implements NegocioCorteCaja {
         }
     }
 
-    @Override
+       
     public List<Object[]> getCortesByIdCajaFk(BigDecimal idCajaFK, String fechaIni, String fechaFin) {
         try {
             Query query = em.createNativeQuery("select cj.*,c.NOMBRE,u.NOMBRE_USUARIO from corte_caja cj\n" +
@@ -106,7 +105,7 @@ public class EjbCorteCaja implements NegocioCorteCaja {
 
     }
 
-    @Override
+       
     public List<Object[]> getCorteByidPk(BigDecimal idPk) {
        try {
             Query query = em.createNativeQuery("select * from corte_caja c where c.ID_CORTE_CAJA_PK = ? ");
@@ -119,7 +118,7 @@ public class EjbCorteCaja implements NegocioCorteCaja {
         }
     }
 
-    @Override
+       
     public List<Object[]> getLastCorteByCaja(BigDecimal idCajaPk) {
         System.out.println("IdCaja: "+idCajaPk);
         try {
@@ -133,7 +132,7 @@ public class EjbCorteCaja implements NegocioCorteCaja {
             return null;
         }
     }
-    @Override
+       
     public List<Object[]> getLastCorteByCajaHistorial(BigDecimal idCajaPk,BigDecimal idCorteFk) {
         System.out.println("IdCaja: "+idCajaPk);
         try {
@@ -154,7 +153,7 @@ public class EjbCorteCaja implements NegocioCorteCaja {
         }
     }
 
-    @Override
+       
     public List<Object[]> getCortesByFechaCajaUsuario(BigDecimal idCajaFk, BigDecimal idUsuarioFk, String fecha) {
        try {
             Query query = em.createNativeQuery(" select cj.* from CORTE_CAJA cj where cj.ID_CAJA_FK = ? and cj.ID_USER_FK = ? and  TO_DATE(TO_CHAR(cj.FECHA,'dd/mm/yyyy'),'dd/mm/yyyy') BETWEEN ' "+fecha+" ' AND '"+fecha+"' ");

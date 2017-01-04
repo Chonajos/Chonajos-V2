@@ -1,26 +1,26 @@
 package com.web.chon.ejb;
 
 import com.web.chon.dominio.Rol;
-import com.web.chon.negocio.NegocioCatRol;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Juan de la Cruz
  */
-@Stateless(mappedName = "ejbCatRol")
-public class EjbCatRol implements NegocioCatRol {
+@Repository
+public class EjbCatRol  {
 
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+     @PersistenceContext
+    private EntityManager em;
 
-    @Override
+
+       
     public List<Object[]> getAll() {
 
         try {
@@ -35,7 +35,7 @@ public class EjbCatRol implements NegocioCatRol {
         }
     }
 
-    @Override
+       
     public List<Object[]> getById(int idRol) {
         try {
             Query query = em.createNativeQuery("SELECT * FROM ROL WHERE  ID_ROL_PK = ?");
@@ -47,7 +47,7 @@ public class EjbCatRol implements NegocioCatRol {
         }
     }
 
-    @Override
+       
     public int delete(int idRol) {
         try {
             Query query = em.createNativeQuery("DELETE ROL WHERE ID_ROL_PK = ?");
@@ -59,7 +59,7 @@ public class EjbCatRol implements NegocioCatRol {
         }
     }
 
-    @Override
+       
     public int update(Rol rol) {
         try {
 
@@ -76,7 +76,7 @@ public class EjbCatRol implements NegocioCatRol {
         }
     }
 
-    @Override
+       
     public int insert(Rol rol) {
         try {
             Query query = em.createNativeQuery("INSERT INTO ROL (ID_ROL_PK,NOMBRE_ROL,DESCRIPCION_ROL) VALUES(S_ROL.NextVal,?,?)");
@@ -91,7 +91,7 @@ public class EjbCatRol implements NegocioCatRol {
         }
     }
 
-    @Override
+       
     public int getNextVal() {
         try{
             

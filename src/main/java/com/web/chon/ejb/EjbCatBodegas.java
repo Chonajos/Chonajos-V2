@@ -6,27 +6,26 @@
 package com.web.chon.ejb;
 
 import com.web.chon.dominio.Bodega;
-import com.web.chon.negocio.NegocioCatBodega;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author marcogante
  */
-@Stateless(mappedName = "ejbCatBodegas")
-public class EjbCatBodegas implements NegocioCatBodega {
+@Repository
+public class EjbCatBodegas   {
 
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+     @PersistenceContext
+    private EntityManager em;
 
-    @Override
+       
     public List<Object[]> getBodegas() {
 
         try {
@@ -41,7 +40,7 @@ public class EjbCatBodegas implements NegocioCatBodega {
         }
     }
 
-    @Override
+       
     public List<Object[]> getBodegaById(int idBodega) {
         try {
             Query query = em.createNativeQuery("SELECT * FROM BODEGA WHERE  ID_BD_PK = ?");
@@ -53,7 +52,7 @@ public class EjbCatBodegas implements NegocioCatBodega {
         }
     }
 
-    @Override
+       
     public int deleteBodega(int idBodega) {
         Query query = em.createNativeQuery("DELETE BODEGA WHERE ID_BD_PK = ?");
         query.setParameter(1, idBodega);
@@ -61,7 +60,7 @@ public class EjbCatBodegas implements NegocioCatBodega {
         return query.executeUpdate();
     }
 
-    @Override
+       
     public int updateBodega(Bodega bo) {
         try {
 
@@ -79,7 +78,7 @@ public class EjbCatBodegas implements NegocioCatBodega {
         }
     }
 
-    @Override
+       
     public int insertBodega(Bodega bo) {
         try {
             Query query = em.createNativeQuery("INSERT INTO BODEGA (ID_BD_PK,NOMBRE,DESCRIPCION,ID_SUCURSAL_FK) VALUES(S_BODEGA.NextVal,?,?,?)");
@@ -95,12 +94,12 @@ public class EjbCatBodegas implements NegocioCatBodega {
         }
     }
 
-    @Override
+       
     public int getNextVal() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
+       
     public Long countBodegas() {
         Query query = em.createNativeQuery("SELECT COUNT(ID_BD_PK) FROM BODEGA");
         BigDecimal value = (BigDecimal) query.getSingleResult();
@@ -108,7 +107,7 @@ public class EjbCatBodegas implements NegocioCatBodega {
         return value.longValue();
     }
 
-    @Override
+       
     public List<Object[]> getBodepagasPagination(int first, int pageSize, BigDecimal idSucursal) {
 
         StringBuffer strQuery = new StringBuffer("SELECT * FROM(SELECT BOD.*,SUC.NOMBRE_SUCURSAL,row_number() over (order by BOD.ID_BD_PK ASC) rn  FROM BODEGA BOD LEFT JOIN SUCURSAL SUC ON  SUC.ID_SUCURSAL_PK = BOD.ID_SUCURSAL_FK  ");
@@ -126,7 +125,7 @@ public class EjbCatBodegas implements NegocioCatBodega {
 
     }
 
-    @Override
+       
     public List<Object[]> getBodegaByIdSucursal(BigDecimal idSurcusal) {
         try {
             Query query = em.createNativeQuery("SELECT * FROM BODEGA WHERE  ID_SUCURSAL_FK = ?");

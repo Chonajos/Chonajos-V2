@@ -6,14 +6,14 @@
 package com.web.chon.service;
 
 import com.web.chon.dominio.Entidad;
-import com.web.chon.util.Utilidades;
+import com.web.chon.ejb.EjbCatEntidad;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.stereotype.Service;
-import com.web.chon.negocio.NegocioCatEntidad;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -22,7 +22,8 @@ import com.web.chon.negocio.NegocioCatEntidad;
 @Service
 public class ServiceCatEntidad  implements IfaceCatEntidad  {
 
-    NegocioCatEntidad ejb;
+    @Autowired
+    EjbCatEntidad ejb;
     
     @Override
     public ArrayList<Entidad> getEntidades()       
@@ -30,7 +31,6 @@ public class ServiceCatEntidad  implements IfaceCatEntidad  {
        try
        {
             ArrayList <Entidad> lista_entidades= new ArrayList<Entidad>();
-            ejb = (NegocioCatEntidad) Utilidades.getEJBRemote("ejbCatEntidad", NegocioCatEntidad.class.getName());
             List<Object[]> lstObject = ejb.getEntidades();
              
             for(Object[] obj: lstObject )

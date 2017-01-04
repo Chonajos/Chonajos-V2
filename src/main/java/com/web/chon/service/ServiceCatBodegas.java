@@ -5,23 +5,17 @@
  */
 package com.web.chon.service;
 
-import com.web.chon.dominio.AnalisisMercado;
 import com.web.chon.dominio.Bodega;
 import com.web.chon.dominio.Pagina;
-import com.web.chon.negocio.NegocioCatBodega;
-import com.web.chon.repository.UsuarioRepository;
-
-import com.web.chon.util.Utilidades;
+import com.web.chon.ejb.EjbCatBodegas;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -31,25 +25,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 public class ServiceCatBodegas implements IfaceCatBodegas {
 
-    NegocioCatBodega ejb;
+    @Autowired
+    EjbCatBodegas ejb;
    
 
-    public void getEjb() {
-        if (ejb == null) {
-            try {
-                ejb = (NegocioCatBodega) Utilidades.getEJBRemote("ejbCatBodegas", NegocioCatBodega.class.getName());
-            } catch (Exception ex) {
-                Logger.getLogger(ServiceCatBodegas.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
+    
 
     @Override
     public ArrayList<Bodega> getBodegas() {
         try {
             ArrayList<Bodega> lista_bodegas = new ArrayList<Bodega>();
 
-            getEjb();
+               
             List<Object[]> lstObject = ejb.getBodegas();
 
             for (Object[] obj : lstObject) {
@@ -88,14 +75,14 @@ public class ServiceCatBodegas implements IfaceCatBodegas {
 
         try {
 
-            getEjb();
+               
             ArrayList<Bodega> lstBodegas = new ArrayList<Bodega>();
             long size = ejb.countBodegas();
 
             if (first != 0) {
                 first++;
             }
-            getEjb();
+               
             List<Object[]> lstObject = ejb.getBodepagasPagination(first,pageSize,filters.getIdSucursalFk());
 
             for (Object[] obj : lstObject) {
@@ -127,13 +114,13 @@ public class ServiceCatBodegas implements IfaceCatBodegas {
     @Override
     public int create(Bodega dominio) {
 
-        getEjb();
+           
         return ejb.insertBodega(dominio);
     }
 
     @Override
     public int update(Bodega dominio) {
-        getEjb();
+           
         return ejb.updateBodega(dominio);
     }
 
@@ -144,7 +131,7 @@ public class ServiceCatBodegas implements IfaceCatBodegas {
 
     @Override
     public int delete(BigDecimal id) {
-        getEjb();
+           
         return ejb.deleteBodega(id.intValue());
     }
 
@@ -153,10 +140,10 @@ public class ServiceCatBodegas implements IfaceCatBodegas {
 
         List<Object[]> lstObject = null;
         Bodega bodega = new Bodega();
-        getEjb();
+           
         lstObject = ejb.getBodegaById(Integer.parseInt(dominio));
 
-        getEjb();
+           
         for (Object[] obj : lstObject) {
 
             bodega.setIdBodegaPK(obj[0] == null ? null : new BigDecimal(obj[0].toString()));
@@ -173,7 +160,7 @@ public class ServiceCatBodegas implements IfaceCatBodegas {
         try {
             ArrayList<Bodega> lista_bodegas = new ArrayList<Bodega>();
 
-            getEjb();
+               
             List<Object[]> lstObject = ejb.getBodegaByIdSucursal(idSucursal);
 
             for (Object[] obj : lstObject) {

@@ -9,14 +9,12 @@ package com.web.chon.service;
 
 
 import com.web.chon.dominio.PreciosCompetencia;
-import com.web.chon.negocio.NegocioPreciosCompetidores;
-import com.web.chon.util.Utilidades;
+import com.web.chon.ejb.EjbPreciosCompetidores;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -26,33 +24,26 @@ import org.springframework.stereotype.Service;
 @Service
 public class ServicePreciosCompetencias implements IfacePreciosCompetencias
 {
-    NegocioPreciosCompetidores ejb;
+    @Autowired
+    EjbPreciosCompetidores ejb;
 
-    public void getEjb() {
-        if (ejb == null) {
-            try {
-                ejb = (NegocioPreciosCompetidores) Utilidades.getEJBRemote("ejbPreciosCompetidores", NegocioPreciosCompetidores.class.getName());
-            } catch (Exception ex) {
-                Logger.getLogger(ServicePreciosCompetencias.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
+   
 
     @Override
     public int getNextVal() {
-        getEjb();
+           
       return ejb.getNextVal();
     }
 
     @Override
     public int insertPreciosCompetencias(PreciosCompetencia pc) {
-      getEjb();
+         
       return ejb.insertPreciosCompetidores(pc);
     }
 
     @Override
     public ArrayList<PreciosCompetencia> getPreciosCompetencias(String fecha) {
-       getEjb();
+          
 
         List<Object[]> lstObject = new ArrayList<Object[]>();
         ArrayList<PreciosCompetencia> lista= new ArrayList<PreciosCompetencia>();
@@ -73,13 +64,13 @@ public class ServicePreciosCompetencias implements IfacePreciosCompetencias
 
     @Override
     public int deletePrecioCompetencia(PreciosCompetencia pc) {
-       getEjb();
+          
       return ejb.deletePreciosCompetidores(pc);
     }
 
     @Override
     public int updateCompetencia(PreciosCompetencia pc) {
-       getEjb();
+          
       return ejb.updatePreciosCompetidores(pc);
     }
 
@@ -87,10 +78,10 @@ public class ServicePreciosCompetencias implements IfacePreciosCompetencias
     public PreciosCompetencia getPreciosCompetenciasByCompetidorProducto(PreciosCompetencia pc) {
        List<Object[]> lstObject = null;
         PreciosCompetencia dominio = new PreciosCompetencia();
-        getEjb();
+           
         lstObject = ejb.getPreciosCompetenciasByCompetidorProducto(pc);
 
-        getEjb();
+           
         for (Object[] obj : lstObject) {
 
             dominio.setIdPcPk(obj[0] == null ? null : new BigDecimal(obj[0].toString()));

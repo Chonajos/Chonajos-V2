@@ -7,13 +7,13 @@ package com.web.chon.service;
 
 import com.web.chon.dominio.ExistenciaMenudeo;
 import com.web.chon.dominio.RelEntSalExAj;
-import com.web.chon.negocio.NegocioExistenciaMenudeo;
-import com.web.chon.util.Utilidades;
+import com.web.chon.ejb.EjbExistenciaMenudeo;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -23,35 +23,28 @@ import org.springframework.stereotype.Service;
 @Service
 public class ServiceExistenciaMenudeo implements IfaceExistenciaMenudeo {
 
-    NegocioExistenciaMenudeo ejb;
+    @Autowired
+    EjbExistenciaMenudeo ejb;
 
-    private void getEjb() {
-        try {
-            if (ejb == null) {
-                ejb = (NegocioExistenciaMenudeo) Utilidades.getEJBRemote("ejbExistenciaMenudeo", NegocioExistenciaMenudeo.class.getName());
-            }
-
-        } catch (Exception ex) {
-            Logger.getLogger(ServiceExistenciaMenudeo.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+    
+    
 
     @Override
     public int insertaExistenciaMenudeo(ExistenciaMenudeo em) {
-        getEjb();
+           
         return ejb.insertaExistenciaMenudeo(em);
     }
 
     @Override
     public int updateExistenciaMenudeo(ExistenciaMenudeo em) {
-        getEjb();
+           
         return ejb.updateExistenciaMenudeo(em);
     }
 
     @Override
     public ArrayList<ExistenciaMenudeo> getExistenciasMenudeoByIdSucursal(BigDecimal idSucursal) {
 
-        getEjb();
+           
 
         ArrayList<ExistenciaMenudeo> lstExistenciaMenudeo = new ArrayList<ExistenciaMenudeo>();
 
@@ -78,7 +71,7 @@ public class ServiceExistenciaMenudeo implements IfaceExistenciaMenudeo {
 
     @Override
     public ExistenciaMenudeo getExistenciasMenudeoById(BigDecimal id) {
-        getEjb();
+           
 
         List<Object[]> lstObject = ejb.getExistenciasMenudeoById(id);
         ExistenciaMenudeo data = new ExistenciaMenudeo();
@@ -106,7 +99,7 @@ public class ServiceExistenciaMenudeo implements IfaceExistenciaMenudeo {
 
     @Override
     public ExistenciaMenudeo getExistenciasRepetidasById(String ID_SUBPRODUCTO_FK, BigDecimal ID_SUCURSAL_FK) {
-        getEjb();
+           
         List<Object[]> lstObject = ejb.getExistenciasRepetidasById(ID_SUBPRODUCTO_FK, ID_SUCURSAL_FK);
         ExistenciaMenudeo data = new ExistenciaMenudeo();
         for (Object[] obj : lstObject) {
@@ -125,7 +118,7 @@ public class ServiceExistenciaMenudeo implements IfaceExistenciaMenudeo {
 
     @Override
     public int getNexVal() {
-        getEjb();
+           
         try {
             return ejb.getNextVal();
 
@@ -139,7 +132,7 @@ public class ServiceExistenciaMenudeo implements IfaceExistenciaMenudeo {
     @Override
     public ArrayList<ExistenciaMenudeo> getExistenciasMenudeoByIdSucursalAndIdSubproducto(BigDecimal idSucursal, String idSubProducto) {
 
-        getEjb();
+           
 
         ArrayList<ExistenciaMenudeo> lstExistenciaMenudeo = new ArrayList<ExistenciaMenudeo>();
 
@@ -166,7 +159,7 @@ public class ServiceExistenciaMenudeo implements IfaceExistenciaMenudeo {
 
     @Override
     public RelEntSalExAj getRelacion(BigDecimal idSucursal, String idSubproducto) {
-       getEjb();
+          
 
         RelEntSalExAj data = new RelEntSalExAj();
         List<Object[]> lstObject = ejb.getRelacion(idSucursal, idSubproducto);

@@ -6,14 +6,12 @@
 package com.web.chon.service;
 
 import com.web.chon.dominio.StatusVenta;
-
-import com.web.chon.negocio.NegocioCatStatusVenta;
-
-import com.web.chon.util.Utilidades;
+import com.web.chon.ejb.EjbCatStatusVenta;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -22,7 +20,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ServiceCatStatusVenta implements IfaceCatStatusVenta{
-    NegocioCatStatusVenta ejb;
+    @Autowired
+    EjbCatStatusVenta ejb;
 
     @Override
     public ArrayList<StatusVenta> getStatusVentas() 
@@ -30,7 +29,6 @@ public class ServiceCatStatusVenta implements IfaceCatStatusVenta{
        try
        {
             ArrayList <StatusVenta> lista_sucursales = new ArrayList<StatusVenta>();
-            ejb = (NegocioCatStatusVenta) Utilidades.getEJBRemote("ejbCatStatusVenta", NegocioCatStatusVenta.class.getName());
             List<Object[]> lstObject = ejb.getStatusVentas();
             for(Object[] obj: lstObject )
             {

@@ -6,6 +6,7 @@
 package com.web.chon.service;
 
 import com.web.chon.dominio.ExistenciaProducto;
+import com.web.chon.ejb.EjbExistenciaProducto;
 import com.web.chon.negocio.NegocioExistenciaProducto;
 import com.web.chon.util.Utilidades;
 import java.math.BigDecimal;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -22,35 +24,28 @@ import org.springframework.stereotype.Service;
 @Service
 public class ServiceNegocioExistencia implements IfaceNegocioExistencia {
 
-    NegocioExistenciaProducto ejb;
+    @Autowired
+    EjbExistenciaProducto ejb;
 
-    public void getEjb() {
-        if (ejb == null) {
-            try {
-                ejb = (NegocioExistenciaProducto) Utilidades.getEJBRemote("ejbExistenciaProducto", NegocioExistenciaProducto.class.getName());
-            } catch (Exception ex) {
-                Logger.getLogger(NegocioExistenciaProducto.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
+    
 
     @Override
     public int insertExistenciaProducto(ExistenciaProducto ep) {
-        getEjb();
+           
         return ejb.insertaExistencia(ep);
 
     }
 
     @Override
     public int updateCantidadKilo(ExistenciaProducto ep) {
-        getEjb();
+           
         return ejb.updateCantidadKilo(ep);
 
     }
 
     @Override
     public ArrayList<ExistenciaProducto> getExistencias(BigDecimal idSucursal, BigDecimal idBodega, BigDecimal idProvedor, String idProducto, BigDecimal idEmpaque, BigDecimal idConvenio, BigDecimal idEmpPK,BigDecimal carro) {
-        getEjb();
+           
 
         try {
             ArrayList<ExistenciaProducto> lista = new ArrayList<ExistenciaProducto>();
@@ -97,7 +92,7 @@ public class ServiceNegocioExistencia implements IfaceNegocioExistencia {
     @Override
     public ArrayList<ExistenciaProducto> getExistenciaProductoRepetidos(BigDecimal idSucursal, String idSubproductoFk, BigDecimal idTipoEmpaqueFk, BigDecimal idBodegaFk, BigDecimal idProvedorFk, BigDecimal idTipoConvenio,BigDecimal idEMProducto) {
         
-        getEjb();
+           
 
         try {
             ArrayList<ExistenciaProducto> lista = new ArrayList<ExistenciaProducto>();
@@ -140,13 +135,13 @@ public class ServiceNegocioExistencia implements IfaceNegocioExistencia {
 
     @Override
     public int updatePrecio(ExistenciaProducto ep) {
-        getEjb();
+           
         return ejb.updatePrecio(ep);
     }
 
     @Override
     public ArrayList<ExistenciaProducto> getExistenciaById(BigDecimal idExistencia) {
-        getEjb();
+           
 
         try {
             ArrayList<ExistenciaProducto> lista = new ArrayList<ExistenciaProducto>();
@@ -170,7 +165,7 @@ public class ServiceNegocioExistencia implements IfaceNegocioExistencia {
 
     @Override
     public ArrayList<ExistenciaProducto> getExistenciasCancelar(BigDecimal idExistencia) {
-        getEjb();
+           
 
         try {
             ArrayList<ExistenciaProducto> lista = new ArrayList<ExistenciaProducto>();
@@ -191,15 +186,15 @@ public class ServiceNegocioExistencia implements IfaceNegocioExistencia {
 
     @Override
     public int deleteExistenciaProducto(ExistenciaProducto ep) {
-        getEjb();
+           
         return ejb.deleteExistenciaProducto(ep);
     }
 
     @Override
     public ExistenciaProducto getExistenciaByIdEmpFk(BigDecimal idEmpFk) {
-        getEjb();
+           
         try {
-            getEjb();
+               
             List<Object[]> lstObject = new ArrayList<Object[]>();
             lstObject = ejb.getExistenciaByIdEmpFk(idEmpFk);
             ExistenciaProducto existencia = new ExistenciaProducto();
@@ -230,21 +225,21 @@ public class ServiceNegocioExistencia implements IfaceNegocioExistencia {
 
     @Override
     public int update(ExistenciaProducto ep) {
-        getEjb();
+           
         return ejb.update(ep);
 
     }
 
     @Override
     public int getNextVal() {
-        getEjb();
+           
         return ejb.getNextVal();
     }
 
     @Override
     public ArrayList<ExistenciaProducto> getExistenciaByBarCode(String idSubProducto, BigDecimal idTipoEmpaqueFk, BigDecimal idTipoConvenioFk, BigDecimal idCarro, BigDecimal idSucursalFk) {
        
-        getEjb();
+           
         try {
             ArrayList<ExistenciaProducto> lista = new ArrayList<ExistenciaProducto>();
             //System.out.println("SerivceNegocioExistencia: getExistencias : "+idSucursal+ " idProvedorFk: "+idProvedorFk);

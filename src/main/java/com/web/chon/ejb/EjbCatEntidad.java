@@ -9,23 +9,23 @@ import com.web.chon.dominio.Entidad;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import com.web.chon.negocio.NegocioCatEntidad;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author freddy
  */
-@Stateless(mappedName = "ejbCatEntidad")
-public class EjbCatEntidad implements NegocioCatEntidad{
+@Repository
+public class EjbCatEntidad 
+        {
 
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+     @PersistenceContext
+    private EntityManager em;
 
-    @Override
+       
     public List<Object[]> getEntidades() 
     {
     try {
@@ -42,22 +42,22 @@ public class EjbCatEntidad implements NegocioCatEntidad{
         }
     }
 
-    @Override
+       
     public Object[] getEntidadById(int idEntidad) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
+       
     public int deleteEntidad(int idEntidad) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
+       
     public int updateEntidad(Entidad enti) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
+       
     public int insertEntidad(Entidad enti) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

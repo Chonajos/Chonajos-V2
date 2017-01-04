@@ -16,18 +16,19 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author freddy
  */
-@Stateless(mappedName = "ejbEntradaMenudeoProducto")
-public class EjbEntradaMenudeoProducto implements NegocioMenudeoProducto {
+@Repository
+public class EjbEntradaMenudeoProducto  {
 
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
 
-    @Override
+    
     public int insertEntradaMenudeoProducto(EntradaMenudeoProducto entrada) {
         System.out.println("::::::::::::::::::::::::::::::::");
         System.out.println(entrada.toString());
@@ -51,13 +52,13 @@ public class EjbEntradaMenudeoProducto implements NegocioMenudeoProducto {
         }
     }
 
-    @Override
+    
     public int getNextVal() {
         Query query = em.createNativeQuery("SELECT S_EntradaMenudeoProducto.nextVal FROM DUAL");
         return Integer.parseInt(query.getSingleResult().toString());
     }
 
-    @Override
+    
     public List<Object[]> getEntradaMenudeoProductoByIdEM(BigDecimal idEntradaMenudeo) {
 
            Query query = em.createNativeQuery("select emp.ID_EMMP_PK, emp.ID_EMM_FK, emp.ID_SUBPRODUCTO_FK, emp.ID_TIPO_EMPAQUE_FK, emp.KILOS_TOTALES, emp.CANTIDAD_EMPACAQUE,\n" +

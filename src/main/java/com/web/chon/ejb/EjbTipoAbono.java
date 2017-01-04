@@ -6,42 +6,41 @@
 package com.web.chon.ejb;
 
 import com.web.chon.dominio.AbonoCredito;
-import com.web.chon.negocio.NegocioTipoAbono;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author JesusAlfredo
  */
-@Stateless(mappedName = "ejbTipoAbono")
-public class EjbTipoAbono implements NegocioTipoAbono{
+@Repository
+public class EjbTipoAbono  {
     
-    @PersistenceContext(unitName = "persistenceJR")
-    EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
 
-    @Override
+       
     public int insert(AbonoCredito tabono) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
+       
     public int update(AbonoCredito idtAbono) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
+       
     public int delete(BigDecimal idtAbono) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
+       
     public List<Object[]> getAll() {
         try {
 
@@ -58,7 +57,7 @@ public class EjbTipoAbono implements NegocioTipoAbono{
     
     }
 
-    @Override
+       
     public List<Object[]> getById(BigDecimal idtAbono) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

@@ -6,6 +6,7 @@
 package com.web.chon.service;
 
 import com.web.chon.dominio.TipoOperacion;
+import com.web.chon.ejb.EjbTipoOperacion;
 import com.web.chon.negocio.NegocioTiposOperacion;
 import com.web.chon.util.Utilidades;
 import java.math.BigDecimal;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -21,21 +23,13 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ServiceTipoOperacion implements IfaceTiposOperacion {
-
-    NegocioTiposOperacion ejb;
-     private void getEjb() {
-        if (ejb == null) {
-            try {
-                ejb = (NegocioTiposOperacion) Utilidades.getEJBRemote("ejbTipoOperacion", NegocioTiposOperacion.class.getName());
-            } catch (Exception ex) {
-                Logger.getLogger(ServiceTipoOperacion.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
+    @Autowired
+    EjbTipoOperacion ejb;
+     
     
     @Override
     public ArrayList<TipoOperacion> getOperaciones() {
-       getEjb();
+          
         ArrayList<TipoOperacion> lstOperaciones= new ArrayList<TipoOperacion>();
         List<Object[]> lstObject = new ArrayList<Object[]>();
         lstObject = ejb.getOperaciones();
