@@ -101,7 +101,7 @@ public class BeanInfoTv implements Serializable {
 
 
             FacesContext context = FacesContext.getCurrentInstance();
-            String mimeType = "image/jpg";
+            String mimeType = "image/jpg/png/jpeg";
 
             if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
                 return new DefaultStreamedContent();

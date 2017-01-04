@@ -2,6 +2,10 @@ package com.web.chon.service;
 
 import com.web.chon.dominio.Subproducto;
 import com.web.chon.ejb.EjbSubProducto;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -40,7 +44,7 @@ public class ServiceSubProducto implements IfaceSubProducto {
                 subProducto.setDescripcionSubproducto(obj[2] == null ? "" : obj[2].toString());
                 subProducto.setUrlImagenSubproducto(obj[3] == null ? "" : obj[3].toString());
                 subProducto.setIdProductoFk(obj[4] == null ? null : obj[4].toString());
-                subProducto.setFichero((obj[5] == null ? null : (byte[]) (obj[5])));
+                subProducto.setFichero((obj[5] == null ? null : convertToBytes((obj[5]))));
                 subProducto.setNombreCategoria(obj[7] == null ? "" : obj[7].toString());
 
                 lstSubProducto.add(subProducto);
@@ -166,7 +170,7 @@ public class ServiceSubProducto implements IfaceSubProducto {
                 subProducto.setIdProductoFk(obj[4] == null ? null : obj[4].toString());
                 subProducto.setNombreCategoria(obj[5] == null ? "" : obj[5].toString());
                 subProducto.setPrecioProducto(obj[6] == null ? null : new BigDecimal(obj[6].toString()));
-                subProducto.setFichero((obj[7] == null ? null : (byte[]) (obj[7])));
+                subProducto.setFichero((obj[7] == null ? null : convertToBytes((obj[7]))));
 
                 lstSubProducto.add(subProducto);
             }
@@ -176,6 +180,20 @@ public class ServiceSubProducto implements IfaceSubProducto {
             Logger.getLogger(ServiceSubProducto.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
+    }
+    
+    private byte[] convertToBytes(Object obj) {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ObjectOutput out;
+        try {
+            out = new ObjectOutputStream(bos);
+
+            out.writeObject(obj);
+
+        } catch (IOException ex) {
+            Logger.getLogger(ServiceSubProducto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return bos.toByteArray();
     }
 
 }
