@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.web.chon.service;
 
 import com.web.chon.dominio.BajaClientes;
@@ -18,24 +13,22 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class ServiceBajaCliente implements IfaceBajaCliente
-{
+public class ServiceBajaCliente implements IfaceBajaCliente {
+
     @Autowired
     EjbBajaClientes ejb;
 
     @Override
-    public int insertCliente(BajaClientes cliente) 
-    {
+    public int insertCliente(BajaClientes cliente) {
         return ejb.insertCliente(cliente);
 
     }
 
     @Override
-    public int deleteCliente(BigDecimal idCliente) 
-    {
-        
-       return ejb.deleteClienteBajas(idCliente);
-       
+    public int deleteCliente(BigDecimal idCliente) {
+
+        return ejb.deleteClienteBajas(idCliente);
+
     }
-    
+
 }

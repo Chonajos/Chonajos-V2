@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.web.chon.service;
 
 import com.web.chon.dominio.Pagina;
@@ -25,8 +20,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class ServiceCatSucursales implements IfaceCatSucursales {
+
     @Autowired
     EjbCatSucursales ejb;
+
     @Override
     public ArrayList<Sucursal> getSucursales() {
         try {
@@ -55,7 +52,7 @@ public class ServiceCatSucursales implements IfaceCatSucursales {
 
     @Override
     public int deleteSucursal(BigDecimal idSucursal) {
-           return ejb.deleteSucursal(idSucursal);
+        return ejb.deleteSucursal(idSucursal);
     }
 
     @Override
@@ -65,15 +62,13 @@ public class ServiceCatSucursales implements IfaceCatSucursales {
     }
 
     @Override
-    public int insertSucursal(Sucursal sucu) 
-    {
+    public int insertSucursal(Sucursal sucu) {
         return ejb.insertSucursal(sucu);
     }
 
     @Override
-    public int getNextVal() 
-    {
-       return ejb.getNextVal();
+    public int getNextVal() {
+        return ejb.getNextVal();
     }
 
     @Override
@@ -84,16 +79,13 @@ public class ServiceCatSucursales implements IfaceCatSucursales {
     @Override
     public Pagina<Sucursal> findAllDominio(Sucursal filters, int first, int pageSize) {
 
-        
         long size = ejb.getSizeListSucursales();
-        if(first!=0)
-        {
+        if (first != 0) {
             first++;
         }
-        List<Object[]> listaSucursales = ejb.getSucursalesDetalle(first,pageSize);
+        List<Object[]> listaSucursales = ejb.getSucursalesDetalle(first, pageSize);
         ArrayList<Sucursal> CatListaSucursales = new ArrayList();
 
-        
         for (Object[] obj : listaSucursales) {
             Sucursal s = new Sucursal();
             s.setIdSucursalPk(obj[0] == null ? null : new BigDecimal(obj[0].toString()));
@@ -104,15 +96,13 @@ public class ServiceCatSucursales implements IfaceCatSucursales {
             s.setNumInt(obj[5] == null ? null : new BigDecimal(obj[5].toString()));
             s.setNumExt(obj[6] == null ? null : new BigDecimal(obj[6].toString()));
             s.setIdStatusSucursalfk(obj[7] == null ? null : new BigDecimal(obj[7].toString()));
-            if(s.getIdSucursalPk().intValue()==1)
-            {
-                
+
+            if (s.getIdSucursalPk().intValue() == 1) {
                 s.setStatusSucursal(false);
-            }
-            else
-            {
+            } else {
                 s.setStatusSucursal(true);
             }
+
             s.setNombreStatus(obj[8] == null ? "" : obj[8].toString());
             s.setIdEntidadFk(obj[9] == null ? null : new BigDecimal(obj[9].toString()));
             s.setNombreEntidad(obj[10] == null ? "" : obj[10].toString());

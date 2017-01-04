@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.web.chon.service;
 
 import com.web.chon.dominio.Documento;
@@ -23,22 +18,21 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class ServiceDocumentos implements IfaceDocumentos {
-@Autowired
+
+    @Autowired
     EjbDocumentos ejb;
-     @Autowired  IfaceAbonoDocumentos ifaceAbonoDocumentos;
-    
-    
+    @Autowired
+    IfaceAbonoDocumentos ifaceAbonoDocumentos;
 
     @Override
     public int insertarDocumento(Documento documento) {
-          
-       return ejb.insertarDocumento(documento);
+
+        return ejb.insertarDocumento(documento);
     }
-    
+
     @Override
     public int getNextVal() {
-           
-        
+
         return ejb.nextVal();
     }
 
@@ -64,19 +58,18 @@ public class ServiceDocumentos implements IfaceDocumentos {
 
     @Override
     public int updateDocumentoById(Documento dc) {
-          
-       return ejb.updateDocumento(dc);
-    
+
+        return ejb.updateDocumento(dc);
+
     }
 
     @Override
-    public ArrayList<Documento> getDocumentos(Date fechaInicio, Date fechaFin, BigDecimal idSucursalFk, BigDecimal idClienteFk, BigDecimal idFormaPagoFk, BigDecimal idStatusFk,BigDecimal filtroFecha) {
-           
+    public ArrayList<Documento> getDocumentos(Date fechaInicio, Date fechaFin, BigDecimal idSucursalFk, BigDecimal idClienteFk, BigDecimal idFormaPagoFk, BigDecimal idStatusFk, BigDecimal filtroFecha) {
+
         ArrayList<Documento> lstDocumentos = new ArrayList<Documento>();
         List<Object[]> lstObject = new ArrayList<Object[]>();
-        lstObject = ejb.getDocumentos(TiempoUtil.getFechaDDMMYYYY(fechaInicio), TiempoUtil.getFechaDDMMYYYY(fechaFin),idSucursalFk,idClienteFk,idFormaPagoFk,idStatusFk,filtroFecha);
-        for (Object[] object : lstObject) 
-        {
+        lstObject = ejb.getDocumentos(TiempoUtil.getFechaDDMMYYYY(fechaInicio), TiempoUtil.getFechaDDMMYYYY(fechaFin), idSucursalFk, idClienteFk, idFormaPagoFk, idStatusFk, filtroFecha);
+        for (Object[] object : lstObject) {
             Documento documento = new Documento();
             documento.setIdDocumentoPk(object[0] == null ? null : new BigDecimal(object[0].toString()));
             documento.setIdTipoDocumento(object[1] == null ? null : new BigDecimal(object[1].toString()));
@@ -100,15 +93,14 @@ public class ServiceDocumentos implements IfaceDocumentos {
             lstDocumentos.add(documento);
         }
         return lstDocumentos;
-    
-    
+
     }
 
     @Override
     public int cambiarFormaPago(Documento d) {
-           
-       return ejb.cambiarFormaPago(d);
-    
+
+        return ejb.cambiarFormaPago(d);
+
     }
 
 }

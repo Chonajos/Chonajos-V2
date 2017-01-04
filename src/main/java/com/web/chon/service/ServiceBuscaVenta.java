@@ -26,8 +26,6 @@ public class ServiceBuscaVenta implements IfaceBuscaVenta {
     @Autowired
     EjbBuscaVenta ejb;
 
-    
-
     @Override
     public ArrayList<BuscaVenta> getVentaById(int idVenta) {
         try {
@@ -158,9 +156,6 @@ public class ServiceBuscaVenta implements IfaceBuscaVenta {
 //                //busca_venta.setIdBodega(obj[19] == null ? null : new BigDecimal(obj[19].toString()));
 //                //busca_venta.setIdTipoConvenio(obj[20] == null ? null : new BigDecimal(obj[20].toString()));
 //                //busca_venta.setIdProvedor(obj[21] == null ? null : new BigDecimal(obj[21].toString()));
-//                
-//                System.out.println("###################################");
-//                System.out.println(busca_venta.toString());
                 lstVentas.add(busca_venta);
             }
             return lstVentas;
@@ -173,19 +168,19 @@ public class ServiceBuscaVenta implements IfaceBuscaVenta {
 
     @Override
     public int updateStatusVentaMayoreo(int idVenta, int idUsuario) {
-           
+
         return ejb.updateStatusVentaMayoreo(idVenta, idUsuario);
     }
 
     @Override
     public int cancelarVenta(int idVenta, int idUsuario, String comentarios) {
-           
+
         return ejb.cancelarVenta(idVenta, idUsuario, comentarios);
     }
 
     @Override
     public int cancelarVentaMayoreo(int idVenta, int idUsuario, String comentarios) {
-           
+
         return ejb.cancelarVentaMayoreo(idVenta, idUsuario, comentarios);
 
     }
@@ -250,9 +245,8 @@ public class ServiceBuscaVenta implements IfaceBuscaVenta {
 
                 lstVenta.add(producto);
             }
-            
-            venta.setListaProductos(lstVenta);
 
+            venta.setListaProductos(lstVenta);
 
             return venta;
         } catch (Exception ex) {

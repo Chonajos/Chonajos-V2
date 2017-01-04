@@ -1,11 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.web.chon.service;
-
-
 
 import com.web.chon.dominio.TipoVenta;
 import com.web.chon.ejb.EjbTipoVenta;
@@ -16,30 +9,27 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author freddy
  */
 @Service
-public class ServiceTipoVenta implements IfaceTipoVenta{
-    
+@Transactional
+public class ServiceTipoVenta implements IfaceTipoVenta {
+
     @Autowired
     EjbTipoVenta ejb;
 
-    
-
     @Override
     public ArrayList<TipoVenta> getAll() {
-       
+
         try {
             ArrayList<TipoVenta> lstTipos = new ArrayList<TipoVenta>();
-               
-
             List<Object[]> lstObject = ejb.getAll();
 
-            for (Object[] obj : lstObject) 
-            {
+            for (Object[] obj : lstObject) {
                 TipoVenta tipo = new TipoVenta();
                 tipo.setIdTipoVentaPk(obj[0] == null ? null : new BigDecimal(obj[0].toString()));
                 tipo.setNombreTipoVenta(obj[1] == null ? "" : obj[1].toString());
@@ -50,6 +40,6 @@ public class ServiceTipoVenta implements IfaceTipoVenta{
             Logger.getLogger(TipoVenta.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
-        
+
     }
 }

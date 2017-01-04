@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -22,7 +23,9 @@ import org.springframework.stereotype.Service;
  * @author Juan de la Cruz
  */
 @Service
+@Transactional
 public class ServiceSubProducto implements IfaceSubProducto {
+
     @Autowired
     EjbSubProducto ejb;
 
@@ -30,7 +33,7 @@ public class ServiceSubProducto implements IfaceSubProducto {
     public ArrayList<Subproducto> getSubProductos() {
         try {
             ArrayList<Subproducto> lstSubProducto = new ArrayList<Subproducto>();
-            
+
             List<Object[]> lstObject = ejb.getSubProductos();
 
             for (Object[] obj : lstObject) {
@@ -43,7 +46,6 @@ public class ServiceSubProducto implements IfaceSubProducto {
                 subProducto.setIdProductoFk(obj[4] == null ? null : obj[4].toString());
                 subProducto.setFichero((obj[5] == null ? null : (byte[]) (obj[5])));
                 subProducto.setNombreCategoria(obj[7] == null ? "" : obj[7].toString());
-                
 
                 lstSubProducto.add(subProducto);
             }
@@ -91,7 +93,7 @@ public class ServiceSubProducto implements IfaceSubProducto {
             try {
                 byte[] fichero = subProducto.getFichero();
                 ejb.insertarDocumento(subProducto.getIdSubproductoPk(), fichero);
-                
+
             } catch (SQLException ex) {
                 Logger.getLogger(ServiceSubProducto.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -155,7 +157,7 @@ public class ServiceSubProducto implements IfaceSubProducto {
     public ArrayList<Subproducto> getSubProductosIdSucursal(BigDecimal idSucursal) {
         try {
             ArrayList<Subproducto> lstSubProducto = new ArrayList<Subproducto>();
-            
+
             List<Object[]> lstObject = ejb.getSubProductosIdSucursal(idSucursal);
 
             for (Object[] obj : lstObject) {
@@ -178,20 +180,6 @@ public class ServiceSubProducto implements IfaceSubProducto {
             Logger.getLogger(ServiceSubProducto.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
-    }
-
-    private byte[] convertToBytes(Object obj) {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ObjectOutput out;
-        try {
-            out = new ObjectOutputStream(bos);
-
-            out.writeObject(obj);
-
-        } catch (IOException ex) {
-            Logger.getLogger(ServiceSubProducto.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return bos.toByteArray();
     }
 
 }

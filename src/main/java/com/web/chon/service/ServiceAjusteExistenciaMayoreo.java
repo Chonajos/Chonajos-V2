@@ -1,4 +1,3 @@
-
 package com.web.chon.service;
 
 import com.web.chon.dominio.AjusteExistenciaMayoreo;
@@ -20,10 +19,8 @@ public class ServiceAjusteExistenciaMayoreo implements IfaceAjusteExistenciaMayo
     @Autowired
     EjbAjusteExistenciaMayoreo ejb;
 
-
     @Override
     public int insert(AjusteExistenciaMayoreo data) {
-           
 
         return ejb.insert(data);
     }

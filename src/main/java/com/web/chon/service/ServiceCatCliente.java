@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.web.chon.service;
 
 import com.web.chon.dominio.Cliente;
@@ -31,7 +26,7 @@ public class ServiceCatCliente implements IfaceCatCliente {
 
     @Override
     public ArrayList<Cliente> getClientes() {
-        //throw new UnsupportedOperationException("Not supported yet.");
+
         try {
             ArrayList<Cliente> lista_clientes = new ArrayList<Cliente>();
             List<Object[]> lstObject = ejb.getClientes();
@@ -46,7 +41,7 @@ public class ServiceCatCliente implements IfaceCatCliente {
                 cliente.setCalle(obj[5] == null ? "" : obj[5].toString());
                 String auxiliar_sexo = obj[6] == null ? "M" : obj[6].toString();
                 cliente.setSexo(auxiliar_sexo.charAt(0));
-                cliente.setFecha_nacimiento(obj[7] == null ? null:(Date) obj[7]);
+                cliente.setFecha_nacimiento(obj[7] == null ? null : (Date) obj[7]);
                 cliente.setTel_movil(obj[8] == null ? null : new BigDecimal(obj[8].toString()));
                 cliente.setTel_fijo(obj[9] == null ? null : new BigDecimal(obj[9].toString()));
                 cliente.setExt(obj[10] == null ? null : new BigDecimal(obj[10].toString()));
@@ -66,11 +61,11 @@ public class ServiceCatCliente implements IfaceCatCliente {
                 cliente.setClaveoficina(obj[24] == null ? new BigDecimal(0) : new BigDecimal(obj[24].toString()));
                 cliente.setNextelclave(obj[25] == null ? "" : obj[25].toString());
                 cliente.setStatus_cliente(obj[26] == null ? new BigDecimal(0) : new BigDecimal(obj[26].toString()));
-                cliente.setStatusClienteBoolean(obj[26] == null ? false:obj[26].toString().equals("1"));
+                cliente.setStatusClienteBoolean(obj[26] == null ? false : obj[26].toString().equals("1"));
                 cliente.setTipoPersona(obj[30] == null ? "1" : obj[30].toString());
 //Hasta aqui terminan los datos de la tabla clientes.
                 //Los siguientes datos son para obtener las direcciones y los correos.
-                cliente.setFecha_alta(obj[27] == null ? null:(Date) obj[27]);
+                cliente.setFecha_alta(obj[27] == null ? null : (Date) obj[27]);
                 cliente.setDiasCredito(obj[28] == null ? null : new BigDecimal(obj[28].toString()));
                 cliente.setLimiteCredito(obj[29] == null ? null : new BigDecimal(obj[29].toString()));
                 cliente.setEstado_id(obj[31] == null ? "" : (obj[31].toString()));
@@ -86,10 +81,9 @@ public class ServiceCatCliente implements IfaceCatCliente {
                 cliente.setCodigoPostalFiscal(obj[40] == null ? "" : (obj[40].toString()));
                 cliente.setMunicipio(obj[41] == null ? "" : (obj[41].toString()));
                 cliente.setMunicipioFiscal(obj[42] == null ? "" : (obj[42].toString()));
-                
+
                 //cliente.setID_CP(Integer.parseInt(obj[39] == null ? "":(obj[39].toString())));
                 //cliente.setID_CP_FISCAL(Integer.parseInt(obj[40] == null ? "":(obj[40].toString())));
-
                 lista_clientes.add(cliente);
 
             }
@@ -137,9 +131,9 @@ public class ServiceCatCliente implements IfaceCatCliente {
 
     @Override
     public int insertCliente(Cliente cliente) {
-        //System.out.println("Cliente" + cliente.toString());
+
         return ejb.insertCliente(cliente);
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
     }
 
     @Override
@@ -168,7 +162,7 @@ public class ServiceCatCliente implements IfaceCatCliente {
 
     @Override
     public int getNextVal() {
-     return ejb.getNextVal();
+        return ejb.getNextVal();
     }
 
     @Override
@@ -188,7 +182,7 @@ public class ServiceCatCliente implements IfaceCatCliente {
                 cliente.setUtilizadoTotal(cliente.getUtilizadoMenudeo().add(cliente.getUtilizadoMayoreo(), MathContext.UNLIMITED));
                 cliente.setCreditoDisponible(cliente.getLimiteCredito().subtract(cliente.getUtilizadoTotal(), MathContext.UNLIMITED));
             }
-            
+
             return cliente;
         } catch (Exception ex) {
             Logger.getLogger(ServiceCatCliente.class.getName()).log(Level.SEVERE, null, ex);
@@ -201,7 +195,7 @@ public class ServiceCatCliente implements IfaceCatCliente {
     public Cliente getCreditoClienteByIdCliente(BigDecimal idCliente) {
         try {
             Cliente cliente = new Cliente();
-           List<Object[]> lstObject = ejb.getCreditoClienteByIdCliente(idCliente);
+            List<Object[]> lstObject = ejb.getCreditoClienteByIdCliente(idCliente);
 
             for (Object[] obj : lstObject) {
                 cliente.setId_cliente(obj[0] == null ? null : new BigDecimal(obj[0].toString()));
@@ -210,9 +204,8 @@ public class ServiceCatCliente implements IfaceCatCliente {
                 cliente.setUtilizadoTotal(obj[3] == null ? new BigDecimal("0") : new BigDecimal(obj[3].toString()));
                 cliente.setUtilizadoDocumentos(obj[4] == null ? new BigDecimal("0") : new BigDecimal(obj[4].toString()));
                 cliente.setCreditoDisponible((cliente.getLimiteCredito().subtract(cliente.getUtilizadoTotal(), MathContext.UNLIMITED)).subtract(cliente.getUtilizadoDocumentos(), MathContext.UNLIMITED));
-                
+
             }
-         
 
             return cliente;
         } catch (Exception ex) {
@@ -221,8 +214,8 @@ public class ServiceCatCliente implements IfaceCatCliente {
 
         }
     }
-    
-     @Override
+
+    @Override
     public ArrayList<Cliente> getClientesActivos() {
         try {
             ArrayList<Cliente> lista_clientes = new ArrayList<Cliente>();
@@ -246,7 +239,7 @@ public class ServiceCatCliente implements IfaceCatCliente {
                 cliente.setNum_ext(obj[12] == null ? null : new BigDecimal(obj[12].toString()));
                 cliente.setClavecelular(obj[13] == null ? null : new BigDecimal(obj[13].toString()));
                 cliente.setLadacelular(obj[14] == null ? null : new BigDecimal(obj[14].toString()));
-                cliente.setID_CP(obj[15] == null ? new BigDecimal(100000): new BigDecimal(obj[15].toString()));//
+                cliente.setID_CP(obj[15] == null ? new BigDecimal(100000) : new BigDecimal(obj[15].toString()));//
                 cliente.setCalleFiscal(obj[16] == null ? "" : obj[16].toString());
                 cliente.setNum_int_fiscal(obj[17] == null ? null : new BigDecimal(obj[17].toString()));
                 cliente.setNum_ext_fiscal(obj[18] == null ? null : new BigDecimal(obj[18].toString()));

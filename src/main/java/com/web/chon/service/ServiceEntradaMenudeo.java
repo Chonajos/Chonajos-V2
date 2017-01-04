@@ -1,15 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.web.chon.service;
 
 import com.web.chon.dominio.EntradaMenudeo;
 import com.web.chon.dominio.EntradaMenudeoProducto;
 import com.web.chon.ejb.EjbEntradaMenudeo;
-import com.web.chon.negocio.NegocioEntradaMenudeo;
-import com.web.chon.util.Utilidades;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.ArrayList;
@@ -19,23 +12,24 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author freddy
  */
 @Service
+@Transactional
 public class ServiceEntradaMenudeo implements IfaceEntradaMenudeo {
+
     @Autowired
     EjbEntradaMenudeo ejb;
     @Autowired
     private IfaceEntradaMenudeoProducto ifaceEntradaMenudeoProducto;
 
-    
-
     @Override
     public int insertEntradaMercancia(EntradaMenudeo entrada) {
-           
+
         return ejb.insertEntradaMenudeo(entrada);
     }
 
@@ -46,7 +40,7 @@ public class ServiceEntradaMenudeo implements IfaceEntradaMenudeo {
 
     @Override
     public int getNextVal() {
-           
+
         try {
             return ejb.getNextVal();
 
@@ -58,7 +52,7 @@ public class ServiceEntradaMenudeo implements IfaceEntradaMenudeo {
 
     @Override
     public int getFolio(BigDecimal idSucursal) {
-           
+
         try {
             return ejb.getFolio(idSucursal);
 
@@ -71,8 +65,7 @@ public class ServiceEntradaMenudeo implements IfaceEntradaMenudeo {
 
     @Override
     public ArrayList<EntradaMenudeo> getEntradaProductoByIntervalDate(Date fechaFiltroInicio, Date fechaFiltroFin, BigDecimal idSucursal, String idSubproductoPk) {
-           
-        System.out.println("Service////////////////" + idSubproductoPk);
+
         List<Object[]> lstObject = new ArrayList<Object[]>();
         ArrayList<EntradaMenudeo> lstEntradaMercancia2 = new ArrayList<EntradaMenudeo>();
         lstObject = ejb.getEntradaProductoByIntervalDate(fechaFiltroInicio, fechaFiltroFin, idSucursal, idSubproductoPk);
@@ -99,18 +92,16 @@ public class ServiceEntradaMenudeo implements IfaceEntradaMenudeo {
             dominio.setListaDetalleProducto(lstDetalle);
             BigDecimal sumaKilos = new BigDecimal(0);
             BigDecimal sumaCostos = new BigDecimal(0);
-            for(EntradaMenudeoProducto item:lstDetalle)
-            {
+            for (EntradaMenudeoProducto item : lstDetalle) {
                 sumaKilos = sumaKilos.add(item.getKilosTotales(), MathContext.UNLIMITED);
                 sumaCostos = sumaCostos.add(item.getPrecio(), MathContext.UNLIMITED);
                 dominio.setSumaCostos(sumaCostos);
                 dominio.setSumaKilos(sumaKilos);
             }
-            
-            
+
             lstEntradaMercancia2.add(dominio);
         }
-            return lstEntradaMercancia2;
-        
+        return lstEntradaMercancia2;
+
     }
 }

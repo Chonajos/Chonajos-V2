@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.web.chon.service;
 
 import com.web.chon.dominio.MayoreoProductoEntradaProducto;
@@ -17,35 +12,35 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author freddy
  */
 @Service
+@Transactional
 public class ServiceVentaMayoreoProducto implements IfaceVentaMayoreoProducto {
 
     @Autowired
     EjbVentaMayoreoProducto ejb;
 
-   
-
     @Override
     public int insertarVentaMayoreoProducto(VentaProductoMayoreo venta) {
-           
+
         return ejb.insertarVentaProducto(venta);
     }
 
     @Override
     public int getNextVal() {
-           
+
         return ejb.getNextVal();
     }
 
     @Override
     public ArrayList<VentaProductoMayoreo> getProductosbyIdVmFk(BigDecimal idVmFk) {
         try {
-               
+
             ArrayList<VentaProductoMayoreo> lstProductos = new ArrayList<VentaProductoMayoreo>();
             List<Object[]> lstObject = ejb.getProductos(idVmFk);
             for (Object[] obj : lstObject) {
@@ -76,7 +71,7 @@ public class ServiceVentaMayoreoProducto implements IfaceVentaMayoreoProducto {
                 //busca_venta.setIdProvedor(obj[21] == null ? null : new BigDecimal(obj[21].toString()));
                 producto.setIdVentaMayProdPk(obj[8] == null ? null : new BigDecimal(obj[8].toString()));
                 producto.setIdVentaMayoreoFk(obj[9] == null ? null : new BigDecimal(obj[9].toString()));
-                
+
                 lstProductos.add(producto);
             }
             return lstProductos;
@@ -89,7 +84,7 @@ public class ServiceVentaMayoreoProducto implements IfaceVentaMayoreoProducto {
 
     @Override
     public ArrayList<VentaProductoMayoreo> buscaVentaCancelar(BigDecimal idVenta, BigDecimal idSucursal) {
-           
+
         try {
             ArrayList<VentaProductoMayoreo> lstVentas = new ArrayList<VentaProductoMayoreo>();
             List<Object[]> lstObject = ejb.buscaVentaCancelar(idVenta, idSucursal);
@@ -110,11 +105,11 @@ public class ServiceVentaMayoreoProducto implements IfaceVentaMayoreoProducto {
     }
 
     @Override
-    public ArrayList<MayoreoProductoEntradaProducto> getVentaByIdSucursalAndCarro(BigDecimal idSucursal, BigDecimal carro,String fechaInicio,String fechaFin) {
-           
+    public ArrayList<MayoreoProductoEntradaProducto> getVentaByIdSucursalAndCarro(BigDecimal idSucursal, BigDecimal carro, String fechaInicio, String fechaFin) {
+
         try {
             ArrayList<MayoreoProductoEntradaProducto> lstMayoreoProductoEntradaProducto = new ArrayList<MayoreoProductoEntradaProducto>();
-            List<Object[]> lstObject = ejb.getVentaByIdSucursalAndCarro(idSucursal, carro,fechaInicio,fechaFin);
+            List<Object[]> lstObject = ejb.getVentaByIdSucursalAndCarro(idSucursal, carro, fechaInicio, fechaFin);
             for (Object[] obj : lstObject) {
                 MayoreoProductoEntradaProducto dominio = new MayoreoProductoEntradaProducto();
 
@@ -146,7 +141,7 @@ public class ServiceVentaMayoreoProducto implements IfaceVentaMayoreoProducto {
 
         switch (dominio.getIdConvenio().intValue()) {
             case 1:
-                BigDecimal kiloPromedio = dominio.getKilosEntrada().divide(dominio.getEmpaqueEntrada(),10,RoundingMode.HALF_UP);
+                BigDecimal kiloPromedio = dominio.getKilosEntrada().divide(dominio.getEmpaqueEntrada(), 10, RoundingMode.HALF_UP);
                 BigDecimal costoCompra = kiloPromedio.multiply(dominio.getEmpaquesVendidos()).multiply(dominio.getConvenio());
                 comision = dominio.getTotalVenta().subtract(costoCompra);
 

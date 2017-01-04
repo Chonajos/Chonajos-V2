@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.web.chon.service;
 
 import com.web.chon.dominio.EntradaMercanciaProducto;
@@ -10,8 +5,6 @@ import com.web.chon.dominio.EntradaMercanciaProductoPaquete;
 import com.web.chon.dominio.Pagina;
 import com.web.chon.dominio.VentaProductoMayoreo;
 import com.web.chon.ejb.EjbEntradaMercanciaProducto;
-import com.web.chon.negocio.NegocioEntradaMercanciaProducto;
-import com.web.chon.util.Utilidades;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.ArrayList;
@@ -21,25 +14,28 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author marcogante
  */
 @Service
+@Transactional
 public class ServiceEntradaMercanciaProducto implements IfaceEntradaMercanciaProducto {
-@Autowired
+
+    @Autowired
     EjbEntradaMercanciaProducto ejb;
-    @Autowired private IfaceCatBodegas ifaceCatBodegas;
-    @Autowired private IfaceSubProducto ifaceSubProducto;
-    @Autowired private IfaceEntMerProPaq ifaceEntMerProPaq;
-
-
+    @Autowired
+    private IfaceCatBodegas ifaceCatBodegas;
+    @Autowired
+    private IfaceSubProducto ifaceSubProducto;
+    @Autowired
+    private IfaceEntMerProPaq ifaceEntMerProPaq;
 
     @Override
     public int insertEntradaMercanciaProducto(EntradaMercanciaProducto producto) {
 
-           
         return ejb.insertEntradaMercanciaProducto(producto);
     }
 
@@ -70,7 +66,7 @@ public class ServiceEntradaMercanciaProducto implements IfaceEntradaMercanciaPro
 
     @Override
     public int update(EntradaMercanciaProducto dominio) {
-          
+
         return ejb.updateEntradaMercanciaProducto(dominio);
     }
 
@@ -87,15 +83,12 @@ public class ServiceEntradaMercanciaProducto implements IfaceEntradaMercanciaPro
     @Override
     public int getNextVal() {
 
-           
         return ejb.getNextVal();
 
     }
 
     @Override
     public ArrayList<EntradaMercanciaProducto> getEntradaProductoByIdEM(BigDecimal idEntradaMercancia) {
-
-           
 
         ArrayList<EntradaMercanciaProducto> lstEntradaMercanciaProducto = new ArrayList<EntradaMercanciaProducto>();
         List<Object[]> lstObject = new ArrayList<Object[]>();
@@ -107,7 +100,7 @@ public class ServiceEntradaMercanciaProducto implements IfaceEntradaMercanciaPro
             EntradaMercanciaProducto dominio = new EntradaMercanciaProducto();
 
             numeroMovimiento++;
-            
+
             dominio.setIdEmpPK(new BigDecimal(obj[0].toString()));
             dominio.setIdEmFK(new BigDecimal(obj[1].toString()));
             dominio.setIdSubProductoFK(obj[2] == null ? null : obj[2].toString());
@@ -131,22 +124,21 @@ public class ServiceEntradaMercanciaProducto implements IfaceEntradaMercanciaPro
             dominio.setListaPaquetes(ifaceEntMerProPaq.getPaquetesByIdEmp(dominio.getIdEmpPK()));
             BigDecimal totalkilosPaquetes = new BigDecimal(0);
             BigDecimal totalcantPaquetes = new BigDecimal(0);
-            for(EntradaMercanciaProductoPaquete paquete:dominio.getListaPaquetes())
-            {
-                if (paquete.getIdStatusFk().intValue()==1){
-                totalkilosPaquetes = totalkilosPaquetes.add(paquete.getPesoNeto(), MathContext.UNLIMITED);
-                totalcantPaquetes = totalcantPaquetes.add(paquete.getPaquetes(), MathContext.UNLIMITED);
+            for (EntradaMercanciaProductoPaquete paquete : dominio.getListaPaquetes()) {
+                if (paquete.getIdStatusFk().intValue() == 1) {
+                    totalkilosPaquetes = totalkilosPaquetes.add(paquete.getPesoNeto(), MathContext.UNLIMITED);
+                    totalcantPaquetes = totalcantPaquetes.add(paquete.getPaquetes(), MathContext.UNLIMITED);
                 }
             }
             dominio.setKilosPaquetes(totalkilosPaquetes);
             dominio.setCantPaquetes(totalcantPaquetes);
-            
+
             VentaProductoMayoreo venta = new VentaProductoMayoreo();
-            venta =getTotalVentasByIdEMP(dominio.getIdEmpPK());
-            
+            venta = getTotalVentasByIdEMP(dominio.getIdEmpPK());
+
             dominio.setKilosVendidos(venta.getKilosVendidos());
             dominio.setCantidadVendida(venta.getCantidadEmpaque());
-            
+
             dominio.setKilosReales(dominio.getKilosPaquetes().add(dominio.getKilosVendidos(), MathContext.UNLIMITED));
             dominio.setCantidadReales(dominio.getCantPaquetes().add(dominio.getCantidadVendida(), MathContext.UNLIMITED));
             lstEntradaMercanciaProducto.add(dominio);
@@ -159,17 +151,15 @@ public class ServiceEntradaMercanciaProducto implements IfaceEntradaMercanciaPro
 
     @Override
     public int deleteEntradaMercanciaProducto(EntradaMercanciaProducto ep) {
-          
+
         return ejb.deleteEntradaProducto(ep);
     }
 
-    
-
     @Override
     public EntradaMercanciaProducto getEntradaMercanciaProductoByIdEmpPk(BigDecimal idEmpPk) {
-          
+
         try {
-               
+
             List<Object[]> lstObject = new ArrayList<Object[]>();
             lstObject = ejb.getEntradaMercanciaProductoByIdEmpPk(idEmpPk);
             EntradaMercanciaProducto entradaProducto = new EntradaMercanciaProducto();
@@ -177,43 +167,36 @@ public class ServiceEntradaMercanciaProducto implements IfaceEntradaMercanciaPro
                 entradaProducto.setIdEmpPK(object[0] == null ? null : new BigDecimal(object[0].toString()));
                 entradaProducto.setCantidadPaquetes(object[1] == null ? null : new BigDecimal(object[1].toString()));
                 entradaProducto.setKilosTotalesProducto(object[2] == null ? null : new BigDecimal(object[2].toString()));
-                
+
             }
             return entradaProducto;
-        }
-        catch (Exception ex) 
-        {
+        } catch (Exception ex) {
             Logger.getLogger(ServiceNegocioExistencia.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
-    
+
     }
 
     @Override
     public VentaProductoMayoreo getTotalVentasByIdEMP(BigDecimal idEmP) {
-          
+
         try {
-               
+
             List<Object[]> lstObject = new ArrayList<Object[]>();
             lstObject = ejb.getTotalVentasByIdEMP(idEmP);
             VentaProductoMayoreo venta = new VentaProductoMayoreo();
-            for (Object[] object : lstObject) 
-            {
+            for (Object[] object : lstObject) {
                 venta.setTotalVenta(object[0] == null ? null : new BigDecimal(object[0].toString()));
                 venta.setKilosVendidos(object[1] == null ? null : new BigDecimal(object[1].toString()));
                 venta.setCantidadEmpaque(object[2] == null ? null : new BigDecimal(object[2].toString()));
-                
+
             }
             return venta;
-        }
-        catch (Exception ex) 
-        {
+        } catch (Exception ex) {
             Logger.getLogger(ServiceNegocioExistencia.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
-        
-        
-        
+
     }
 
 }

@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
  * @author Juan de la Cruz
  */
 @Service
+@Transactional
 public class ServiceMantenimientoPrecio implements IfaceMantenimientoPrecio {
 
     @Autowired
@@ -39,7 +41,6 @@ public class ServiceMantenimientoPrecio implements IfaceMantenimientoPrecio {
                 mantenimientoPrecios.setCostoReal(obj[6] == null ? null : new BigDecimal(obj[6].toString()));
                 mantenimientoPrecios.setCostoMerma(obj[7] == null ? null : new BigDecimal(obj[7].toString()));
 
-                System.out.println("by id" + mantenimientoPrecios.toString());
             }
 
             return mantenimientoPrecios;
@@ -92,7 +93,7 @@ public class ServiceMantenimientoPrecio implements IfaceMantenimientoPrecio {
                     mantenimientoPrecios.setPrecioSugerido(mantenimientoPrecios.getCostoMerma().add(mantenimientoPrecios.getCostoMerma().multiply(new BigDecimal(0.3))));
 
                 }
-                System.out.println("mantenimiento data " + mantenimientoPrecios.toString());
+
                 lstMantenimientoPrecios.add(mantenimientoPrecios);
             }
 

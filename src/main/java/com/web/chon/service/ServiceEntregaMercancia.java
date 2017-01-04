@@ -2,9 +2,7 @@ package com.web.chon.service;
 
 import com.web.chon.dominio.EntregaMercancia;
 import com.web.chon.ejb.EjbEntregaMercancia;
-import com.web.chon.negocio.NegocioEntregaMercancia;
 import com.web.chon.util.TiempoUtil;
-import com.web.chon.util.Utilidades;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,17 +11,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Juan de la Cruz
  */
 @Service
+@Transactional
 public class ServiceEntregaMercancia implements IfaceEntregaMercancia {
-@Autowired
-    EjbEntregaMercancia ejb;
 
-    
+    @Autowired
+    EjbEntregaMercancia ejb;
 
     @Override
     public ArrayList<EntregaMercancia> getByIdSucursalAndFolioSucursal(BigDecimal idSucursal, BigDecimal folioSucursal) {
@@ -74,7 +73,6 @@ public class ServiceEntregaMercancia implements IfaceEntregaMercancia {
 
     @Override
     public int insert(EntregaMercancia entregaMercancia) {
-           
 
         return ejb.insertar(entregaMercancia);
 
@@ -83,8 +81,6 @@ public class ServiceEntregaMercancia implements IfaceEntregaMercancia {
     @Override
     public ArrayList<EntregaMercancia> getByIdVentaMayoreoProducto(BigDecimal idVentaMayoreoProducto) {
         try {
-
-               
 
             ArrayList<EntregaMercancia> lstEntregaMercancia = new ArrayList<EntregaMercancia>();
             List<Object[]> lstObject = new ArrayList<Object[]>();
@@ -97,7 +93,7 @@ public class ServiceEntregaMercancia implements IfaceEntregaMercancia {
                 dominio.setIdVPMenudeo(object[1] == null ? null : new BigDecimal(object[1].toString()));
                 dominio.setIdVPMayoreo(object[2] == null ? null : new BigDecimal(object[2].toString()));
                 dominio.setIdUsuario(object[3] == null ? null : new BigDecimal(object[3].toString()));
-                dominio.setFechaStr(object[4] == null ? null : TiempoUtil.getFechaDDMMYYYYHHMM(((Date)object[4])));
+                dominio.setFechaStr(object[4] == null ? null : TiempoUtil.getFechaDDMMYYYYHHMM(((Date) object[4])));
                 dominio.setEmpaquesEntregados(object[5] == null ? null : new BigDecimal(object[5].toString()));
                 dominio.setKilosEntregados(object[6] == null ? null : new BigDecimal(object[6].toString()));
                 dominio.setObservaciones(object[7] == null ? null : object[7].toString());

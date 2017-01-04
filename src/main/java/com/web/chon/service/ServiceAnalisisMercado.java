@@ -27,11 +27,9 @@ public class ServiceAnalisisMercado implements IfaceAnalisisMercado {
     @Override
     public int saveEntradaProductoCentral(AnalisisMercado entradaMercancia) {
 
-           
         //System.out.println(entradaMercancia.toString());
         return ejb.saveEntradaProductoCentral(entradaMercancia);
     }
-
 
     @Override
     public Pagina<AnalisisMercado> findAll(Pageable pageable) {
@@ -50,7 +48,7 @@ public class ServiceAnalisisMercado implements IfaceAnalisisMercado {
 
     @Override
     public int update(AnalisisMercado dto) {
-           
+
         return ejb.update(dto);
     }
 
@@ -79,8 +77,6 @@ public class ServiceAnalisisMercado implements IfaceAnalisisMercado {
         List<Object[]> lstObject = null;
 
         Date fechaFin = fechaInicio;
-
-           
 
         ArrayList<AnalisisMercado> lstEntradaMercancia = new ArrayList<AnalisisMercado>();
         ArrayList<AnalisisMercado> lstEntradaMercanciaDate = new ArrayList<AnalisisMercado>();
@@ -170,7 +166,6 @@ public class ServiceAnalisisMercado implements IfaceAnalisisMercado {
 
                         lstObject = ejb.getEntradaProductoByFiltroWeek(rangoFechaInicio.get(0), rangoFechaInicio.get(6), idProducto);
                         List<Object[]> lstObjectAnterior = ejb.getEntradaProductoByFiltroWeek(TiempoUtil.getFechaDDMMYYYY(anioAnteriorInicio), TiempoUtil.getFechaDDMMYYYY(anioAnteriorFin), idProducto);
-                        
 
                         for (Object[] obj : lstObject) {
                             AnalisisMercado dominio = new AnalisisMercado();
@@ -189,7 +184,7 @@ public class ServiceAnalisisMercado implements IfaceAnalisisMercado {
                             lstEntradaMercancia.add(dominio);
                             cont++;
                         }
-                        
+
                         fechaInicio = TiempoUtil.sumarRestarDias(fechaInicio, 7);
                         rangoFechaInicio = TiempoUtil.getintervalWeekDDMMYYYYbyDay(fechaInicio);
                     }
@@ -252,11 +247,10 @@ public class ServiceAnalisisMercado implements IfaceAnalisisMercado {
 
                 default:
 
-                    //System.out.println("default " + filtro);
                     break;
             }
         } catch (Exception e) {
-            //System.out.println("error servide " + e.getMessage());
+
             e.getStackTrace();
         }
 
@@ -267,10 +261,9 @@ public class ServiceAnalisisMercado implements IfaceAnalisisMercado {
     public AnalisisMercado getEntradaProductoByIdProducto(String idProducto, String fecha) {
         List<Object[]> lstObject = null;
         AnalisisMercado dominio = new AnalisisMercado();
-           
+
         lstObject = ejb.getEntradaProductoByIdProducto(idProducto, fecha);
 
-           
         for (Object[] obj : lstObject) {
 
             dominio.setIdEntrada(obj[0] != null ? new BigDecimal(obj[0].toString()) : new BigDecimal(0));
@@ -296,7 +289,6 @@ public class ServiceAnalisisMercado implements IfaceAnalisisMercado {
         BigDecimal remanete = new BigDecimal(0);
         List<String> lstFecha = TiempoUtil.getintervalWeekDDMMYYYYbyDay(fechaRemanente);
 
-           
         remanete = ejb.getRemanente(lstFecha.get(0), lstFecha.get(6), idProducto);
 
         return remanete;
@@ -311,29 +303,24 @@ public class ServiceAnalisisMercado implements IfaceAnalisisMercado {
     @Override
     public ArrayList<AnalisisMercado> getAnalisMercadoByNameDayOfYear(String fechaInicio, String fechaFin, String idProducto, String nombreDia) {
         List<Object[]> lstObject = null;
-//        System.out.println("fechaInicio "+fechaInicio);
-//        System.out.println("fechaFin "+fechaFin);
-//        System.out.println("idProSystemducto "+idProducto);
-//        System.out.println("nombreDia "+nombreDia);
+
         ArrayList<AnalisisMercado> lstAnalisisMercado = new ArrayList<AnalisisMercado>();
-           
+
         lstObject = ejb.getAnalisMercadoByNameDayOfYear(fechaInicio, fechaFin, idProducto, nombreDia);
 
-           
         for (Object[] obj : lstObject) {
             AnalisisMercado dominio = new AnalisisMercado();
-        
+
             dominio.setIdEntrada(obj[1] != null ? new BigDecimal(obj[1].toString()) : new BigDecimal(0));
             dominio.setIdProductoFk(idProducto);
             dominio.setPrecio(obj[3] != null ? new BigDecimal(obj[3].toString()) : new BigDecimal(0));
             dominio.setCantidadToneladas(obj[4] != null ? new BigDecimal(obj[4].toString()) : new BigDecimal(0));
-            dominio.setFecha(obj[0] == null ? null:(Date) obj[0]);
+            dominio.setFecha(obj[0] == null ? null : (Date) obj[0]);
             dominio.setRemantePorSemana(obj[6] != null ? new BigDecimal(obj[6].toString()) : new BigDecimal(0));
             dominio.setDescripcionFiltro(TiempoUtil.getFechaDDMMYYYY(dominio.getFecha()));
             lstAnalisisMercado.add(dominio);
 
         }
-        //System.out.println("termina");
 
         return lstAnalisisMercado;
     }

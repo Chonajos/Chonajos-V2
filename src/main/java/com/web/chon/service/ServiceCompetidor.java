@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.web.chon.service;
 
 import com.web.chon.dominio.Competidor;
@@ -26,11 +21,9 @@ public class ServiceCompetidor implements IfaceCompetidores {
 
     @Autowired
     EjbCompetidores ejb;
-    
-    
+
     @Override
     public ArrayList<Competidor> getCometidores() {
-          
 
         List<Object[]> lstObject = new ArrayList<Object[]>();
         ArrayList<Competidor> lstCompetidores = new ArrayList<Competidor>();
@@ -43,33 +36,33 @@ public class ServiceCompetidor implements IfaceCompetidores {
             lstCompetidores.add(dominio);
         }
         return lstCompetidores;
-        
+
     }
 
     @Override
     public int getNextVal() {
-        
-     return ejb.getNextVal();
+
+        return ejb.getNextVal();
     }
 
     @Override
     public int insertCompetidor(Competidor c) {
-           
+
         return ejb.insertCompetidor(c);
     }
 
     @Override
     public int updateCompetidor(Competidor c) {
-        
-     return ejb.updateCompetidor(c);
+
+        return ejb.updateCompetidor(c);
     }
 
     @Override
     public Competidor getCometidoresById(BigDecimal idCompetidor) {
-           
-     try {
-            Competidor c  = new Competidor();
-          List<Object[]> object = ejb.getCometidoresById(idCompetidor);
+
+        try {
+            Competidor c = new Competidor();
+            List<Object[]> object = ejb.getCometidoresById(idCompetidor);
             for (Object[] obj : object) {
                 c.setIdCompetidorPk(obj[0] == null ? null : new BigDecimal(obj[0].toString()));
                 c.setNombreCompetidor(obj[1] == null ? "" : obj[1].toString());
@@ -80,8 +73,8 @@ public class ServiceCompetidor implements IfaceCompetidores {
         } catch (Exception ex) {
             Logger.getLogger(ServiceCompetidor.class.getName()).log(Level.SEVERE, null, ex);
             return null;
-        }   
-    
+        }
+
     }
-    
+
 }

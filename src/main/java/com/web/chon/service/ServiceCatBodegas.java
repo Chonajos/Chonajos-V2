@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.web.chon.service;
 
 import com.web.chon.dominio.Bodega;
@@ -28,16 +23,12 @@ public class ServiceCatBodegas implements IfaceCatBodegas {
 
     @Autowired
     EjbCatBodegas ejb;
-   
-
-    
 
     @Override
     public ArrayList<Bodega> getBodegas() {
         try {
             ArrayList<Bodega> lista_bodegas = new ArrayList<Bodega>();
 
-               
             List<Object[]> lstObject = ejb.getBodegas();
 
             for (Object[] obj : lstObject) {
@@ -76,22 +67,21 @@ public class ServiceCatBodegas implements IfaceCatBodegas {
 
         try {
 
-               
             ArrayList<Bodega> lstBodegas = new ArrayList<Bodega>();
             long size = ejb.countBodegas();
 
             if (first != 0) {
                 first++;
             }
-               
-            List<Object[]> lstObject = ejb.getBodepagasPagination(first,pageSize,filters.getIdSucursalFk());
+
+            List<Object[]> lstObject = ejb.getBodepagasPagination(first, pageSize, filters.getIdSucursalFk());
 
             for (Object[] obj : lstObject) {
                 Bodega bodega = new Bodega();
                 bodega.setIdBodegaPK(new BigDecimal(obj[0].toString()));
                 bodega.setNombreBodega((obj[1] == null ? "" : obj[1].toString()));
                 bodega.setDescripcionBodega((obj[2] == null ? "" : obj[2].toString()));
-                bodega.setIdSucursalFk(obj[3] == null ? null: new BigDecimal(obj[3].toString()));
+                bodega.setIdSucursalFk(obj[3] == null ? null : new BigDecimal(obj[3].toString()));
                 bodega.setNombreSucursal((obj[4] == null ? "" : obj[4].toString()));
 
                 lstBodegas.add(bodega);
@@ -115,13 +105,12 @@ public class ServiceCatBodegas implements IfaceCatBodegas {
     @Override
     public int create(Bodega dominio) {
 
-           
         return ejb.insertBodega(dominio);
     }
 
     @Override
     public int update(Bodega dominio) {
-           
+
         return ejb.updateBodega(dominio);
     }
 
@@ -132,7 +121,7 @@ public class ServiceCatBodegas implements IfaceCatBodegas {
 
     @Override
     public int delete(BigDecimal id) {
-           
+
         return ejb.deleteBodega(id.intValue());
     }
 
@@ -141,10 +130,9 @@ public class ServiceCatBodegas implements IfaceCatBodegas {
 
         List<Object[]> lstObject = null;
         Bodega bodega = new Bodega();
-           
+
         lstObject = ejb.getBodegaById(Integer.parseInt(dominio));
 
-           
         for (Object[] obj : lstObject) {
 
             bodega.setIdBodegaPK(obj[0] == null ? null : new BigDecimal(obj[0].toString()));
@@ -161,7 +149,6 @@ public class ServiceCatBodegas implements IfaceCatBodegas {
         try {
             ArrayList<Bodega> lista_bodegas = new ArrayList<Bodega>();
 
-               
             List<Object[]> lstObject = ejb.getBodegaByIdSucursal(idSucursal);
 
             for (Object[] obj : lstObject) {
@@ -179,8 +166,6 @@ public class ServiceCatBodegas implements IfaceCatBodegas {
             return null;
 
         }
-        
-        
-        
+
     }
 }

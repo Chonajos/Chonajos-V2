@@ -1,15 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.web.chon.service;
-
 
 import com.web.chon.dominio.EntradaMenudeoProducto;
 import com.web.chon.ejb.EjbEntradaMenudeoProducto;
-import com.web.chon.negocio.NegocioMenudeoProducto;
-import com.web.chon.util.Utilidades;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,39 +9,39 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author freddy
  */
 @Service
-public class ServiceEntradaMenudeoProducto implements IfaceEntradaMenudeoProducto{
+@Transactional
+public class ServiceEntradaMenudeoProducto implements IfaceEntradaMenudeoProducto {
+
     @Autowired
     EjbEntradaMenudeoProducto ejb;
 
-    
-
     @Override
     public int insertEntradaMercanciaProducto(EntradaMenudeoProducto producto) {
-          
+
         return ejb.insertEntradaMenudeoProducto(producto);
     }
 
     @Override
     public int getNextVal() {
-           
+
         return ejb.getNextVal();
     }
 
     @Override
     public ArrayList<EntradaMenudeoProducto> getEntradaProductoById(BigDecimal id) {
-          
 
         List<Object[]> lstObject = new ArrayList<Object[]>();
         ArrayList<EntradaMenudeoProducto> lstEntradaMercancia2 = new ArrayList<EntradaMenudeoProducto>();
         lstObject = ejb.getEntradaMenudeoProductoByIdEM(id);
         int count = 1;
-        
+
         for (Object[] obj : lstObject) {
             EntradaMenudeoProducto dominio = new EntradaMenudeoProducto();
             dominio.setIdEmmpPk(obj[0] == null ? null : new BigDecimal(obj[0].toString()));
@@ -64,8 +56,8 @@ public class ServiceEntradaMenudeoProducto implements IfaceEntradaMenudeoProduct
             dominio.setPorcentarjeMerma(obj[9] == null ? null : new BigDecimal(obj[9].toString()));
             dominio.setPrecio(obj[10] == null ? null : new BigDecimal(obj[10].toString()));
             dominio.setCount(count);
-            count=count+1;
-           
+            count = count + 1;
+
             lstEntradaMercancia2.add(dominio);
         }
         return lstEntradaMercancia2;

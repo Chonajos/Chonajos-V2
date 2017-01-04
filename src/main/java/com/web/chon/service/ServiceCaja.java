@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.web.chon.service;
 
 import com.web.chon.dominio.Caja;
@@ -25,8 +20,6 @@ public class ServiceCaja implements IfaceCaja {
     @Autowired
     EjbCaja ejb;
 
-   
-
     @Override
     public int insertCaja(Caja c) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -39,7 +32,7 @@ public class ServiceCaja implements IfaceCaja {
 
     @Override
     public Caja getCajaByIdPk(BigDecimal idCajaPk) {
-           
+
         List<Object[]> object = ejb.getCajaByIdPk(idCajaPk);
         Caja caja = new Caja();
         for (Object[] obj : object) {
@@ -54,7 +47,7 @@ public class ServiceCaja implements IfaceCaja {
 
     @Override
     public Caja getCajaByIdUsuarioPk(BigDecimal idUsuarioPk) {
-           
+
         List<Object[]> object = ejb.getCajaByIdUsuarioPk(idUsuarioPk);
         Caja caja = new Caja();
         for (Object[] obj : object) {
@@ -70,7 +63,7 @@ public class ServiceCaja implements IfaceCaja {
 
     @Override
     public ArrayList<Caja> getCajas() {
-           
+
         ArrayList<Caja> listaCajas = new ArrayList<Caja>();
         List<Object[]> lstObject = ejb.getCajas();
         for (Object[] obj : lstObject) {
@@ -87,18 +80,17 @@ public class ServiceCaja implements IfaceCaja {
 
     @Override
     public ArrayList<Caja> getSucursalesByIdCaja(BigDecimal idCajaFk) {
-             
+
         ArrayList<Caja> listaCajas = new ArrayList<Caja>();
         List<Object[]> lstObject = ejb.getSucursalesByIdCaja(idCajaFk);
-        for (Object[] obj : lstObject) 
-        {
+        for (Object[] obj : lstObject) {
             Caja caja = new Caja();
             caja.setIdSucursalFk(obj[0] == null ? null : new BigDecimal(obj[0].toString()));
             caja.setNombre(obj[1] == null ? "" : obj[1].toString());
             listaCajas.add(caja);
         }
         return listaCajas;
-    
+
     }
 
 }

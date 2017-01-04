@@ -29,18 +29,22 @@ public class ServiceAccesMenu implements IfaceAccesMenu {
         try {
             ArrayList<AccesMenu> lstMenuAcces = new ArrayList<AccesMenu>();
 
-               
             List<Object[]> lstObject = ejb.getAccesosMenuPorIdRol(idRol);
 
             for (Object[] obj : lstObject) {
+                
                 AccesMenu accesMenu = new AccesMenu();
+                
                 accesMenu.setIdMenu(new BigDecimal(obj[0].toString()));
                 accesMenu.setDescripcion((obj[1] == null ? "" : obj[1].toString()));
                 accesMenu.setTipo((obj[2] == null ? "" : obj[2].toString()));
                 accesMenu.setNivel((obj[3] == null ? "" : obj[3].toString()));
                 accesMenu.setUrlSistema((obj[4] == null ? "" : obj[4].toString()));
+                
                 int estatus = Integer.parseInt(obj[5].toString());
+                
                 accesMenu.setEstatus(estatus > 0 ? true : false);
+                
                 lstMenuAcces.add(accesMenu);
 
             }
@@ -75,8 +79,6 @@ public class ServiceAccesMenu implements IfaceAccesMenu {
     @Override
     public int create(AccesMenu dominio) {
         try {
-
-               
 
             List<Object[]> lstExiste = ejb.exist(dominio.getIdRol(), dominio.getIdMenu());
             if (dominio.isEstatus()) {

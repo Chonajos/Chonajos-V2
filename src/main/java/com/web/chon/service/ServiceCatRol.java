@@ -24,13 +24,9 @@ public class ServiceCatRol implements IfaceCatRol {
     @Autowired
     EjbCatRol ejb;
 
-    
-
     @Override
     public int getNextVal() {
-        
-           
-        
+
         return ejb.getNextVal();
     }
 
@@ -41,19 +37,18 @@ public class ServiceCatRol implements IfaceCatRol {
 
     @Override
     public Pagina<Rol> findAllDominio(Rol filters, int first, int pageSize) {
-       throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public int create(Rol rol) {
 
-           
         return ejb.insert(rol);
     }
 
     @Override
     public int update(Rol rol) {
-           
+
         return ejb.update(rol);
     }
 
@@ -63,8 +58,6 @@ public class ServiceCatRol implements IfaceCatRol {
         try {
             ArrayList<Rol> lstRol = new ArrayList<Rol>();
 
-               
-            
             List<Object[]> lstObject = ejb.getAll();
 
             for (Object[] obj : lstObject) {
@@ -85,7 +78,7 @@ public class ServiceCatRol implements IfaceCatRol {
 
     @Override
     public int delete(BigDecimal id) {
-           
+
         return ejb.delete(id.intValue());
     }
 
@@ -94,10 +87,9 @@ public class ServiceCatRol implements IfaceCatRol {
 
         List<Object[]> lstObject = null;
         Rol rol = new Rol();
-           
+
         lstObject = ejb.getById(idRol.intValue());
 
-           
         for (Object[] obj : lstObject) {
 
             rol.setIdRolPk(obj[0] == null ? null : new BigDecimal(obj[0].toString()));

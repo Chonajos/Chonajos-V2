@@ -97,10 +97,11 @@ public class BeanInfoTv implements Serializable {
     }
 
 
-    public StreamedContent getProductImage() throws IOException, SQLException {
+    public StreamedContent getProductImage() throws IOException {
 
 
             FacesContext context = FacesContext.getCurrentInstance();
+            String mimeType = "image/jpg";
 
             if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
                 return new DefaultStreamedContent();
@@ -113,7 +114,8 @@ public class BeanInfoTv implements Serializable {
                     
                 }
                 byte[] image = subproducto.getFichero();
-                return new DefaultStreamedContent(new ByteArrayInputStream(image));
+                
+                return new DefaultStreamedContent(new ByteArrayInputStream(image),mimeType,subproducto.getIdSubproductoPk());
 
             }
     }

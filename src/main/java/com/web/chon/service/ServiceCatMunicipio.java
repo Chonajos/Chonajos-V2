@@ -1,9 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.web.chon.service;
+
 import com.web.chon.dominio.Municipios;
 import com.web.chon.ejb.EjbCatMunicipio;
 import java.math.BigDecimal;
@@ -21,38 +17,33 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class ServiceCatMunicipio implements IfaceCatMunicipio
-{
-    
+public class ServiceCatMunicipio implements IfaceCatMunicipio {
+
     @Autowired
     EjbCatMunicipio ejb;
 
     @Override
-    public ArrayList<Municipios> getMunicipios(int idMunicipio)
-    {
-        try
-       {
-            ArrayList <Municipios> lista_municipios= new ArrayList<Municipios>();
+    public ArrayList<Municipios> getMunicipios(int idMunicipio) {
+        try {
+            ArrayList<Municipios> lista_municipios = new ArrayList<Municipios>();
             List<Object[]> lstObject = ejb.getMunicipios(idMunicipio);
-             
-            for(Object[] obj: lstObject )
-            {
+
+            for (Object[] obj : lstObject) {
                 Municipios muni = new Municipios();
                 muni.setIdMunicipioPk(obj[0] == null ? null : new BigDecimal(obj[0].toString()));
                 muni.setNombreMunicipio(obj[1].toString());
-              
+
                 lista_municipios.add(muni);
-               
-            }
-            return lista_municipios;
-        }catch(Exception ex)
-            {
-                
-                Logger.getLogger(ServiceCatEntidad.class.getName()).log(Level.SEVERE, null, ex);
-                return null;
 
             }
-        
+            return lista_municipios;
+        } catch (Exception ex) {
+
+            Logger.getLogger(ServiceCatEntidad.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+
+        }
+
     }
 
     @Override

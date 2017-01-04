@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.web.chon.service;
 
 import com.web.chon.dominio.Entidad;
@@ -22,35 +17,31 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class ServiceCatEntidad  implements IfaceCatEntidad  {
+public class ServiceCatEntidad implements IfaceCatEntidad {
 
     @Autowired
     EjbCatEntidad ejb;
-    
+
     @Override
-    public ArrayList<Entidad> getEntidades()       
-    {
-       try
-       {
-            ArrayList <Entidad> lista_entidades= new ArrayList<Entidad>();
+    public ArrayList<Entidad> getEntidades() {
+        try {
+            ArrayList<Entidad> lista_entidades = new ArrayList<Entidad>();
             List<Object[]> lstObject = ejb.getEntidades();
-             
-            for(Object[] obj: lstObject )
-            {
+
+            for (Object[] obj : lstObject) {
                 Entidad enti = new Entidad();
                 enti.setIdEntidadPk(obj[0] == null ? null : new BigDecimal(obj[0].toString()));
                 enti.setNombreEntidad(obj[1].toString());
                 lista_entidades.add(enti);
-               
-            }
-            return lista_entidades;
-        }catch(Exception ex)
-            {
-                
-                Logger.getLogger(ServiceCatEntidad.class.getName()).log(Level.SEVERE, null, ex);
-                return null;
 
             }
+            return lista_entidades;
+        } catch (Exception ex) {
+
+            Logger.getLogger(ServiceCatEntidad.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+
+        }
     }
 
     @Override
@@ -72,5 +63,5 @@ public class ServiceCatEntidad  implements IfaceCatEntidad  {
     public int insertEntidad(Entidad enti) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }

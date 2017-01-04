@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.web.chon.service;
 
 import com.web.chon.dominio.CarroDetalle;
@@ -19,12 +14,14 @@ import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author freddy
  */
 @Service
+@Transactional
 public class ServiceVentaMayoreo implements IfaceVentaMayoreo {
 
     @Autowired
@@ -33,23 +30,21 @@ public class ServiceVentaMayoreo implements IfaceVentaMayoreo {
     @Autowired
     IfaceVentaMayoreoProducto ifaceVentaMayoreoProducto;
 
-    
-
     @Override
     public int insertarVenta(VentaMayoreo venta) {
-           
+
         return ejb.insertarVenta(venta);
     }
 
     @Override
     public int getNextVal() {
-           
+
         return ejb.getNextVal();
     }
 
     @Override
     public ArrayList<VentaMayoreo> getVentasByIntervalDate(Date fechaInicio, Date fechaFin, BigDecimal idSucursal, BigDecimal idStatusVenta, BigDecimal idTipoVenta, String idSubProductoFk, BigDecimal idCliente) {
-           
+
         ArrayList<VentaMayoreo> lstVenta = new ArrayList<VentaMayoreo>();
         List<Object[]> lstObject = ejb.getVentasByInterval(TiempoUtil.getFechaDDMMYYYY(fechaInicio), TiempoUtil.getFechaDDMMYYYY(fechaFin), idSucursal, idStatusVenta, idTipoVenta, idSubProductoFk, idCliente);
         BigDecimal ganacias = new BigDecimal(0);
@@ -85,13 +80,12 @@ public class ServiceVentaMayoreo implements IfaceVentaMayoreo {
 
     @Override
     public int getVentaSucursal(BigDecimal idSucursal) {
-           
+
         return ejb.getVentaSucursal(idSucursal);
     }
 
     @Override
     public int updateEstatusVentaByFolioSucursalAndIdSucursal(BigDecimal folioSucursal, BigDecimal idSucursal, BigDecimal estatusVenta) {
-           
 
         return ejb.updateEstatusVentaByFolioSucursalAndIdSucursal(folioSucursal, idSucursal, estatusVenta);
 
@@ -99,14 +93,14 @@ public class ServiceVentaMayoreo implements IfaceVentaMayoreo {
 
     @Override
     public int cancelarVentaMayoreo(BigDecimal idVenta, BigDecimal idUsuario, String comentarios) {
-           
+
         return ejb.cancelarVentaMayoreo(idVenta, idUsuario, comentarios);
 
     }
 
     @Override
     public VentaMayoreo getVentaMayoreoByFolioidSucursalFk(BigDecimal idFolio, BigDecimal idSucursal) {
-           
+
         List<Object[]> Object = ejb.getVentaMayoreoByFolioidSucursalFk(idFolio, idSucursal);
         VentaMayoreo venta = new VentaMayoreo();
         for (Object[] obj : Object) {
@@ -146,7 +140,6 @@ public class ServiceVentaMayoreo implements IfaceVentaMayoreo {
     @Override
     public ArrayList<OperacionesVentasMayoreo> getReporteVentasByCarroAndIdSucursalAndTipoVenta(BigDecimal carro, BigDecimal idSucursal, BigDecimal idTipoVenta) {
         try {
-               
 
             List<Object[]> lstObjectPrincipal = new ArrayList<Object[]>();
             List<Object[]> lstObjectSecundario = new ArrayList<Object[]>();
@@ -250,7 +243,6 @@ public class ServiceVentaMayoreo implements IfaceVentaMayoreo {
     @Override
     public ArrayList<CarroDetalle> getDetalleVentasCarro(BigDecimal idSucursal, BigDecimal carro) {
         try {
-               
 
             List<Object[]> lstObject = new ArrayList<Object[]>();
             lstObject = ejb.getDetalleVentasCarro(idSucursal, carro);

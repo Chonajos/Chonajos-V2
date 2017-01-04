@@ -32,11 +32,9 @@ public class ServiceCredito implements IfaceCredito {
     private static final BigDecimal CREDITOATRASADO = new BigDecimal(2);
     private static final BigDecimal CREDITONOATRASADO = new BigDecimal(1);
 
-    
-
     @Override
     public ArrayList<Credito> getAll() {
-           
+
         ArrayList<Credito> lstCredito = new ArrayList<Credito>();
         List<Object[]> lstObject = new ArrayList<Object[]>();
         lstObject = ejb.getAll();
@@ -65,7 +63,7 @@ public class ServiceCredito implements IfaceCredito {
 
     @Override
     public Credito getById(BigDecimal idCredito) {
-           
+
         List<Object[]> lstObject = new ArrayList<Object[]>();
         lstObject = ejb.getById(idCredito);
         Credito credito = new Credito();
@@ -91,21 +89,20 @@ public class ServiceCredito implements IfaceCredito {
 
     @Override
     public int delete(BigDecimal idCredito) {
-           
+
         return ejb.delete(idCredito);
     }
 
     @Override
     public int update(Credito credito) {
-           
+
         return ejb.update(credito);
     }
 
     @Override
     public int insert(Credito credito) {
         try {
-               
-            //System.out.println("credito " + credito.toString());
+
             int idCredito = ejb.nextVal();
 
             if (ejb.insert(credito, idCredito) == 0) {
@@ -114,18 +111,18 @@ public class ServiceCredito implements IfaceCredito {
                 return idCredito;
             }
         } catch (Exception ex) {
-            //                       System.out.println("error >" + ex.getMessage().toString());
+            System.out.println("error >" + ex.getMessage().toString());
             return 0;
         }
     }
 
     @Override
-    public ArrayList<SaldosDeudas> getCreditosActivos(BigDecimal idCliente,BigDecimal idAbonoPk) {
+    public ArrayList<SaldosDeudas> getCreditosActivos(BigDecimal idCliente, BigDecimal idAbonoPk) {
         //System.out.println("**************Service*************");
-           
+
         ArrayList<SaldosDeudas> lstCreditos = new ArrayList<SaldosDeudas>();
         List<Object[]> lstObject = new ArrayList<Object[]>();
-        lstObject = ejb.getCreditosActivos(idCliente,idAbonoPk);
+        lstObject = ejb.getCreditosActivos(idCliente, idAbonoPk);
         for (Object[] object : lstObject) {
             SaldosDeudas credito = new SaldosDeudas();
             credito.setFolioCredito(object[0] == null ? null : new BigDecimal(object[0].toString()));
@@ -140,12 +137,12 @@ public class ServiceCredito implements IfaceCredito {
             credito.setNumeroPagos(object[9] == null ? null : new BigDecimal(object[9].toString()));
             credito.setChequesPorCobrar(object[10] == null ? null : new BigDecimal(object[10].toString()));
             String nombreSucursal = null;
-            if(object[12] == null){
-                 nombreSucursal =object[11] == null ? "Registro Ingresado Manualmente":object[11].toString()+" Menudeo";
-            }else{
-                nombreSucursal =object[12].toString()+" Mayoreo";
+            if (object[12] == null) {
+                nombreSucursal = object[11] == null ? "Registro Ingresado Manualmente" : object[11].toString() + " Menudeo";
+            } else {
+                nombreSucursal = object[12].toString() + " Mayoreo";
             }
-            
+
             credito.setNombreSucursal(nombreSucursal);
             Date hoy = context.getFechaSistema();
             hoy.setHours(0);
@@ -250,21 +247,21 @@ public class ServiceCredito implements IfaceCredito {
 
     @Override
     public int updateStatus(BigDecimal idCreditoPk, BigDecimal estatus) {
-           
+
         return ejb.updateStatus(idCreditoPk, estatus);
 
     }
 
     @Override
     public int updateACuenta(Credito credito) {
-           
+
         return ejb.updateACuenta(credito);
 
     }
 
     @Override
     public Credito getTotalAbonado(BigDecimal idCredito) {
-           
+
         List<Object[]> lstObject = new ArrayList<Object[]>();
         lstObject = ejb.getTotalAbonado(idCredito);
         Credito credito = new Credito();
@@ -283,7 +280,6 @@ public class ServiceCredito implements IfaceCredito {
 
         List<Object[]> lstObject = new ArrayList<Object[]>();
         ArrayList<SaldosDeudas> lstSaldoDeuda = new ArrayList<SaldosDeudas>();
-           
 
         lstObject = ejb.getAllCreditosActivos(idSucursal);
 
@@ -390,7 +386,6 @@ public class ServiceCredito implements IfaceCredito {
     @Override
     public Credito getCreditosByIdVentaMenudeo(BigDecimal idVenta) {
 
-           
         Credito credito = new Credito();
         List<Object[]> lstObject = new ArrayList<Object[]>();
         lstObject = ejb.getCreditosByIdVentaMenudeo(idVenta);
@@ -417,7 +412,7 @@ public class ServiceCredito implements IfaceCredito {
 
     @Override
     public Credito getCreditosByIdVentaMayoreo(BigDecimal idVentaMayoreo) {
-           
+
         Credito credito = new Credito();
         List<Object[]> lstObject = new ArrayList<Object[]>();
         lstObject = ejb.getCreditosByIdVentaMayoreo(idVentaMayoreo);
@@ -447,13 +442,13 @@ public class ServiceCredito implements IfaceCredito {
 
     @Override
     public int eliminarCreditoByIdCreditoPk(BigDecimal idCreditoPk) {
-           
+
         return ejb.eliminarCreditoByIdCreditoPk(idCreditoPk);
     }
 
     @Override
     public int activarCredito(Credito credito) {
-           
+
         return ejb.activarCredito(credito);
     }
 

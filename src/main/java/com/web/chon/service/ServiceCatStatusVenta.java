@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.web.chon.service;
 
 import com.web.chon.dominio.StatusVenta;
@@ -21,31 +16,28 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class ServiceCatStatusVenta implements IfaceCatStatusVenta{
+public class ServiceCatStatusVenta implements IfaceCatStatusVenta {
+
     @Autowired
     EjbCatStatusVenta ejb;
 
     @Override
-    public ArrayList<StatusVenta> getStatusVentas() 
-    {
-       try
-       {
-            ArrayList <StatusVenta> lista_sucursales = new ArrayList<StatusVenta>();
+    public ArrayList<StatusVenta> getStatusVentas() {
+        try {
+            ArrayList<StatusVenta> lista_sucursales = new ArrayList<StatusVenta>();
             List<Object[]> lstObject = ejb.getStatusVentas();
-            for(Object[] obj: lstObject )
-            {
-                StatusVenta st = new StatusVenta();         
+            for (Object[] obj : lstObject) {
+                StatusVenta st = new StatusVenta();
                 st.setId_status_pk(Integer.parseInt(obj[0].toString()));
-                st.setStatus(obj[1] == null ? "" :obj[1].toString());
+                st.setStatus(obj[1] == null ? "" : obj[1].toString());
                 lista_sucursales.add(st);
             }
             return lista_sucursales;
-        }catch(Exception ex)
-            {
-                Logger.getLogger(ServiceCatStatusVenta.class.getName()).log(Level.SEVERE, null, ex);
-                return null;
+        } catch (Exception ex) {
+            Logger.getLogger(ServiceCatStatusVenta.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
 
-            }
+        }
     }
 
     @Override
@@ -72,5 +64,5 @@ public class ServiceCatStatusVenta implements IfaceCatStatusVenta{
     public int getNextVal() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }

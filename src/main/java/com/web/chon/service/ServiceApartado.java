@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.web.chon.service;
 
 import com.web.chon.dominio.Apartado;
@@ -18,28 +13,27 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class ServiceApartado implements IfaceApartado{
+public class ServiceApartado implements IfaceApartado {
+
     @Autowired
     EjbApartado ejb;
 
-    
-
     @Override
     public int insert(Apartado apartado) {
-           
+
         return ejb.insert(apartado);
     }
 
     @Override
     public int getNextVal() {
-           
+
         return ejb.getNextVal();
     }
 
     @Override
     public BigDecimal montoApartado(BigDecimal idVentaFk, BigDecimal idTipoFk) {
-          
+
         return ejb.montoApartado(idVentaFk, idTipoFk);
     }
-    
+
 }

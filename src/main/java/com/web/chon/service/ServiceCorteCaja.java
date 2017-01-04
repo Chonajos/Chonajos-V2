@@ -1,9 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.web.chon.service;
+
 import com.web.chon.dominio.CorteCaja;
 import com.web.chon.ejb.EjbCorteCaja;
 import java.math.BigDecimal;
@@ -25,28 +21,27 @@ public class ServiceCorteCaja implements IfaceCorteCaja {
     @Autowired
     EjbCorteCaja ejb;
 
-
     @Override
     public int insertCorte(CorteCaja cc) {
-           
+
         return ejb.insertCorte(cc);
     }
 
     @Override
     public int updateCorte(CorteCaja cc) {
-           
+
         return ejb.updateCorte(cc);
     }
 
     @Override
     public int getNextVal() {
-           
+
         return ejb.getNextVal();
     }
 
     @Override
     public ArrayList<CorteCaja> getCortesByIdCajaFk(BigDecimal idDestinoFK, String fechaIni, String fechaFin) {
-           
+
         ArrayList<CorteCaja> lstCortes = new ArrayList<CorteCaja>();
         List<Object[]> lstObject = new ArrayList<Object[]>();
         lstObject = ejb.getCortesByIdCajaFk(idDestinoFK, fechaIni, fechaFin);
@@ -75,7 +70,7 @@ public class ServiceCorteCaja implements IfaceCorteCaja {
 
     @Override
     public CorteCaja getCorteByidPk(BigDecimal idPk) {
-           
+
         List<Object[]> lstObject = new ArrayList<Object[]>();
         lstObject = ejb.getCorteByidPk(idPk);
         CorteCaja corte = new CorteCaja();
@@ -91,7 +86,6 @@ public class ServiceCorteCaja implements IfaceCorteCaja {
             corte.setComentarios(object[8] == null ? null : object[8].toString());
             corte.setIdUserFk(object[9] == null ? null : new BigDecimal(object[9].toString()));
             corte.setIdStatusFk(object[10] == null ? null : new BigDecimal(object[10].toString()));
-            ///
             corte.setNombreCaja(object[11] == null ? null : object[11].toString());
             corte.setNombreUsuario(object[12] == null ? null : object[12].toString());
             corte.setNombreStatus(object[13] == null ? null : object[13].toString());
@@ -102,7 +96,7 @@ public class ServiceCorteCaja implements IfaceCorteCaja {
 
     @Override
     public CorteCaja getLastCorteByCaja(BigDecimal idCajaPk) {
-           
+
         List<Object[]> lstObject = new ArrayList<Object[]>();
         lstObject = ejb.getLastCorteByCaja(idCajaPk);
         BigDecimal cero = new BigDecimal(0);
@@ -122,16 +116,16 @@ public class ServiceCorteCaja implements IfaceCorteCaja {
             corte.setIdStatusFk(object[11] == null ? null : new BigDecimal(object[11].toString()));
             corte.setMontoCuentaAnterior(object[12] == null ? cero : new BigDecimal(object[12].toString()));
             corte.setMontoCuentaNuevo(object[13] == null ? cero : new BigDecimal(object[13].toString()));
-            ///
 
         }
         return corte;
     }
-     @Override
-    public CorteCaja getLastCorteByCajaHistorial(BigDecimal idCajaPk,BigDecimal idCorteFk) {
-           
+
+    @Override
+    public CorteCaja getLastCorteByCajaHistorial(BigDecimal idCajaPk, BigDecimal idCorteFk) {
+
         List<Object[]> lstObject = new ArrayList<Object[]>();
-        lstObject = ejb.getLastCorteByCajaHistorial(idCajaPk,idCorteFk);
+        lstObject = ejb.getLastCorteByCajaHistorial(idCajaPk, idCorteFk);
         BigDecimal cero = new BigDecimal(0);
         CorteCaja corte = new CorteCaja();
         for (Object[] object : lstObject) {
@@ -149,7 +143,6 @@ public class ServiceCorteCaja implements IfaceCorteCaja {
             corte.setIdStatusFk(object[12] == null ? null : new BigDecimal(object[12].toString()));
             corte.setMontoCuentaAnterior(object[13] == null ? cero : new BigDecimal(object[13].toString()));
             corte.setMontoCuentaNuevo(object[14] == null ? cero : new BigDecimal(object[14].toString()));
-            ///
 
         }
         return corte;
@@ -157,7 +150,7 @@ public class ServiceCorteCaja implements IfaceCorteCaja {
 
     @Override
     public ArrayList<CorteCaja> getCortesByFechaCajaUsuario(BigDecimal idCajaFk, BigDecimal idUsuarioFk, String fecha) {
-           
+
         ArrayList<CorteCaja> lstCortes = new ArrayList<CorteCaja>();
         List<Object[]> lstObject = new ArrayList<Object[]>();
         lstObject = ejb.getCortesByFechaCajaUsuario(idCajaFk, idUsuarioFk, fecha);

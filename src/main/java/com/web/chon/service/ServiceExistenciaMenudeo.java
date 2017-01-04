@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.web.chon.service;
 
 import com.web.chon.dominio.ExistenciaMenudeo;
@@ -15,36 +10,33 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author freddy
  */
 @Service
+@Transactional
 public class ServiceExistenciaMenudeo implements IfaceExistenciaMenudeo {
 
     @Autowired
     EjbExistenciaMenudeo ejb;
 
-    
-    
-
     @Override
     public int insertaExistenciaMenudeo(ExistenciaMenudeo em) {
-           
+
         return ejb.insertaExistenciaMenudeo(em);
     }
 
     @Override
     public int updateExistenciaMenudeo(ExistenciaMenudeo em) {
-           
+
         return ejb.updateExistenciaMenudeo(em);
     }
 
     @Override
     public ArrayList<ExistenciaMenudeo> getExistenciasMenudeoByIdSucursal(BigDecimal idSucursal) {
-
-           
 
         ArrayList<ExistenciaMenudeo> lstExistenciaMenudeo = new ArrayList<ExistenciaMenudeo>();
 
@@ -71,7 +63,6 @@ public class ServiceExistenciaMenudeo implements IfaceExistenciaMenudeo {
 
     @Override
     public ExistenciaMenudeo getExistenciasMenudeoById(BigDecimal id) {
-           
 
         List<Object[]> lstObject = ejb.getExistenciasMenudeoById(id);
         ExistenciaMenudeo data = new ExistenciaMenudeo();
@@ -99,7 +90,7 @@ public class ServiceExistenciaMenudeo implements IfaceExistenciaMenudeo {
 
     @Override
     public ExistenciaMenudeo getExistenciasRepetidasById(String ID_SUBPRODUCTO_FK, BigDecimal ID_SUCURSAL_FK) {
-           
+
         List<Object[]> lstObject = ejb.getExistenciasRepetidasById(ID_SUBPRODUCTO_FK, ID_SUCURSAL_FK);
         ExistenciaMenudeo data = new ExistenciaMenudeo();
         for (Object[] obj : lstObject) {
@@ -118,7 +109,7 @@ public class ServiceExistenciaMenudeo implements IfaceExistenciaMenudeo {
 
     @Override
     public int getNexVal() {
-           
+
         try {
             return ejb.getNextVal();
 
@@ -131,8 +122,6 @@ public class ServiceExistenciaMenudeo implements IfaceExistenciaMenudeo {
 
     @Override
     public ArrayList<ExistenciaMenudeo> getExistenciasMenudeoByIdSucursalAndIdSubproducto(BigDecimal idSucursal, String idSubProducto) {
-
-           
 
         ArrayList<ExistenciaMenudeo> lstExistenciaMenudeo = new ArrayList<ExistenciaMenudeo>();
 
@@ -159,7 +148,6 @@ public class ServiceExistenciaMenudeo implements IfaceExistenciaMenudeo {
 
     @Override
     public RelEntSalExAj getRelacion(BigDecimal idSucursal, String idSubproducto) {
-          
 
         RelEntSalExAj data = new RelEntSalExAj();
         List<Object[]> lstObject = ejb.getRelacion(idSucursal, idSubproducto);
@@ -170,11 +158,11 @@ public class ServiceExistenciaMenudeo implements IfaceExistenciaMenudeo {
             data.setKilosVendidos(obj[2] == null ? null : new BigDecimal(obj[2].toString()));
             data.setKilosAjustados(obj[3] == null ? null : new BigDecimal(obj[3].toString()));
             data.setKilosExistencia(obj[1] == null ? null : new BigDecimal(obj[1].toString()));
-           
+
         }
-        System.out.println("Data: "+data.toString());
+
         return data;
-    
+
     }
 
 }

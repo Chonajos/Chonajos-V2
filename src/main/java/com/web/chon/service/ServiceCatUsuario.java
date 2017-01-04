@@ -1,9 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.web.chon.service;
+
 import com.web.chon.dominio.Usuario;
 import com.web.chon.ejb.EjbCatUsuario;
 import java.math.BigDecimal;
@@ -30,7 +26,7 @@ public class ServiceCatUsuario implements IfaceCatUsuario {
     public ArrayList<Usuario> getUsuarios() {
         try {
             ArrayList<Usuario> lstUsuario = new ArrayList<Usuario>();
-            
+
             List<Object[]> lstObject = ejb.getUsuarios();
 
             for (Object[] obj : lstObject) {
@@ -62,7 +58,7 @@ public class ServiceCatUsuario implements IfaceCatUsuario {
     public Usuario getUsuariosById(int idProducto) {
         try {
             Usuario usuario = new Usuario();
-           
+
             List<Object[]> lstObject = ejb.getUsuarioById(idProducto);
 
             for (Object[] obj : lstObject) {
@@ -129,11 +125,11 @@ public class ServiceCatUsuario implements IfaceCatUsuario {
     }
 
     @Override
-    public Usuario getUsuarioByClave(String clave,int idSucursal) {
+    public Usuario getUsuarioByClave(String clave, int idSucursal) {
         try {
 
             Usuario usuario = new Usuario();
-            List<Object[]> lstObject = ejb.getUsuarioByClave(clave,idSucursal);
+            List<Object[]> lstObject = ejb.getUsuarioByClave(clave, idSucursal);
 
             for (Object[] obj : lstObject) {
 
@@ -148,7 +144,7 @@ public class ServiceCatUsuario implements IfaceCatUsuario {
                 usuario.setIdSucursal(obj[26] == null ? -1 : Integer.parseInt(obj[26].toString()));
 
             }
-            
+
             return usuario;
 
         } catch (Exception ex) {
@@ -158,10 +154,10 @@ public class ServiceCatUsuario implements IfaceCatUsuario {
 
     @Override
     public ArrayList<Usuario> getUsuariosbyIdSucursal(int idSucursal) {
-       
+
         try {
             ArrayList<Usuario> lstUsuario = new ArrayList<Usuario>();
-            
+
             List<Object[]> lstObject = ejb.getUsuariosbyIdSucursal(idSucursal);
 
             for (Object[] obj : lstObject) {

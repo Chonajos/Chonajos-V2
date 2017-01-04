@@ -1,36 +1,30 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.web.chon.service;
+
 import com.web.chon.dominio.TipoAbono;
 import com.web.chon.ejb.EjbTipoAbono;
-import com.web.chon.negocio.NegocioTipoAbono;
-import com.web.chon.util.Utilidades;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author JesusAlfredo
  */
 @Service
+@Transactional
 public class ServiceTipoAbono implements IfaceTipoAbono {
+
     @Autowired
     EjbTipoAbono ejb;
 
-    
-
     @Override
     public ArrayList<TipoAbono> getAll() {
-          
+
         ArrayList<TipoAbono> lstCredito = new ArrayList<TipoAbono>();
         List<Object[]> lstObject = new ArrayList<Object[]>();
         lstObject = ejb.getAll();
@@ -43,7 +37,7 @@ public class ServiceTipoAbono implements IfaceTipoAbono {
         }
 
         return lstCredito;
-        
+
     }
 
     @Override

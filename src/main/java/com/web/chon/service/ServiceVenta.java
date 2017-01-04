@@ -1,4 +1,5 @@
 package com.web.chon.service;
+
 import com.web.chon.dominio.Venta;
 import com.web.chon.dominio.VentaProducto;
 import com.web.chon.ejb.EjbVenta;
@@ -12,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -20,6 +22,7 @@ import org.springframework.stereotype.Service;
  * @author Juan de la Cruz
  */
 @Service
+@Transactional
 public class ServiceVenta implements IfaceVenta {
 
     @Autowired
@@ -38,13 +41,13 @@ public class ServiceVenta implements IfaceVenta {
     }
 
     @Override
-    public ArrayList<Venta> getVentasByIntervalDate(Date fechaInicio, Date fechaFin, BigDecimal idSucursal, BigDecimal idStatusVenta, String idProducto, BigDecimal idTipoVenta,BigDecimal idCliente) {
+    public ArrayList<Venta> getVentasByIntervalDate(Date fechaInicio, Date fechaFin, BigDecimal idSucursal, BigDecimal idStatusVenta, String idProducto, BigDecimal idTipoVenta, BigDecimal idCliente) {
         ArrayList<Venta> lstVenta = new ArrayList<Venta>();
         BigDecimal count = new BigDecimal(0);
         BigDecimal B_CONTADO = new BigDecimal(1);
-        String S_CONTADO ="CONTADO";
-        String S_CREDITO ="CREDITO";
-        List<Object[]> lstObject = ejb.getVentasByInterval(TiempoUtil.getFechaDDMMYYYY(fechaInicio), TiempoUtil.getFechaDDMMYYYY(fechaFin), idSucursal, idStatusVenta, idProducto, idTipoVenta,idCliente);
+        String S_CONTADO = "CONTADO";
+        String S_CREDITO = "CREDITO";
+        List<Object[]> lstObject = ejb.getVentasByInterval(TiempoUtil.getFechaDDMMYYYY(fechaInicio), TiempoUtil.getFechaDDMMYYYY(fechaFin), idSucursal, idStatusVenta, idProducto, idTipoVenta, idCliente);
         for (Object[] obj : lstObject) {
             Venta venta = new Venta();
             venta.setIdVentaPk(obj[0] == null ? null : new BigDecimal(obj[0].toString()));
@@ -61,14 +64,14 @@ public class ServiceVenta implements IfaceVenta {
             venta.setNombreEstatus(obj[11] == null ? null : obj[11].toString());
             // se agregan estos valores en 1 para que no de error en creditos borrados 
             venta.setIdTipoVenta(obj[12] == null ? new BigDecimal(1) : new BigDecimal(obj[12].toString()));
-            venta.setDescripcionTipoVenta(venta.getIdTipoVenta().equals(B_CONTADO) ? S_CONTADO:S_CREDITO);
+            venta.setDescripcionTipoVenta(venta.getIdTipoVenta().equals(B_CONTADO) ? S_CONTADO : S_CREDITO);
             venta.setIdCredito(obj[13] == null ? null : new BigDecimal(obj[13].toString()));
             venta.setFechaPromesaPago(obj[14] == null ? new Date() : (Date) obj[14]);
             venta.setMontoCredito(obj[15] == null ? new BigDecimal(1) : new BigDecimal(obj[15].toString()));
             venta.setNumeroPagos(obj[16] == null ? new BigDecimal(1) : new BigDecimal(obj[16].toString()));
             venta.setPlazos(obj[17] == null ? new BigDecimal(1) : new BigDecimal(obj[17].toString()));
             venta.setaCuenta(obj[18] == null ? new BigDecimal(0) : new BigDecimal(obj[18].toString()));
-            
+
             ArrayList<VentaProducto> listaProductos = new ArrayList<VentaProducto>();
             listaProductos = ifaceVentaProducto.getVentasProductoByIdVenta(venta.getIdVentaPk());
             venta.setLstVentaProducto(listaProductos);

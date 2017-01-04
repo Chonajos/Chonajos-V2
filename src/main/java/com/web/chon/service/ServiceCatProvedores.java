@@ -1,5 +1,5 @@
-
 package com.web.chon.service;
+
 import com.web.chon.dominio.Pagina;
 import com.web.chon.dominio.Provedor;
 import com.web.chon.ejb.EjbCatProvedores;
@@ -26,8 +26,6 @@ public class ServiceCatProvedores implements IfaceCatProvedores {
     @Autowired
     EjbCatProvedores ejb;
 
-   
-
     @Override
     public int deleteProvedor(BigDecimal idProvedor) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -36,7 +34,6 @@ public class ServiceCatProvedores implements IfaceCatProvedores {
     @Override
     public int updateProvedor(Provedor pro) {
         try {
-               
 
             return ejb.updateProvedor(pro);
 
@@ -49,7 +46,6 @@ public class ServiceCatProvedores implements IfaceCatProvedores {
     @Override
     public int insertProvedor(Provedor pro) {
         try {
-               
 
             return ejb.insertProvedor(pro);
 
@@ -62,7 +58,6 @@ public class ServiceCatProvedores implements IfaceCatProvedores {
     @Override
     public int getNextVal() {
 
-           
         return ejb.getNextVal();
 
     }
@@ -135,7 +130,7 @@ public class ServiceCatProvedores implements IfaceCatProvedores {
 
     @Override
     public Provedor getById(BigDecimal dominio) {
-           
+
         List<Object[]> lstObject = ejb.getById(dominio);
         Provedor provedor = new Provedor();
         for (Object[] obj : lstObject) {
@@ -172,7 +167,7 @@ public class ServiceCatProvedores implements IfaceCatProvedores {
     public ArrayList<Provedor> getProvedores() {
 
         try {
-            
+
             List<Object[]> lstObject = ejb.getProvedores();
             ArrayList<Provedor> lista_provedores = new ArrayList<Provedor>();
             for (Object[] obj : lstObject) {
@@ -208,7 +203,6 @@ public class ServiceCatProvedores implements IfaceCatProvedores {
 
     @Override
     public ArrayList<Provedor> getProvedorByNombreCompleto(String nombreCompleto) {
-           
 
         ArrayList<Provedor> lstProvedor = new ArrayList<Provedor>();
         List<Object[]> lstObject = ejb.getProvedorByNombreCompleto(nombreCompleto);
@@ -231,8 +225,6 @@ public class ServiceCatProvedores implements IfaceCatProvedores {
 
     @Override
     public ArrayList<Provedor> getProvedoresByIdSucursal(BigDecimal idSucursal) {
-
-           
 
         ArrayList<Provedor> lstProvedor = new ArrayList<Provedor>();
         List<Object[]> lstObject = ejb.getProvedoresByIdSucursal(idSucursal);

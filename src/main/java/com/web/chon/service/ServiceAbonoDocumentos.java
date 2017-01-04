@@ -1,9 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.web.chon.service;
+
 import com.web.chon.dominio.AbonoDocumentos;
 import com.web.chon.ejb.EjbAbonoDocumento;
 import com.web.chon.util.TiempoUtil;
@@ -21,11 +17,11 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class ServiceAbonoDocumentos implements IfaceAbonoDocumentos{
+public class ServiceAbonoDocumentos implements IfaceAbonoDocumentos {
 
     @Autowired
     EjbAbonoDocumento ejb;
-    
+
     @Override
     public int update(AbonoDocumentos abonoDocumentos) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -48,24 +44,23 @@ public class ServiceAbonoDocumentos implements IfaceAbonoDocumentos{
 
     @Override
     public int getNextVal() {
-          
-       return ejb.getNextVal();
+
+        return ejb.getNextVal();
     }
 
     @Override
     public int insert(AbonoDocumentos abonoDocumentos) {
-           
-       return ejb.insert(abonoDocumentos);
+
+        return ejb.insert(abonoDocumentos);
     }
 
     @Override
     public ArrayList<AbonoDocumentos> getCheques(Date fechaInicio, Date fechaFin, BigDecimal idSucursalFk, BigDecimal idClienteFk, BigDecimal filtro, BigDecimal filtroStatus) {
-           
+
         ArrayList<AbonoDocumentos> lstAbonoCredito = new ArrayList<AbonoDocumentos>();
         List<Object[]> lstObject = new ArrayList<Object[]>();
-        lstObject = ejb.getChequesPendientes(TiempoUtil.getFechaDDMMYYYY(fechaInicio), TiempoUtil.getFechaDDMMYYYY(fechaFin),idSucursalFk,idClienteFk,filtro,filtroStatus);
-        for (Object[] object : lstObject) 
-        {
+        lstObject = ejb.getChequesPendientes(TiempoUtil.getFechaDDMMYYYY(fechaInicio), TiempoUtil.getFechaDDMMYYYY(fechaFin), idSucursalFk, idClienteFk, filtro, filtroStatus);
+        for (Object[] object : lstObject) {
             AbonoDocumentos abonoDocumento = new AbonoDocumentos();
             abonoDocumento.setIdAbonoDocumentoPk(object[0] == null ? null : new BigDecimal(object[0].toString()));
             abonoDocumento.setMontoAbono(object[2] == null ? null : new BigDecimal(object[2].toString()));
@@ -88,14 +83,14 @@ public class ServiceAbonoDocumentos implements IfaceAbonoDocumentos{
             lstAbonoCredito.add(abonoDocumento);
         }
         return lstAbonoCredito;
-    
+
     }
 
     @Override
     public BigDecimal getTotalAbonadoByIdDocumento(BigDecimal idDocumentoFk) {
-           
+
         return ejb.getTotalAbonadoByIdDocumento(idDocumentoFk);
-    
+
     }
-    
+
 }

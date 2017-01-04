@@ -1,10 +1,7 @@
 package com.web.chon.service;
 
-import com.web.chon.dominio.GestionCredito;
 import com.web.chon.dominio.ResultadoGestion;
 import com.web.chon.ejb.EjbResultadoGestion;
-import com.web.chon.negocio.NegocioResultadoGestion;
-import com.web.chon.util.Utilidades;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,39 +9,40 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Juan de la Cruz
  */
 @Service
+@Transactional
 public class ServiceResultadoGestion implements IfaceResultadoGestion {
+
     @Autowired
     EjbResultadoGestion ejb;
 
-    
-
     @Override
     public int update(ResultadoGestion resultadoGestion) {
-           
+
         return ejb.update(resultadoGestion);
     }
 
     @Override
     public int insert(ResultadoGestion resultadoGestion) {
-           
+
         return ejb.insert(resultadoGestion);
     }
 
     @Override
     public int delete(BigDecimal idResultadoGestion) {
-           
+
         return ejb.delete(idResultadoGestion);
     }
 
     @Override
     public ArrayList<ResultadoGestion> getAll() {
-           
+
         ArrayList<ResultadoGestion> lstResultadoGestion = new ArrayList<ResultadoGestion>();
         List<Object[]> lstObject = new ArrayList<Object[]>();
         lstObject = ejb.getAll();
@@ -76,10 +74,9 @@ public class ServiceResultadoGestion implements IfaceResultadoGestion {
 //
 //        return resultadoGestion;
 //    }
-
     @Override
     public int getNextVal() {
-           
+
         try {
             return ejb.getNextVal();
 
@@ -93,7 +90,5 @@ public class ServiceResultadoGestion implements IfaceResultadoGestion {
     public ResultadoGestion getById(BigDecimal idResultadoGestion) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
- 
 
 }

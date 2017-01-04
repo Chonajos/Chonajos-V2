@@ -2,8 +2,6 @@ package com.web.chon.service;
 
 import com.web.chon.dominio.GestionCredito;
 import com.web.chon.ejb.EjbGestionCredito;
-import com.web.chon.negocio.NegocioGestionCredito;
-import com.web.chon.util.Utilidades;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,40 +9,40 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Juan de la Cruz
  */
 @Service
+@Transactional
 public class ServiceGestionCredito implements IfaceGestionCredito {
 
     @Autowired
     EjbGestionCredito ejb;
 
- 
-
     @Override
     public int update(GestionCredito gestionCredito) {
-           
+
         return ejb.update(gestionCredito);
     }
 
     @Override
     public int insert(GestionCredito gestionCredito) {
-           
+
         return ejb.insert(gestionCredito);
     }
 
     @Override
     public int delete(BigDecimal idGestionCredito) {
-           
+
         return ejb.delete(idGestionCredito);
     }
 
     @Override
     public ArrayList<GestionCredito> getAll() {
-           
+
         ArrayList<GestionCredito> lstGestionCredito = new ArrayList<GestionCredito>();
         List<Object[]> lstObject = new ArrayList<Object[]>();
         lstObject = ejb.getAll();
@@ -66,7 +64,6 @@ public class ServiceGestionCredito implements IfaceGestionCredito {
 
     @Override
     public GestionCredito getById(BigDecimal idAbonoCredito) {
-           
 
         GestionCredito gestionCredito = new GestionCredito();
         List<Object[]> lstObject = new ArrayList<Object[]>();
@@ -86,7 +83,7 @@ public class ServiceGestionCredito implements IfaceGestionCredito {
 
     @Override
     public int getNextVal() {
-           
+
         try {
             return ejb.getNextVal();
 
